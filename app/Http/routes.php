@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin');
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +23,26 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    /*
+     * Routes that require to be authenticated
+     */
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/', function () {
+            return view('dashboard');
+        });
+
+
+        /*
+         * Routes that manage all the content of patients
+         */
+        Route::group(['prefix' => 'patients'], function () {
+            Route::get('/', 'PatientController@index');
+            Route::post('addPatient',['as'=>'addPatient','uses'=>'PatientController@addPatient']);
+        });
+    });
+
 });

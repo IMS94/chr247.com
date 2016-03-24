@@ -7,7 +7,7 @@ $user = Auth::user();
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Symfony Music School</title>
+    <title>{{$user->clinic->name}}</title>
     <link rel="shortcut" href="favicon.ico"/>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -42,9 +42,9 @@ $user = Auth::user();
         <!-- Logo -->
         <a href="{{url('/')}}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>SMS</b></span>
+            <span class="logo-mini"><b>HIS</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>SMS</b> Admin</span>
+            <span class="logo-lg"><b>HIS</b> Admin</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -71,8 +71,8 @@ $user = Auth::user();
                                 <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="User Image">
 
                                 <p>
-                                    User
-                                    <small>Symphony Music School</small>
+                                    {{$user->name}}
+                                    <small>{{$user->clinic->name}}</small>
                                 </p>
                             </li>
 
@@ -82,7 +82,7 @@ $user = Auth::user();
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="{{url('logout')}}" class="btn btn-default btn-flat">Sign out</a>
                                 </div>
                             </li>
                         </ul>
@@ -105,7 +105,7 @@ $user = Auth::user();
                     <img src="{{asset('dist/img/avatar.png')}}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p> User</p>
+                    <p>{{$user->name}}</p>
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
@@ -132,6 +132,13 @@ $user = Auth::user();
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
+
+                <li @if(strpos(Request::url(),'patients')!=false) class="active" @endif>
+                    <a href="{{url('patients')}}">
+                        <i class="fa fa-dashboard"></i> <span>Patients</span>
+                    </a>
+                </li>
+
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -161,7 +168,7 @@ $user = Auth::user();
         <div class="pull-right hidden-xs">
             <b>Version</b> 1.0.0
         </div>
-        <strong>Copyright &copy; <a href="#">Eduze</a>.</strong> All rights
+        <strong>Copyright &copy; <a href="#">Consec Technologies</a>.</strong> All rights
         reserved.
     </footer>
 </div><!-- ./wrapper -->

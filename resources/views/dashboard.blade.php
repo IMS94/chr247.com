@@ -7,7 +7,7 @@
 
 
 @section('sub_header')
-    Symphony Music School
+    Health Informatics System
 @endsection
 
 @section('content')

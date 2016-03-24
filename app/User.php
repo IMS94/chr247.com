@@ -23,4 +23,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    /**
+     * User's clinic
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function clinic(){
+        return $this->belongsTo('App\Clinic','clinic_id','id');
+    }
+
+    /**
+     * User's role
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role(){
+        return $this->belongsTo('App\Role');
+    }
 }
