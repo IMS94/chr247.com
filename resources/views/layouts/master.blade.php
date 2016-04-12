@@ -152,11 +152,14 @@ $user = Auth::user();
         <section class="content-header">
             <h1>
                 @yield('page_header')
-                <small>@yield('sub_header')</small>
+                <small>@yield('sub_header','Health Informatics System')</small>
             </h1>
+            @yield('breadcrumb','')
         </section>
         <!-- Main content -->
         <section class="content">
+            {{--Time is shown using a script--}}
+            <h4 id="timer"></h4>
             @yield('content')
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
@@ -188,5 +191,30 @@ $user = Auth::user();
 <!-- DataTables -->
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+
+{{--The script to show time on the top--}}
+<script>
+    $(document).ready(function () {
+        setInterval(function () {
+            var d = new Date;
+            var hours = d.getHours();
+            var mins = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
+            var seconds = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
+            var year = d.getFullYear();
+            var month = d.getMonth() < 10 ? "0" + d.getMonth() : d.getMonth();
+            var day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
+            if (hours > 12) {
+                var hours = (hours - 12);
+                var ampm = "PM";
+            }
+            else {
+                var ampm = "AM";
+            }
+            var date = year + "-" + month + "-" + day;
+            var time = hours + ":" + mins + ":" + seconds + " " + ampm;
+            $("#timer").html(date + " | " + time);
+        }, 1000);
+    });
+</script>
 
 </html>

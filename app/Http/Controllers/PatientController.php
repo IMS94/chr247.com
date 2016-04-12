@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Clinic;
+use App\Exceptions\NotFoundException;
 use App\Patient;
 use Illuminate\Http\Request;
 
@@ -14,27 +16,23 @@ use Exception;
 
 class PatientController extends Controller
 {
-    public function index()
+    /**
+     * Get the patients list
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getPatientList()
     {
-        return view('patients.patients');
+        $clinic = Clinic::getCurrentClinic();
+        $patients = $clinic->patients;
+        return view('patients.patients', ['patients' => $patients]);
     }
 
 
-    /*
-     * 'firstName' => 'Kamal',
-  'lastName' => 'Silva',
-  'dob' => '1111-01-11',
-  'gender' => 'Male',
-  'address' => 'Gampaha',
-  'nic' => '940214041V',
-  'phone' => '0717086160',
-  'bloodGroup' => 'Don\'t know',
-  'allergies' => 'Prawn',
-  'familyHistory' => 'Not much',
-  'medicalHistory' => 'Yep',
-  'postSurgicalHistory' => 'Nope',
-  'remarks' => 'Good boy',
-     * */
+    /**
+     * Adds a patient to the system
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function addPatient(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -48,7 +46,7 @@ class PatientController extends Controller
             return back()->with('type', 'patient')->withErrors($validator)->withInput();
         }
 
-        $clinic = Auth::user()->clinic;
+        $clinic = Clinic::getCurrentClinic();
 
         /*
          * Checks if the same clinic has a patient in the same nic. If yes, it is notified.
@@ -66,11 +64,11 @@ class PatientController extends Controller
         $patient->address = $request->address ?: null;
         $patient->nic = $request->nic ?: null;
         $patient->phone = $request->phone ?: null;
-        $patient->blood_group = $request->bloodGroup != 'null' ?: null;
+        $patient->blood_group = $request->bloodGroup != 'null' ? $request->bloodGroup : null;
         $patient->allergies = $request->allergies ?: null;
         $patient->family_history = $request->familyHistory ?: null;
         $patient->medical_history = $request->medicalHistory ?: null;
-        $patient->post_surgical_history = $request->postSurgicalHostory ?: null;
+        $patient->post_surgical_history = $request->postSurgicalHistory ?: null;
         $patient->remarks = $request->remarks ?: null;
 
         try {
@@ -83,5 +81,23 @@ class PatientController extends Controller
         }
 
         return back()->with('success', $request->firstName . ' added successfully');
+    }
+
+
+    /**
+     * Get a specific patient of a clinic
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws NotFoundException
+     */
+    public function getPatient($id)
+    {
+        $patient = Patient::find($id);
+        if (empty($patient)) {
+            throw new NotFoundException("Patient Not Found");
+        }
+        $this->authorize('view', $patient);
+
+        return view('patients.patient', ['patient' => $patient]);
     }
 }

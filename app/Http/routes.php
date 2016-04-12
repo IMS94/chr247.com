@@ -31,17 +31,23 @@ Route::group(['middleware' => 'web'], function () {
      * Routes that require to be authenticated
      */
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/', function () {
+        Route::get('/', ['as' => 'root', 'uses' => function () {
             return view('dashboard');
-        });
+        }
+        ]);
 
 
         /*
          * Routes that manage all the content of patients
          */
         Route::group(['prefix' => 'patients'], function () {
-            Route::get('/', 'PatientController@index');
-            Route::post('addPatient',['as'=>'addPatient','uses'=>'PatientController@addPatient']);
+            Route::get('/', ['as' => 'patients', 'uses' => 'PatientController@getPatientList']);
+
+            /*
+             * Patients
+             */
+            Route::post('addPatient', ['as' => 'addPatient', 'uses' => 'PatientController@addPatient']);
+            Route::get('patient/{id}', ['as' => 'patient', 'uses' => 'PatientController@getPatient']);
         });
     });
 
