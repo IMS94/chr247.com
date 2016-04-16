@@ -23,11 +23,22 @@
 
         <!--    Box Body  -->
         <div class="box-body">
+
+            {{--Success Message--}}
             @if(session()->has('success'))
                 <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4><i class="icon fa fa-check"></i> Success!</h4>
                     {{session('success')}}
+                </div>
+            @endif
+
+            {{--Error Message--}}
+            @if(session()->has('error'))
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Success!</h4>
+                    {{session('error')}}
                 </div>
             @endif
 
@@ -53,17 +64,30 @@
                 </thead>
                 <tbody>
                 @forelse($patients as $patient)
-                    <tr class="tableRow"
-                        onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
-                        <td>{{$patient->first_name}} {{$patient->last_name?:''}}</td>
-                        <td>{{$patient->phone}}</td>
-                        <td>{{$patient->address}}</td>
-                        <td>
+                    <tr class="tableRow">
+                        <td onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
+                            {{$patient->first_name}} {{$patient->last_name?:''}}
+                        </td>
+                        <td onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
+                            {{$patient->phone}}
+                        </td>
+                        <td onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
+                            {{$patient->address}}
+                        </td>
+                        <td onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
                             {{Utils::getAge($patient->dob)}}
                         </td>
                         <td>
                             @can('delete',$patient)
-                            <button class="btn btn-sm btn-danger"><i class="fa fa-recycle fa-lg"></i></button>
+                            {{--
+                            A modal is used to confirm the delete action.
+                            One the modal popup, the url in the form changes according to the patient's id
+                            --}}
+                            <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                    data-target="#confirmDeletePatientModal"
+                                    onclick="showConfirmDelete({{$patient->id}},'{{$patient->first_name}} {{$patient->last_name?:''}}')">
+                                <i class="fa fa-recycle fa-lg"></i>
+                            </button>
                             @endcan
                         </td>
                     </tr>
@@ -77,6 +101,23 @@
     </div>
 
     @include('patients.modals.addPatient')
+
+    {{--Add delete modal only if the user has previledges--}}
+    @can('delete',$patient)
+    @include('patients.modals.confirmDelete')
+    <script>
+        /**
+         * Method to show delete patient modal.
+         * Updates the modal title and the form's action
+         * @param patientId
+         */
+        function showConfirmDelete(patientId, name) {
+            $('#confirmDeletePatientModal .modal-title').html(name);
+            $('#confirmDeletePatientModal form').prop("action", "{{url('patients/deletePatient')}}/" + patientId);
+        }
+    </script>
+    @endcan
+
 
     {{--Data Tables Scripts--}}
     <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>

@@ -33,4 +33,26 @@ class Utils
     {
         return date("jS M,Y H:i:s", strtotime($timestamp));
     }
+
+
+    /**
+     * Check id a patient is a Male
+     * @param $patient
+     * @return bool
+     */
+    public static function isMale($patient)
+    {
+        return $patient->gender === "Male";
+    }
+
+
+    /**
+     * Check id a patient is a Female
+     * @param $patient
+     * @return bool
+     */
+    public static function isFemale($patient)
+    {
+        return $patient->gender === "Female";
+    }
 }

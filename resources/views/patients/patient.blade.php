@@ -21,23 +21,39 @@
         <!--    Box Header  -->
         <div class="box-header with-border">
 
-            <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#addPatientModal">
+            {{--Check whether the user has permissions to access these tasks--}}
+            @can('edit',$patient)
+            <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#editPatientModal">
                 <i class="fa fa-edit fa-lg"></i> Edit Info
             </button>
+            @endcan
 
+            @can('issueMedical',$patient)
             <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#addPatientModal">
                 <i class="fa fa-stethoscope fa-lg"></i> Issue Medical
             </button>
+            @endcan
 
+            @can('issueID',$patient)
             <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#addPatientModal">
                 <i class="fa fa-tag fa-lg"></i> Issue ID
             </button>
+            @endcan
 
         </div>
 
         <!--    Box Body  -->
         <div class="box-body">
-            <!-- Nav tabs -->
+
+            @if(session()->has('success'))
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Success!</h4>
+                    {{session('success')}}
+                </div>
+            @endif
+
+            {{--    Nav tabs    --}}
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                     <a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a>
@@ -63,7 +79,9 @@
                 <div role="tabpanel" class="tab-pane fade" id="settings">...</div>
             </div>
         </div>
-
     </div>
 
+    @can('edit',$patient)
+    @include('patients.modals.editPatient')
+    @endcan
 @endsection

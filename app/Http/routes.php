@@ -48,6 +48,8 @@ Route::group(['middleware' => 'web'], function () {
              */
             Route::post('addPatient', ['as' => 'addPatient', 'uses' => 'PatientController@addPatient']);
             Route::get('patient/{id}', ['as' => 'patient', 'uses' => 'PatientController@getPatient']);
+            Route::any('deletePatient/{id}', ['as' => 'deletePatient', 'uses' => 'PatientController@deletePatient']);
+            Route::post('editPatient/{id}',['as'=>'editPatient','uses'=>'PatientController@editPatient']);
         });
     });
 

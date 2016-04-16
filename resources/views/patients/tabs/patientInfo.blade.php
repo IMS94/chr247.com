@@ -44,19 +44,19 @@
             </div>
             <div class="row">
                 <label class="col-md-4">Allergies</label>
-                <div class="col-md-8">{{$patient->allergies}}</div>
+                <div class="col-md-8">{{$patient->allergies?:'-'}}</div>
             </div>
             <div class="row">
                 <label class="col-md-4">Family History</label>
-                <div class="col-md-8">{{$patient->family_history}}</div>
+                <div class="col-md-8">{{$patient->family_history?:'-'}}</div>
             </div>
             <div class="row">
                 <label class="col-md-4">Medical History</label>
-                <div class="col-md-8">{{$patient->medical_history}}</div>
+                <div class="col-md-8">{{$patient->medical_history?:'-'}}</div>
             </div>
             <div class="row">
                 <label class="col-md-4">Surgical history</label>
-                <div class="col-md-8">{{$patient->post_surgical_history}}</div>
+                <div class="col-md-8">{{$patient->post_surgical_history?:'-'}}</div>
             </div>
         </div>
 

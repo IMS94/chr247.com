@@ -28,10 +28,11 @@ class CreatePatientsTable extends Migration
             $table->text('medical_history')->nullable();
             $table->text('post_surgical_history')->nullable();
             $table->text('remarks')->nullable();
-            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('created_by')->unsigned();
             $table->timestamps();
 
-            $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
+            $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('restrict');
+            $table->foreign("created_by")->references('id')->on('users')->onDelete('restrict');
         });
     }
 

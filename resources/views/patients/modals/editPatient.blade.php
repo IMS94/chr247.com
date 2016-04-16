@@ -1,13 +1,13 @@
-<div class="modal fade" id="addPatientModal">
+<div class="modal fade" id="editPatientModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Add Patient</h4>
+                <h4 class="modal-title">{{$patient->first_name}} {{$patient->last_name}} - Edit info</h4>
             </div>
 
-            <form class="form-horizontal" method="post" action="{{route('addPatient')}}">
+            <form class="form-horizontal" method="post" action="{{route('editPatient',['id'=>$patient->id])}}">
 
                 <div class="box-body">
 
@@ -25,8 +25,8 @@
                     <div class="form-group{{ $errors->has('firstName') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">First Name</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}"
-                                   required>
+                            <input type="text" class="form-control" name="firstName"
+                                   value="{{ old('firstName')?:$patient->first_name }}" required>
                             @if ($errors->has('firstName'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('firstName') }}</strong>
@@ -38,7 +38,8 @@
                     <div class="form-group{{ $errors->has('lastName') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Last Name</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
+                            <input type="text" class="form-control" name="lastName"
+                                   value="{{ old('lastName')?:$patient->last_name }}">
                             @if ($errors->has('lastName'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('lastName') }}</strong>
@@ -50,7 +51,7 @@
                     <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Date of Birth</label>
                         <div class="col-md-9">
-                            <input type="date" class="form-control" name="dob" value="{{ old('dob') }}"
+                            <input type="date" class="form-control" name="dob" value="{{ old('dob')?:$patient->dob }}"
                                    max="{{date('Y-m-d')}}"
                                    min="{{date('Y-m-d',strtotime(date('Y-m-d').' -150 year'))}}">
                             @if ($errors->has('dob'))
@@ -66,12 +67,14 @@
                         <label class="col-md-3 control-label">Gender</label>
                         <div class="col-md-9 radio">
                             <label>
-                                <input type="radio" name="gender" value="Male" checked="checked">
+                                <input type="radio" name="gender" value="Male"
+                                       @if(Utils::isMale($patient)) checked @endif>
                                 Male
                             </label>
                             <br>
                             <label>
-                                <input type="radio" name="gender" value="Female">
+                                <input type="radio" name="gender" value="Female"
+                                       @if(Utils::isFemale($patient)) checked @endif>
                                 Female
                             </label>
                             @if ($errors->has('gender'))
@@ -85,7 +88,8 @@
                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Address</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                            <input type="text" class="form-control" name="address"
+                                   value="{{ old('address')?:$patient->address }}">
                             @if ($errors->has('address'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -97,7 +101,7 @@
                     <div class="form-group{{ $errors->has('nic') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">NIC</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="nic" value="{{ old('nic') }}"
+                            <input type="text" class="form-control" name="nic" value="{{ old('nic')?:$patient->nic }}"
                                    pattern="[0-9]{9}[vV]">
                             @if ($errors->has('nic'))
                                 <span class="help-block">
@@ -110,7 +114,8 @@
                     <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Contact No.</label>
                         <div class="col-md-9">
-                            <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}">
+                            <input type="tel" class="form-control" name="phone"
+                                   value="{{ old('phone')?:$patient->phone }}">
                             @if ($errors->has('phone'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>
@@ -126,7 +131,7 @@
                             <select name="bloodGroup" class="form-control">
                                 @foreach($bloodGroups as $bloodGroup)
                                     <option value="{{$bloodGroup}}"
-                                            @if(strcmp($bloodGroup,old('bloodGroup'))==0) selected @endif>
+                                            @if(strcmp($bloodGroup,$patient->blood_group)==0) selected @endif>
                                         {{$bloodGroup}}
                                     </option>
                                 @endforeach
@@ -142,7 +147,8 @@
                     <div class="form-group{{ $errors->has('allergies') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Known Allergies</label>
                         <div class="col-md-9">
-                            <textarea class="form-control" name="allergies" rows="2">{{old('allergies')}}</textarea>
+                            <textarea class="form-control" name="allergies"
+                                      rows="2">{{old('allergies')?:$patient->allergies}}</textarea>
                             @if ($errors->has('allergies'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('allergies') }}</strong>
@@ -156,7 +162,8 @@
                         <label class="col-md-3 control-label">Family History</label>
                         <div class="col-md-9">
                             <textarea class="form-control" placeholder="Notable medical conditions run in the family"
-                                      name="familyHistory" rows="2">{{old('familyHistory')}}</textarea>
+                                      name="familyHistory"
+                                      rows="2">{{old('familyHistory')?:$patient->family_history}}</textarea>
                             @if ($errors->has('familyHistory'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('familyHistory') }}</strong>
@@ -170,7 +177,7 @@
                         <label class="col-md-3 control-label">Medical History</label>
                         <div class="col-md-9">
                             <textarea class="form-control" rows="2"
-                                      name="medicalHistory">{{old('medicalHistory')}}</textarea>
+                                      name="medicalHistory">{{old('medicalHistory')?:$patient->medical_history}}</textarea>
                             @if ($errors->has('medicalHistory'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('medicalHistory') }}</strong>
@@ -183,7 +190,7 @@
                         <label class="col-md-3 control-label">Post Surgical History</label>
                         <div class="col-md-9">
                             <textarea class="form-control" rows="2"
-                                      name="postSurgicalHistory">{{old('postSurgicalHistory')}}</textarea>
+                                      name="postSurgicalHistory">{{old('postSurgicalHistory')?:$patient->post_surgical_history}}</textarea>
                             @if ($errors->has('postSurgicalHistory'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('postSurgicalHistory') }}</strong>
@@ -195,7 +202,8 @@
                     <div class="form-group{{ $errors->has('remarks') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Remarks</label>
                         <div class="col-md-9">
-                            <textarea class="form-control" rows="2" name="remarks">{{old('remarks')}}</textarea>
+                            <textarea class="form-control" rows="2"
+                                      name="remarks">{{old('remarks')?:$patient->remarks}}</textarea>
                             @if ($errors->has('remarks'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('remarks') }}</strong>
@@ -208,7 +216,7 @@
 
                 <div class="box-footer">
                     <button type="reset" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary pull-right">Add</button>
+                    <button type="submit" class="btn btn-primary pull-right">Save Changes</button>
                 </div><!-- /.box-footer -->
             </form>
 
@@ -220,7 +228,7 @@
 @if(session('type') && session('type')==="patient" && $errors->any())
     <script>
         $(document).ready(function () {
-            $('#addPatientModal').modal('show');
+            $('#editPatientModal').modal('show');
         });
     </script>
 @endif
