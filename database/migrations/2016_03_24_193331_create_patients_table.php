@@ -13,8 +13,8 @@ class CreatePatientsTable extends Migration
     public function up()
     {
         Schema::create('patients', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('clinic_id')->unsigned();
+            $table->increments('id');
+            $table->integer('clinic_id')->unsigned();
             $table->string('first_name');
             $table->string('last_name')->nullable();
             $table->text('address')->nullable();
@@ -28,7 +28,7 @@ class CreatePatientsTable extends Migration
             $table->text('medical_history')->nullable();
             $table->text('post_surgical_history')->nullable();
             $table->text('remarks')->nullable();
-            $table->bigInteger('created_by')->unsigned();
+            $table->integer('created_by')->unsigned();
             $table->timestamps();
 
             $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('restrict');
