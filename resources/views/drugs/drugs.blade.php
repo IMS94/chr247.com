@@ -1,0 +1,140 @@
+@extends('layouts.master')
+
+
+@section('page_header')
+    Drugs
+@endsection
+
+
+@section('content')
+
+    {{--Data Tables CSS--}}
+    <link href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css">
+    {{--//Data Tables CSS--}}
+
+    <div class="box box-primary">
+        <!--    Box Header  -->
+        <div class="box-header with-border">
+
+            @can('add','App\Drug')
+            <button class="btn btn-primary margin-left"
+                    data-toggle="modal" data-target="#addDrugModal">
+                Add Drug
+            </button>
+            @endcan
+
+            <a class="btn btn-primary margin-left pull-right" href="{{route('drugTypes')}}">
+                Drug Types
+            </a>
+
+        </div>
+
+
+        <!--    Box Body  -->
+        <div class="box-body">
+
+            {{--Success Message--}}
+            @if(session()->has('success'))
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Success!</h4>
+                    {{session('success')}}
+                </div>
+            @endif
+
+            {{--Error Message--}}
+            @if(session()->has('error'))
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Success!</h4>
+                    {{session('error')}}
+                </div>
+            @endif
+
+            <style>
+                .tableRow {
+                    cursor: pointer;
+                }
+
+                .tableRow:hover {
+                    text-decoration: underline !important;
+                }
+            </style>
+
+            <table class="table table-responsive table-condensed table-hover text-center" id="drugsTable">
+                <thead>
+                <tr>
+                    <th>Drug Name</th>
+                    <th>Type</th>
+                    <th>Manufacturer</th>
+                    <th>Quantity</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @forelse($drugs as $drug)
+                    <tr class="tableRow">
+                        <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
+                            {{$drug->name}}
+                        </td>
+                        <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
+                            {{$drug->drug_type_id}}
+                        </td>
+                        <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
+                            {{$drug->manufacturer}}
+                        </td>
+                        <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
+                            {{$drug->quantity}}
+                        </td>
+                        <td>
+                            @can('delete',$drug)
+                            {{--
+                            A modal is used to confirm the delete action.
+                            One the modal popup, the url in the form changes according to the drug's id
+                            --}}
+                            <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                    data-target="#confirmDeleteDrugModal"
+                                    onclick="showConfirmDelete({{$drug->id}},'{{$drug->name}}')">
+                                <i class="fa fa-recycle fa-lg"></i>
+                            </button>
+                            @endcan
+                        </td>
+                    </tr>
+                @empty
+
+                @endforelse
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    @include('drugs.modals.addDrug')
+
+    @include('drugs.modals.confirmDelete')
+    <script>
+        /**
+         * Method to show delete drug modal.
+         * Updates the modal title and the form's action
+         * @param drugId
+         */
+        function showConfirmDelete(drugId, name) {
+            $('#confirmDeleteDrugModal .modal-title').html(name);
+            $('#confirmDeleteDrugModal form').prop("action", "{{url('drugs/deletedrug')}}/" + drugId);
+        }
+    </script>
+
+
+    {{--Data Tables Scripts--}}
+    <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables/dataTables.bootstrap.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            var tableFixed = $('#drugsTable').dataTable({
+                'pageLength': 10
+            });
+        });
+    </script>
+    {{--//Data Tables--}}
+
+@endsection

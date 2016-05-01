@@ -26,6 +26,27 @@ class Clinic extends Model
     }
 
     /**
+     * Drugs of the clinic
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function drugs(){
+        return $this->hasMany('App\Drug','clinic_id','id');
+    }
+
+
+    /**
+     * Drug types of the clinic
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function drugTypes(){
+        return $this->hasMany('App\DrugType','clinic_id','id');
+    }
+
+
+
+
+
+    /**
      * Get the currently logged in user's clinic
      * @return mixed
      */

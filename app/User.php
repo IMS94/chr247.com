@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -60,5 +61,14 @@ class User extends Authenticatable
     public function isDoctor()
     {
         return $this->role->role === 'Doctor';
+    }
+
+
+    /**
+     * Get the currently signed in user
+     * @return mixed
+     */
+    public static function getCurrentUser(){
+        return Auth::user();
     }
 }

@@ -139,6 +139,12 @@ $user = Auth::user();
                     </a>
                 </li>
 
+                <li @if(strpos(Request::url(),'drugs')!=false) class="active" @endif>
+                    <a href="{{url('drugs')}}">
+                        <i class="fa fa-dashboard"></i> <span>Drugs</span>
+                    </a>
+                </li>
+
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -210,7 +216,8 @@ $user = Auth::user();
             else {
                 var ampm = "AM";
             }
-            var date = year + "-" + month + "-" + day;
+            hours = hours < 10 ? "0" + hours : hours;
+            var date = year + "/" + month + "/" + day;
             var time = hours + ":" + mins + ":" + seconds + " " + ampm;
             $("#timer").html(date + " | " + time);
         }, 1000);

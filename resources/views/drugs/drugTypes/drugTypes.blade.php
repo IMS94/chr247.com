@@ -2,9 +2,16 @@
 
 
 @section('page_header')
-    Patients
+    Drug Types
 @endsection
 
+@section('breadcrumb')
+    <ol class="breadcrumb">
+        <li><a href="{{route('root')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('drugs')}}">Drugs</a></li>
+        <li class="active" href="#">Drug Types</li>
+    </ol>
+@endsection
 
 @section('content')
 
@@ -15,9 +22,13 @@
     <div class="box box-primary">
         <!--    Box Header  -->
         <div class="box-header with-border">
-            <button class="btn btn-primary pull-left" data-toggle="modal" data-target="#addPatientModal">
-                Add Patient
+
+            @can('add','App\DrugType')
+            <button class="btn btn-primary margin-left"
+                    data-toggle="modal" data-target="#addDrugTypeModal">
+                Add Drug Type
             </button>
+            @endcan
         </div>
 
 
@@ -52,40 +63,32 @@
                 }
             </style>
 
-            <table class="table table-responsive table-condensed table-hover text-center" id="patientsTable">
+            <table class="table table-responsive table-condensed table-hover text-center" id="drugsTable">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Contact No.</th>
-                    <th>Address</th>
-                    <th>Age</th>
+                    <th>Drug Type</th>
+                    <th>Created By</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($patients as $patient)
+                @forelse($drugTypes as $drugType)
                     <tr class="tableRow">
-                        <td onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
-                            {{$patient->first_name}} {{$patient->last_name?:''}}
-                        </td>
-                        <td onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
-                            {{$patient->phone}}
-                        </td>
-                        <td onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
-                            {{$patient->address}}
-                        </td>
-                        <td onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
-                            {{Utils::getAge($patient->dob)}}
+                        <td>
+                            {{$drugType->drug_type}}
                         </td>
                         <td>
-                            @can('delete',$patient)
+                            {{$drugType->creator->name}}
+                        </td>
+                        <td>
+                            @can('delete',$drugType)
                             {{--
                             A modal is used to confirm the delete action.
-                            One the modal popup, the url in the form changes according to the patient's id
+                            One the modal popup, the url in the form changes according to the drug's id
                             --}}
                             <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                    data-target="#confirmDeletePatientModal"
-                                    onclick="showConfirmDelete({{$patient->id}},'{{$patient->first_name}} {{$patient->last_name?:''}}')">
+                                    data-target="#confirmDeleteDrugTypeModal"
+                                    onclick="showConfirmDelete({{$drugType->id}},'{{$drugType->drug_type}}')">
                                 <i class="fa fa-recycle fa-lg"></i>
                             </button>
                             @endcan
@@ -100,18 +103,19 @@
 
     </div>
 
-    @include('patients.modals.addPatient')
+    @include('drugs.drugTypes.modals.addDrugType')
 
-    @include('patients.modals.confirmDelete')
+    @include('drugs.drugTypes.modals.confirmDelete')
     <script>
         /**
-         * Method to show delete patient modal.
+         * Method to show delete drug modal.
          * Updates the modal title and the form's action
-         * @param patientId
+         * @param drugId
          */
-        function showConfirmDelete(patientId, name) {
-            $('#confirmDeletePatientModal .modal-title').html(name);
-            $('#confirmDeletePatientModal form').prop("action", "{{url('patients/deletePatient')}}/" + patientId);
+        function showConfirmDelete(drugTypeId, name) {
+            $('#confirmDeleteDrugTypeModal .modal-title').html(name);
+            $('#confirmDeleteDrugTypeModal form').prop("action",
+                    "{{url('drugs/deleteDrugType')}}/" + drugTypeId);
         }
     </script>
 
@@ -121,7 +125,7 @@
     <script src="{{asset('plugins/datatables/dataTables.bootstrap.js')}}"></script>
     <script>
         $(document).ready(function () {
-            var tableFixed = $('#patientsTable').dataTable({
+            var tableFixed = $('#drugsTable').dataTable({
                 'pageLength': 10
             });
         });
