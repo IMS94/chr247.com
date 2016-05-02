@@ -78,7 +78,8 @@ class PatientController extends Controller
             $patient->save();
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            $validator->getMessageBag()->add('general', 'Unable to save the patient details.');
+            $validator->getMessageBag()
+                ->add('general', 'Unable to save the patient details. A patient with similar details already exists');
             return back()->with('type', 'patient')->withInput()->withErrors($validator);
         }
 

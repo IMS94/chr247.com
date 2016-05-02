@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Delete Drug Type</h4>
+                <h4 class="modal-title">Delete Quantity Type</h4>
             </div>
 
             <form class="form-horizontal" method="post" action="#">
@@ -12,7 +12,7 @@
                     {{csrf_field()}}
 
                     <div class="container-fluid">
-                        Are you sure that you want to completely remove this drug type from the system?
+                        Are you sure that you want to completely remove this quantity type from the system?
                     </div>
 
                 </div>

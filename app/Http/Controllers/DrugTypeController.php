@@ -38,8 +38,11 @@ class DrugTypeController extends Controller
         $validator = Validator::make($request->all(), [
             'drugType' => 'required'
         ]);
+        if($validator->fails()){
+            return back()->withInput()->withErrors($validator);
+        }
 
-        if($clinic->drugTypes()->where('drug_type',$name)->count()==0){
+        try{
             $drugType=new DrugType();
             $drugType->drug_type=$name;
             $drugType->clinic()->associate($clinic);
@@ -47,8 +50,10 @@ class DrugTypeController extends Controller
             $drugType->save();
             return back()->with('success', $request->drugType . ' added successfully');
         }
-        $validator->getMessageBag()->add('drugType', 'Drug Type already exists');
-        return back()->withInput()->withErrors($validator);
+        catch(\Exception $e){
+            $validator->getMessageBag()->add('drugType', 'Drug Type already exists');
+            return back()->withInput()->withErrors($validator);
+        }
     }
 
     /**
@@ -63,7 +68,7 @@ class DrugTypeController extends Controller
         try{
             $drugType->delete();
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             return back()->with('error','Unable to delete '.$drugType->drug_type.". It may be associated with Drugs");
         }
         return back()->with('success',$drugType->drug_type." successfully deleted!");

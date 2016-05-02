@@ -7,7 +7,7 @@
                 <h4 class="modal-title">Add Patient</h4>
             </div>
 
-            <form class="form-horizontal" method="post" action="{{route('addPatient')}}">
+            <form class="form-horizontal" method="post" action="{{route('addDrug')}}">
 
                 <div class="box-body">
 
@@ -22,104 +22,47 @@
 
                     {{csrf_field()}}
 
-                    <div class="form-group{{ $errors->has('firstName') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">First Name</label>
+                    <div class="form-group{{ $errors->has('drugName') ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">Drug Name</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}"
+                            <input type="text" class="form-control" name="drugName" value="{{ old('drugName') }}"
                                    required>
-                            @if ($errors->has('firstName'))
+                            @if ($errors->has('drugName'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('firstName') }}</strong>
+                                        <strong>{{ $errors->first('drugName') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('quantityType') ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">Quantity Type</label>
+                        <div class="col-md-9">
+                            <select name="quantityType" class="form-control">
+                                @foreach(\App\DrugType::all() as $quantityType)
+                                    <option value="{{$quantityType->id}}"
+                                            @if($quantityType->id === old('quantityType')) selected @endif>
+                                        {{$quantityType->drug_type}}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('quantityType'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('quantityType') }}</strong>
                                     </span>
                             @endif
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('lastName') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Last Name</label>
+                    <div class="form-group{{ $errors->has('manufacturer') ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">Manufacturer</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
-                            @if ($errors->has('lastName'))
+                            <input type="text" class="form-control" name="manufacturer"
+                                   value="{{ old('manufacturer') }}" required>
+                            @if ($errors->has('manufacturer'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('lastName') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Date of Birth</label>
-                        <div class="col-md-9">
-                            <input type="date" class="form-control" name="dob" value="{{ old('dob') }}"
-                                   max="{{date('Y-m-d')}}"
-                                   min="{{date('Y-m-d',strtotime(date('Y-m-d').' -150 year'))}}">
-                            @if ($errors->has('dob'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('dob') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Address</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="address" value="{{ old('address') }}">
-                            @if ($errors->has('address'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('address') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('nic') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">NIC</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="nic" value="{{ old('nic') }}"
-                                   pattern="[0-9]{9}[vV]">
-                            @if ($errors->has('nic'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('nic') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Contact No.</label>
-                        <div class="col-md-9">
-                            <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}">
-                            @if ($errors->has('phone'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('phone') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-
-
-                    <div class="form-group{{ $errors->has('postSurgicalHistory') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Post Surgical History</label>
-                        <div class="col-md-9">
-                            <textarea class="form-control" rows="2"
-                                      name="postSurgicalHistory">{{old('postSurgicalHistory')}}</textarea>
-                            @if ($errors->has('postSurgicalHistory'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('postSurgicalHistory') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('remarks') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Remarks</label>
-                        <div class="col-md-9">
-                            <textarea class="form-control" rows="2" name="remarks">{{old('remarks')}}</textarea>
-                            @if ($errors->has('remarks'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('remarks') }}</strong>
-                                    </span>
+                                        <strong>{{ $errors->first('manufacturer') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 
 
 @section('page_header')
-    Drug Types
+    Quantity Types
 @endsection
 
 @section('breadcrumb')
@@ -26,7 +26,7 @@
             @can('add','App\DrugType')
             <button class="btn btn-primary margin-left"
                     data-toggle="modal" data-target="#addDrugTypeModal">
-                Add Drug Type
+                Add Quantity Type
             </button>
             @endcan
         </div>
@@ -66,7 +66,7 @@
             <table class="table table-responsive table-condensed table-hover text-center" id="drugsTable">
                 <thead>
                 <tr>
-                    <th>Drug Type</th>
+                    <th>Quantity Type</th>
                     <th>Created By</th>
                     <th></th>
                 </tr>

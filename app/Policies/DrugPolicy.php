@@ -27,7 +27,6 @@ class DrugPolicy
      * @return bool
      */
     public function add(User $user,$class){
-        Log::info($class);
         return $user->isAdmin() || $user->isDoctor();
     }
 

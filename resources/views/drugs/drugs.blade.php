@@ -24,7 +24,7 @@
             @endcan
 
             <a class="btn btn-primary margin-left pull-right" href="{{route('drugTypes')}}">
-                Drug Types
+                Quantity Types
             </a>
 
         </div>
@@ -65,7 +65,7 @@
                 <thead>
                 <tr>
                     <th>Drug Name</th>
-                    <th>Type</th>
+                    <th>Quantity Type</th>
                     <th>Manufacturer</th>
                     <th>Quantity</th>
                     <th></th>
@@ -78,7 +78,7 @@
                             {{$drug->name}}
                         </td>
                         <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
-                            {{$drug->drug_type_id}}
+                            {{$drug->quantityType->drug_type}}
                         </td>
                         <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
                             {{$drug->manufacturer}}
@@ -120,7 +120,7 @@
          */
         function showConfirmDelete(drugId, name) {
             $('#confirmDeleteDrugModal .modal-title').html(name);
-            $('#confirmDeleteDrugModal form').prop("action", "{{url('drugs/deletedrug')}}/" + drugId);
+            $('#confirmDeleteDrugModal form').prop("action", "{{url('drugs/deleteDrug')}}/" + drugId);
         }
     </script>
 

@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
 
         $this->call(UserTableSeeder::class);
+        $this->call(DrugTypesTableSeeder::class);
     }
 }
 
@@ -62,7 +63,7 @@ class UserTableSeeder extends Seeder
         $user->email = "admin@example.com";
         $user->password = bcrypt('1234');
 
-        $role=\App\Role::where('role','Admin')->first();
+        $role = \App\Role::where('role', 'Admin')->first();
         $user->role()->associate($role);
 
         $clinic = \App\Clinic::first();

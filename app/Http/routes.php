@@ -49,26 +49,29 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('addPatient', ['as' => 'addPatient', 'uses' => 'PatientController@addPatient']);
             Route::get('patient/{id}', ['as' => 'patient', 'uses' => 'PatientController@getPatient']);
             Route::any('deletePatient/{id}', ['as' => 'deletePatient', 'uses' => 'PatientController@deletePatient']);
-            Route::post('editPatient/{id}',['as'=>'editPatient','uses'=>'PatientController@editPatient']);
+            Route::post('editPatient/{id}', ['as' => 'editPatient', 'uses' => 'PatientController@editPatient']);
         });
 
         /*
          * Routes to manage all the content of drugs
          */
-        Route::group(['prefix'=>'drugs'],function(){
-            Route::get('/',['as'=>'drugs','uses'=>'DrugController@getDrugList']);
+        Route::group(['prefix' => 'drugs'], function () {
+            Route::get('/', ['as' => 'drugs', 'uses' => 'DrugController@getDrugList']);
 
             /*
              * Drugs
              */
             Route::get('drug/{id}', ['as' => 'drug', 'uses' => 'DrugController@getDrug']);
+            Route::post('addDrug', ['as' => 'addDrug', 'uses' => 'DrugController@addDrug']);
+            Route::post('deleteDrug/{id}', ['as' => 'deleteDrug', 'uses' => 'DrugController@deleteDrug']);
+
 
             /*
              * Drug types
              */
-            Route::get('drugTypes',['as'=>'drugTypes','uses'=>'DrugTypeController@getDrugTypeList']);
-            Route::post('addDrugType',['as'=>'addDrugType','uses'=>'DrugTypeController@addDrugType']);
-            Route::post('deleteDrugType/{id}',['as'=>'deleteDrugType','uses'=>'DrugTypeController@deleteDrugType']);
+            Route::get('drugTypes', ['as' => 'drugTypes', 'uses' => 'DrugTypeController@getDrugTypeList']);
+            Route::post('addDrugType', ['as' => 'addDrugType', 'uses' => 'DrugTypeController@addDrugType']);
+            Route::post('deleteDrugType/{id}', ['as' => 'deleteDrugType', 'uses' => 'DrugTypeController@deleteDrugType']);
         });
     });
 

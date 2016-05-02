@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Add Patient</h4>
+                <h4 class="modal-title">Add Quantity Type</h4>
             </div>
 
             <form class="form-horizontal" method="post" action="{{route('addDrugType')}}">
@@ -23,14 +23,14 @@
                     {{csrf_field()}}
 
                     <div class="alert alert-warning">
-                        These drug types will be used when keeping track of drug stocks.
+                        These quantity types will be used when keeping track of drug stocks.
                         Therefore, use meaningful type names which can be used to describe quantities.
                         <br>
                         <strong>Ex: Pills, Tablets, Bottles, Litres, Mili Litres and etc...</strong>
                     </div>
 
                     <div class="form-group{{ $errors->has('drugType') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Drug Type</label>
+                        <label class="col-md-3 control-label">Quantity Type</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="drugType"
                                    value="{{ old('drugType') }}" required
