@@ -9,6 +9,16 @@ class Drug extends Model
     protected $table = "drugs";
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'manufacturer', 'quantity', 'drug_type_id', 'created_by', 'clinic_id',
+    ];
+
+
+    /**
      * Get the clinic of the drug
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -42,7 +52,8 @@ class Drug extends Model
      * Get the stocks of this drug.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function stocks(){
-        return $this->hasMany('App\Stock','drug_id','id');
+    public function stocks()
+    {
+        return $this->hasMany('App\Stock', 'drug_id', 'id');
     }
 }

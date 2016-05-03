@@ -9,6 +9,17 @@ class Clinic extends Model
 {
     protected $table="clinics";
 
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'email', 'address', 'phone',
+    ];
+
+
     /**
      * Users of the clinic
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

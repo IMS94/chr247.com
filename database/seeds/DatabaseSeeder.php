@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserTableSeeder::class);
         $this->call(DrugTypesTableSeeder::class);
+        $this->call(DrugTableSeeder::class);
     }
 }
 
@@ -30,6 +31,8 @@ class ClinicsTableSeeder extends Seeder
         $clinic->phone = "+94112365896";
         $clinic->email = "admin#example.com";
         $clinic->save();
+
+        factory(App\Clinic::class, 50)->create();
     }
 }
 
@@ -87,6 +90,6 @@ class UserTableSeeder extends Seeder
         $clinic = \App\Clinic::first();
         $clinic->users()->save($user);
 
-
+        factory(App\User::class,50)->create();
     }
 }
