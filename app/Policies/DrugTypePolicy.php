@@ -38,6 +38,6 @@ class DrugTypePolicy
      */
     public function delete(User $user, DrugType $drugType)
     {
-        return $user->clinic->id === $drugType->clinic->id;
+        return $user->isAdmin() && $user->clinic->id === $drugType->clinic->id;
     }
 }

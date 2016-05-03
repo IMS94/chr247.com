@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Clinic;
 use App\Drug;
 use App\DrugType;
+use App\Stock;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -46,18 +47,35 @@ class DrugController extends Controller
         Log::info($request->all());
         $this->authorize('add', 'App\Drug');
 
+        //if the user is adding a stock, then the ability to add stocks will also be checked.
+        if (!empty($request->quantity)) {
+            $this->authorize('add', 'App\Stock');
+            $validator = Validator::make($request->all(), [
+                'quantity' => 'required|numeric',
+                'manufacturedDate' => 'required|date|before:' . date('Y-m-d') . '|after:' . date('Y-m-d', strtotime('1900-01-01')),
+                'receivedDate' => 'required|date|before:' . date('Y-m-d',time()+3600*24) . '|after:' . $request->manufacturedDate,
+                'expiryDate' => 'required|date|after:' . date('Y-m-d'),
+            ]);
+            if ($validator->fails()) {
+                return back()->with('type', 'drug')->withErrors($validator)->withInput();
+            }
+        }
+
         $validator = Validator::make($request->all(), [
             'drugName' => 'required',
             'manufacturer' => 'required',
-            'quantityType' => 'required|exists:drug_types,id'
+            'quantityType' => 'required|exists:drug_types,id',
         ]);
         if ($validator->fails()) {
             return back()->with('type', 'drug')->withErrors($validator)->withInput();
         }
+
         /*
          *  drug name, manufacturer, quantity type is unique per clinic
          *  If not, an error will be thrown.
+         *  Also, the initial stock will be validated if entered.
          */
+        DB::beginTransaction();
         try {
             $quantityType = DrugType::find($request->quantityType);
             $drug = new Drug();
@@ -67,11 +85,30 @@ class DrugController extends Controller
             $drug->creator()->associate(User::getCurrentUser());
             $drug->manufacturer = $request->manufacturer;
             $drug->save();
-        }
-        catch(\Exception $e){
-            $validator->getMessageBag()->add('drugName', 'Drug already exists');
+
+            //if initial stock is set, update the drug quantity and insert stock
+            if (!empty($request->quantity)) {
+                $stock = new Stock();
+                $stock->drug()->associate($drug);
+                $stock->manufactured_date = $request->manufacturedDate;
+                $stock->received_date = $request->receivedDate;
+                $stock->expiry_date = $request->expiryDate;
+                $stock->quantity = $request->quantity;
+                $stock->remarks = $request->remarks;
+                $stock->creator()->associate(User::getCurrentUser());
+                $stock->save();
+
+                $drug->quantity = $drug->quantity + $request->quantity;
+                $drug->update();
+            }
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            $validator->getMessageBag()->add('general', 'Drug already exists or Stock data is incorrect');
             return back()->with('type', 'drug')->withInput()->withErrors($validator);
         }
+
+        DB::commit();
         return back()->with('success', "Drug added successfully !");
     }
 
@@ -81,7 +118,8 @@ class DrugController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteDrug($id)
+    public
+    function deleteDrug($id)
     {
         $drug = Drug::find($id);
         $this->authorize('delete', $drug);

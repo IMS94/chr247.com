@@ -36,4 +36,13 @@ class Drug extends Model
     {
         return $this->belongsTo('App\User', 'created_by', 'id');
     }
+
+
+    /**
+     * Get the stocks of this drug.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stocks(){
+        return $this->hasMany('App\Stock','drug_id','id');
+    }
 }

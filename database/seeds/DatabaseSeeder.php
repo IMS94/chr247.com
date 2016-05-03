@@ -62,11 +62,31 @@ class UserTableSeeder extends Seeder
         $user->username = "admin";
         $user->email = "admin@example.com";
         $user->password = bcrypt('1234');
-
         $role = \App\Role::where('role', 'Admin')->first();
         $user->role()->associate($role);
-
         $clinic = \App\Clinic::first();
         $clinic->users()->save($user);
+
+        $user = new \App\User();
+        $user->name = "Doctor";
+        $user->username = "doctor";
+        $user->email = "doctor@example.com";
+        $user->password = bcrypt('1234');
+        $role = \App\Role::where('role', 'Doctor')->first();
+        $user->role()->associate($role);
+        $clinic = \App\Clinic::first();
+        $clinic->users()->save($user);
+
+        $user = new \App\User();
+        $user->name = "Nurse";
+        $user->username = "nurse";
+        $user->email = "nurse@example.com";
+        $user->password = bcrypt('1234');
+        $role = \App\Role::where('role', 'Nurse')->first();
+        $user->role()->associate($role);
+        $clinic = \App\Clinic::first();
+        $clinic->users()->save($user);
+
+
     }
 }

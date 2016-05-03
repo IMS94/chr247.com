@@ -63,12 +63,22 @@ class User extends Authenticatable
         return $this->role->role === 'Doctor';
     }
 
+    /**
+     * Returns if this user is a nurse
+     * @return bool
+     */
+    public function isNurse()
+    {
+        return $this->role->role === 'Nurse';
+    }
+
 
     /**
      * Get the currently signed in user
      * @return mixed
      */
-    public static function getCurrentUser(){
+    public static function getCurrentUser()
+    {
         return Auth::user();
     }
 }

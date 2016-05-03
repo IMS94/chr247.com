@@ -21,13 +21,13 @@ class DrugPolicy
 
 
     /**
-     * Nurses cannot add drug types.
+     * Any user can add drugs.
      * @param User $user
      * @param $class
      * @return bool
      */
     public function add(User $user,$class){
-        return $user->isAdmin() || $user->isDoctor();
+        return true;
     }
 
     /**
