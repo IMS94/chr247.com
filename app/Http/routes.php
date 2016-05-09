@@ -64,7 +64,13 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('drug/{id}', ['as' => 'drug', 'uses' => 'DrugController@getDrug']);
             Route::post('addDrug', ['as' => 'addDrug', 'uses' => 'DrugController@addDrug']);
             Route::post('deleteDrug/{id}', ['as' => 'deleteDrug', 'uses' => 'DrugController@deleteDrug']);
+            Route::post('editDrug/{id}', ['as' => 'editDrug', 'uses' => 'DrugController@editDrug']);
 
+
+            /*
+             * Stocks
+             */
+            Route::post('addStock/{drugId}',['as' => 'addStock', 'uses' => 'StockController@addStock']);
 
             /*
              * Drug types

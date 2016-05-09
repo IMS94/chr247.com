@@ -8,10 +8,6 @@
 
 @section('content')
 
-    {{--Data Tables CSS--}}
-    <link href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css">
-    {{--//Data Tables CSS--}}
-
     <div class="box box-primary">
         <!--    Box Header  -->
         <div class="box-header with-border">
@@ -115,10 +111,7 @@
         }
     </script>
 
-
     {{--Data Tables Scripts--}}
-    <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('plugins/datatables/dataTables.bootstrap.js')}}"></script>
     <script>
         $(document).ready(function () {
             var tableFixed = $('#patientsTable').dataTable({

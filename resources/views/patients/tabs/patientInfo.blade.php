@@ -1,7 +1,7 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row margin">
 
-        <div class="col-md-6 panel">
+        <div class="col-md-6">
             <div class="row">
                 <label class="col-md-4">Name</label>
                 <div class="col-md-8">{{$patient->first_name}} {{$patient->last_name}}</div>
@@ -33,7 +33,7 @@
 
         </div>
 
-        <div class="col-md-6 panel">
+        <div class="col-md-6">
             <div class="row">
                 <label class="col-md-4">Blood Group</label>
                 <div class="col-md-8">{{$patient->blood_group}}</div>

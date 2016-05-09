@@ -26,7 +26,8 @@ class DrugPolicy
      * @param $class
      * @return bool
      */
-    public function add(User $user,$class){
+    public function add(User $user, $class)
+    {
         return true;
     }
 
@@ -36,8 +37,21 @@ class DrugPolicy
      * @param Drug $drug
      * @return bool
      */
-    public function view(User $user,Drug $drug){
-        return $user->clinic->id===$drug->clinic->id;
+    public function view(User $user, Drug $drug)
+    {
+        return $user->clinic->id === $drug->clinic->id;
+    }
+
+
+    /**
+     * Define who can edit the drug details.
+     * @param User $user
+     * @param Drug $drug
+     * @return bool
+     */
+    public function edit(User $user, Drug $drug)
+    {
+        return $user->clinic->id === $drug->clinic->id && !$user->isNurse();
     }
 
 
@@ -47,7 +61,20 @@ class DrugPolicy
      * @param Drug $drug
      * @return bool
      */
-    public function delete(User $user, Drug $drug){
+    public function delete(User $user, Drug $drug)
+    {
         return $user->isAdmin() && $user->clinic->id === $drug->clinic->id;
+    }
+
+
+    /**
+     * Determine who can add stocks to a particular drug
+     * @param User $user
+     * @param Drug $drug
+     * @return bool
+     */
+    public function addStocks(User $user, Drug $drug)
+    {
+        return $user->clinic->id === $drug->clinic->id;
     }
 }

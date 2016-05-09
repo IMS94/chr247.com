@@ -8,6 +8,18 @@ class Patient extends Model
 {
     protected $table='patients';
 
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'first_name', 'last_name','dob','address','created_by','clinic_id',
+    ];
+
+
+
     /**
      * Clinic of the patient
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

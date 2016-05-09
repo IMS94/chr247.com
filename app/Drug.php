@@ -39,6 +39,15 @@ class Drug extends Model
 
 
     /**
+     * Get the quantity type as a string
+     * @return String
+     */
+    public function getQuantityType(){
+        return $this->quantityType->drug_type;
+    }
+
+
+    /**
      * Get the user who created the drug
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -55,5 +64,14 @@ class Drug extends Model
     public function stocks()
     {
         return $this->hasMany('App\Stock', 'drug_id', 'id');
+    }
+
+    /**
+     * Get the most recent 'n' stocks of a drug.
+     * @param int $limit
+     * @return mixed
+     */
+    public function getStocks($limit=5){
+        return $this->stocks()->orderBy('id','desc')->take($limit)->get();
     }
 }

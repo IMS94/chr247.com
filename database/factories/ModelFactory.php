@@ -42,3 +42,15 @@ $factory->define(App\Drug::class, function (Faker\Generator $faker) {
         'clinic_id' => $clinic->id,
     ];
 });
+
+$factory->define(App\Patient::class, function (Faker\Generator $faker) {
+    $clinic = \App\Clinic::find(1);
+    return [
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'address' => $faker->address,
+        'dob' => $faker->date(),
+        'created_by' => $clinic->users()->first()->id,
+        'clinic_id' => $clinic->id
+    ];
+});

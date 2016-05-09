@@ -34,6 +34,15 @@ class Utils
         return date("jS M,Y H:i:s", strtotime($timestamp));
     }
 
+    /**
+     * Get a date formatted. Ex: 9th May, 2015
+     * @param $date
+     * @return bool|string
+     */
+    public static function getFormattedDate($date){
+        return date("jS M,Y", strtotime($date.' 00:00:00'));
+    }
+
 
     /**
      * Check id a patient is a Male

@@ -29,11 +29,16 @@ class DrugController extends Controller
     }
 
 
+    /**
+     * Get the page to view a single drug
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getDrug($id)
     {
         $drug = Drug::find($id);
         $this->authorize('view', $drug);
-        return "Ok";
+        return view('drugs.drug', ['drug' => $drug]);
     }
 
 
@@ -44,7 +49,6 @@ class DrugController extends Controller
      */
     public function addDrug(Request $request)
     {
-        Log::info($request->all());
         $this->authorize('add', 'App\Drug');
 
         //if the user is adding a stock, then the ability to add stocks will also be checked.
@@ -53,7 +57,7 @@ class DrugController extends Controller
             $validator = Validator::make($request->all(), [
                 'quantity' => 'required|numeric',
                 'manufacturedDate' => 'required|date|before:' . date('Y-m-d') . '|after:' . date('Y-m-d', strtotime('1900-01-01')),
-                'receivedDate' => 'required|date|before:' . date('Y-m-d',time()+3600*24) . '|after:' . $request->manufacturedDate,
+                'receivedDate' => 'required|date|before:' . date('Y-m-d', time() + 3600 * 24) . '|after:' . $request->manufacturedDate,
                 'expiryDate' => 'required|date|after:' . date('Y-m-d'),
             ]);
             if ($validator->fails()) {
@@ -118,8 +122,7 @@ class DrugController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public
-    function deleteDrug($id)
+    public function deleteDrug($id)
     {
         $drug = Drug::find($id);
         $this->authorize('delete', $drug);
@@ -133,5 +136,48 @@ class DrugController extends Controller
         }
         DB::commit();
         return back()->with('success', "The drug successfully deleted!");;
+    }
+
+
+    /**
+     * Edits a drug
+     * @param $id
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function editDrug($id, Request $request)
+    {
+        $drug=Drug::find($id);
+        $this->authorize('edit',$drug);
+
+        $validator = Validator::make($request->all(), [
+            'drugName' => 'required',
+            'manufacturer' => 'required',
+            'quantityType' => 'required|exists:drug_types,id',
+        ]);
+        if ($validator->fails()) {
+            return back()->with('type', 'drug')->withErrors($validator)->withInput();
+        }
+
+        /*
+         *  drug name, manufacturer, quantity type is unique per clinic
+         *  If not, an error will be thrown.
+         *  Also, the initial stock will be validated if entered.
+         */
+        DB::beginTransaction();
+        try {
+            $quantityType = DrugType::find($request->quantityType);
+            $drug->name = $request->drugName;
+            $drug->quantityType()->associate($quantityType);
+            $drug->manufacturer = $request->manufacturer;
+            $drug->update();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            $validator->getMessageBag()->add('drugName', 'Drug name already exists');
+            return back()->withInput()->withErrors($validator);
+        }
+        DB::commit();
+        return back()->with('type', 'drug')->with('success', "Drug added successfully !");
     }
 }
