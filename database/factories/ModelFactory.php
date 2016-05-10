@@ -13,7 +13,7 @@
 
 $factory->define(App\Clinic::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->company.' Clinic',
         'email' => $faker->unique()->email,
         'address' => $faker->address,
         'phone' => $faker->phoneNumber,
@@ -25,32 +25,45 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->email,
         'username' => $faker->unique()->userName,
-        'password' => bcrypt(str_random(10)),
-        'role_id' => rand(1, 3),
-        'clinic_id' => \App\Clinic::first()->id,
+        'password' => bcrypt('1234'),
+        'role_id' => rand(1, 3)
     ];
 });
 
+
+
+$factory->define(App\DrugType::class, function (Faker\Generator $faker) {
+    $types=['Pills','Litres','Tablets','Milli Litres','Units','Bottles'];
+    return [
+        'drug_type' =>$types[rand(0,count($types)-1)]
+    ];
+});
+
+
 $factory->define(App\Drug::class, function (Faker\Generator $faker) {
-    $clinic = \App\Clinic::find(1);
     return [
         'name' => $faker->word,
         'manufacturer' => $faker->company,
-        'quantity' => 0,
-        'drug_type_id' => $clinic->drugTypes()->get()->first()->id,
-        'created_by' => $clinic->users()->first()->id,
-        'clinic_id' => $clinic->id,
+        'quantity' => 0
     ];
 });
 
 $factory->define(App\Patient::class, function (Faker\Generator $faker) {
-    $clinic = \App\Clinic::find(1);
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'address' => $faker->address,
         'dob' => $faker->date(),
-        'created_by' => $clinic->users()->first()->id,
-        'clinic_id' => $clinic->id
+        'phone'=>$faker->phoneNumber
+    ];
+});
+
+$factory->define(App\Stock::class, function (Faker\Generator $faker) {
+    return [
+        'manufactured_date' => $faker->dateTimeThisDecade()->format('Y-m-d'),
+        'received_date' => $faker->dateTimeThisMonth()->format('Y-m-d'),
+        'expiry_date' => date('Y-m-d',time()+$faker->randomNumber()),
+        'quantity'=>$faker->numberBetween(100,2000),
+        'remarks'=>$faker->realText(),
     ];
 });

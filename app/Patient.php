@@ -32,7 +32,7 @@ class Patient extends Model
      * The user who created the patient
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user(){
+    public function creator(){
         return $this->belongsTo('App\User','created_by','id');
     }
 }

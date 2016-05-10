@@ -13,14 +13,18 @@
         <div class="box-header with-border">
 
             @can('add','App\Drug')
-            <button class="btn btn-primary margin-left"
+            <button class="btn btn-primary margin"
                     data-toggle="modal" data-target="#addDrugModal">
                 Add Drug
             </button>
             @endcan
 
-            <a class="btn btn-primary margin-left pull-right" href="{{route('drugTypes')}}">
+            <a class="btn btn-primary margin pull-right" href="{{route('drugTypes')}}">
                 Quantity Types
+            </a>
+
+            <a class="btn btn-primary margin pull-right" href="{{route('dosages')}}">
+                Dosages
             </a>
 
         </div>

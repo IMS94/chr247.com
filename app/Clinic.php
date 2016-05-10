@@ -49,9 +49,27 @@ class Clinic extends Model
      * Drug types of the clinic
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function drugTypes(){
+    public function quantityTypes(){
         return $this->hasMany('App\DrugType','clinic_id','id');
     }
+
+
+    /**
+     * Dosages related information of the clinic.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dosages(){
+        return $this->hasMany('App\Dosage','clinic_id','id');
+    }
+
+    public function dosageFrequencies(){
+        return $this->hasMany('App\DosageFrequency','clinic_id','id');
+    }
+
+    public function dosagePeriods(){
+        return $this->hasMany('App\DosagePeriod','clinic_id','id');
+    }
+
 
 
 

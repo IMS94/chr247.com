@@ -18,6 +18,9 @@ class AuthServiceProvider extends ServiceProvider
         'App\Drug' => 'App\Policies\DrugPolicy',
         'App\DrugType' => 'App\Policies\DrugTypePolicy',
         'App\Stock' => 'App\Policies\StockPolicy',
+        'App\Dosage'=>'App\Policies\DosagePolicy',
+        'App\DosageFrequency'=>'App\Policies\DosagePolicy',
+        'App\DosagePeriod'=>'App\Policies\DosagePolicy',
     ];
 
     /**

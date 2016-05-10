@@ -8,6 +8,18 @@ class Stock extends Model
 {
     protected $table="stocks";
 
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'received_date','expiry_date','manufactured_date','quantity','remarks'
+    ];
+
+
+
     /**
      * Get the drug of the given stock
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

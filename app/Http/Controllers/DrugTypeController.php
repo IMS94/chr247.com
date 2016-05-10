@@ -20,7 +20,7 @@ class DrugTypeController extends Controller
     public function getDrugTypeList()
     {
         $clinic = Clinic::getCurrentClinic();
-        $drugTypes = $clinic->drugTypes;
+        $drugTypes = $clinic->quantityTypes;
         return view('drugs.drugTypes.drugTypes', ['drugTypes' => $drugTypes]);
     }
 

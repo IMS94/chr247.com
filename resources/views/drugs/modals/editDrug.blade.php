@@ -39,9 +39,9 @@
                         <label class="col-md-3 control-label">Quantity Type</label>
                         <div class="col-md-9">
                             <select name="quantityType" class="form-control">
-                                @foreach(\App\DrugType::all() as $quantityType)
+                                @foreach($drug->clinic->quantityTypes as $quantityType)
                                     <option value="{{$quantityType->id}}"
-                                            @if($quantityType->id === $drug->getQuantityType()) selected @endif>
+                                            @if($quantityType->id === $drug->quantityType->id) selected @endif>
                                         {{$quantityType->drug_type}}
                                     </option>
                                 @endforeach

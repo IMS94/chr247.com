@@ -29,7 +29,7 @@
 
             @can('add','App\Stock')
             <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#addStockModal">
-                <i class="fa fa-edit fa-lg"></i> Add Stock
+                <i class="fa fa-plus fa-lg"></i> Add Stock
             </button>
             @endcan
 

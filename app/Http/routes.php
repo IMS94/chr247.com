@@ -70,7 +70,7 @@ Route::group(['middleware' => 'web'], function () {
             /*
              * Stocks
              */
-            Route::post('addStock/{drugId}',['as' => 'addStock', 'uses' => 'StockController@addStock']);
+            Route::post('addStock/{drugId}', ['as' => 'addStock', 'uses' => 'StockController@addStock']);
 
             /*
              * Drug types
@@ -78,6 +78,20 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('drugTypes', ['as' => 'drugTypes', 'uses' => 'DrugTypeController@getDrugTypeList']);
             Route::post('addDrugType', ['as' => 'addDrugType', 'uses' => 'DrugTypeController@addDrugType']);
             Route::post('deleteDrugType/{id}', ['as' => 'deleteDrugType', 'uses' => 'DrugTypeController@deleteDrugType']);
+
+            /*
+             * Dosages
+             */
+            Route::get('dosages', ['as' => 'dosages', 'uses' => 'DosageController@getDosageList']);
+            Route::post('addDosage', ['as' => 'addDosage', 'uses' => 'DosageController@addDosage']);
+            Route::post('addFrequency', ['as' => 'addFrequency', 'uses' => 'DosageController@addFrequency']);
+            Route::post('addPeriod', ['as' => 'addPeriod', 'uses' => 'DosageController@addPeriod']);
+
+            Route::get('deleteDosage/{id}', ['as' => 'deleteDosage', 'uses' => 'DosageController@deleteDosage']);
+            Route::get('deleteFrequency/{id}', ['as' => 'deleteFrequency', 'uses' => 'DosageController@deleteFrequency']);
+            Route::get('deletePeriod/{id}', ['as' => 'deletePeriod', 'uses' => 'DosageController@deletePeriod']);
+
+
         });
     });
 
