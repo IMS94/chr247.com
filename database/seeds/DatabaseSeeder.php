@@ -93,8 +93,7 @@ class DosagesSeeder extends Seeder
             }
 
             $periods = [
-                '2 pills per time', '1 pill per time', '1 tablet per time', '2 tablets per time', 'Half tablets per time',
-                '2 table spoons per time'
+                '3 months', '2 months', '1 month', '1 week', '2 weeks', '3 weeks', '40 days', '3 days'
             ];
             foreach ($periods as $dosage) {
                 $x = new \App\DosagePeriod(['description' => $dosage]);

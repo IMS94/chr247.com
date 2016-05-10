@@ -2,7 +2,7 @@
 
 
 @section('page_header')
-    {{$patient->first_name}} {{$patient->last_name?:''}}
+    {{$patient->first_name}} {{$patient->last_name?:''}} (Age : {{Utils::getAge($patient->dob)}})
 @endsection
 
 @section('breadcrumb')
@@ -55,10 +55,10 @@
 
             {{--    Nav tabs    --}}
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
+                <li role="presentation">
                     <a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a>
                 </li>
-                <li role="presentation">
+                <li role="presentation" class="active">
                     <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Prescribe Medicine</a>
                 </li>
                 <li role="presentation">
@@ -70,11 +70,13 @@
             </ul>
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="info">
+                <div role="tabpanel" class="tab-pane fade" id="info">
                     @include('patients.tabs.patientInfo')
                 </div>
 
-                <div role="tabpanel" class="tab-pane fade" id="profile">...</div>
+                <div role="tabpanel" class="tab-pane fade in active" id="profile">
+                    @include('patients.tabs.prescribeMedicine')
+                </div>
                 <div role="tabpanel" class="tab-pane fade" id="messages">...</div>
                 <div role="tabpanel" class="tab-pane fade" id="settings">...</div>
             </div>

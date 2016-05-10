@@ -33,8 +33,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/', ['as' => 'root', 'uses' => function () {
             return view('dashboard');
-        }
-        ]);
+        }]);
 
 
         /*
@@ -90,8 +89,12 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('deleteDosage/{id}', ['as' => 'deleteDosage', 'uses' => 'DosageController@deleteDosage']);
             Route::get('deleteFrequency/{id}', ['as' => 'deleteFrequency', 'uses' => 'DosageController@deleteFrequency']);
             Route::get('deletePeriod/{id}', ['as' => 'deletePeriod', 'uses' => 'DosageController@deletePeriod']);
+        });
 
 
+        Route::group(['prefix'=>'API'],function(){
+            Route::post('drugs','APIController@getDrugs');
+            Route::post('dosages','APIController@getDosages');
         });
     });
 

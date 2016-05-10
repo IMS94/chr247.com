@@ -136,19 +136,19 @@ $user = Auth::user();
             <ul class="sidebar-menu">
                 <li @if(url('/')===Request::url()) class="active" @endif>
                     <a href="{{url('/')}}">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        <i class="fa fa-h-square"></i> <span>Home</span>
                     </a>
                 </li>
 
                 <li @if(strpos(Request::url(),'patients')!=false) class="active" @endif>
                     <a href="{{url('patients')}}">
-                        <i class="fa fa-dashboard"></i> <span>Patients</span>
+                        <i class="fa fa-wheelchair"></i> <span>Patients</span>
                     </a>
                 </li>
 
                 <li @if(strpos(Request::url(),'drugs')!=false) class="active" @endif>
                     <a href="{{url('drugs')}}">
-                        <i class="fa fa-dashboard"></i> <span>Drugs</span>
+                        <i class="fa fa-stethoscope"></i> <span>Drugs</span>
                     </a>
                 </li>
 
