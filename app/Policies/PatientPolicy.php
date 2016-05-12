@@ -84,4 +84,16 @@ class PatientPolicy
     {
         return !$user->isNurse() && $user->clinic->id === $patient->clinic->id;
     }
+
+
+    /**
+     * Determine who can prescribe medicine for a given patient.
+     * @param User $user
+     * @param Patient $patient
+     * @return bool
+     */
+    public function viewPrescriptions(User $user, Patient $patient)
+    {
+        return $user->clinic->id === $patient->clinic->id;
+    }
 }

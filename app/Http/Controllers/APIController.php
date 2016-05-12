@@ -17,6 +17,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class APIController extends Controller
 {
@@ -54,9 +55,12 @@ class APIController extends Controller
      */
     public function savePrescription(Request $request)
     {
-        Log::info($request->all());
         $patient = Patient::find($request->id);
         if (empty($patient) || Gate::denies('prescribeMedicine', $patient)) {
+            return response()->json(['status' => 0], 404);
+        }
+        //at least on of the complaints and diagnosis has to be present
+        if (!$request->complaints && !$request->diagnosis) {
             return response()->json(['status' => 0], 404);
         }
 
@@ -88,5 +92,48 @@ class APIController extends Controller
         }
         DB::commit();
         return response()->json(['status' => 1], 200);
+    }
+
+
+    /**
+     * Get the prescriptions of a given patient
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPrescriptions($id)
+    {
+        $patient = Patient::find($id);
+        if (Gate::denies('viewPrescriptions', $patient)) {
+            return response()->json(['status' => 0], 404);
+        }
+
+        $prescriptions = $patient->prescriptions()->where('issued', false)
+            ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency',
+                'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType')->get();
+        return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
+    }
+
+
+
+    public function issuePrescription(Request $request){
+        $prescription=Prescription::find($request->prescription['id']);
+        if (empty($prescription) || Gate::denies('issuePrescription', $prescription)) {
+            return response()->json(['status' => 0], 404);
+        }
+
+        $validator=Validator::make($request->all(),[
+            'prescription'=>'required',
+            'prescription.id'=>'required',
+            'prescription.payment'=>'required|numeric',
+            'prescription.prescription_drugs'=>'required|array',
+            'prescription.prescription_drugs.0.issuedQuantity'=>'numeric'
+        ]);
+
+        if($validator->fails()){
+            $errors=$validator->errors()->all();
+            return response()->json(['status' => 0,'message'=>$errors[0]], 404);
+        }
+
+        return 1;
     }
 }

@@ -1,6 +1,3 @@
-<script src="{{asset('plugins/angularjs/angular.min.js')}}"></script>
-<script src="{{asset('js/app.js')}}"></script>
-
 <div class="container-fluid" ng-app="HIS">
 
     {{--Main Box--}}

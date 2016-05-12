@@ -196,12 +196,83 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
              */
             $scope.clearPrescription = function () {
                 $scope.prescribedDrugs = [];
-                $scope.complaints="";
-                $scope.investigations="";
-                $scope.diagnosis="";
-                $scope.remarks="";
+                $scope.complaints = "";
+                $scope.investigations = "";
+                $scope.diagnosis = "";
+                $scope.remarks = "";
             };
 
+        }])
+    .controller('IssueMedicineController', ['$scope', '$http', 'api', '$filter', '$timeout', '$window',
+        function ($scope, $http, api, $filter, $timeout, $window) {
+
+            //data for api
+            $scope.baseUrl = "";
+            $scope.token = "";
+            $scope.id = null;
+
+            //prescriptions array
+            $scope.prescriptions = [];
+
+            //error
+            $scope.error = "";
+
+            /**
+             * Load the prescriptions when the page loads
+             */
+            $scope.loadPrescriptions = function () {
+                api.getPrescriptions($scope.baseUrl, $scope.token, $scope.id).then(function (data) {
+                    if (data && data.status == 1) {
+                        $scope.prescriptions = data.prescriptions;
+                    }
+                });
+            };
+
+            /**
+             * This function is called when issue prescription is clicked.
+             * Each drug should have the quantity set.
+             * @param prescriptionId
+             */
+            $scope.issuePrescription = function (index) {
+                var prescription = $scope.prescriptions[index];
+                if (!prescription) {
+                    $window.alert("Invalid Prescription");
+                    return;
+                }
+                prescription.hasError = false;
+
+                //check if each drug is set with a valid quantity entry
+                var valid = true;
+                for (x in prescription.prescription_drugs) {
+                    if (!angular.isNumber(prescription.prescription_drugs[x].issuedQuantity)) {
+                        valid = false;
+                    }
+                }
+
+                if (!angular.isNumber(prescription.payment)) {
+                    $scope.showError("Please enter the payment for this prescription. (Enter 0 if none)", prescription);
+                }
+                if (valid) {
+                    api.issuePrescription($scope.baseUrl, $scope.token, prescription).then(function (data) {
+                        console.log(data);
+                    });
+                }
+                else {
+                    $scope.showError("Please enter issued quantities of all the drugs in this prescription", prescription);
+                }
+            };
+
+            /**
+             * Helper method to show an error. An error will be visible for 5 seconds
+             * @param message
+             */
+            $scope.showError = function (message, prescription) {
+                $scope.error = message;
+                prescription.hasError = true;
+                $timeout(function () {
+                    prescription.hasError = false;
+                }, 6000);
+            };
         }])
     .service('api', ['$http', function ($http) {
         return {
@@ -212,12 +283,14 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
              * @returns {*}
              */
             getDrugs: function (baseUrl, token) {
-                return $http.post(baseUrl + "/API/drugs", {
+                return $http.post(baseUrl + "/API/drugs/", {
                     _token: token
                 }).then(function (response) {
                     return response.data;
                 }, function () {
-                    return [];
+                    return {
+                        status: 0
+                    };
                 });
             },
 
@@ -252,7 +325,45 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                         return response.data;
                     }
                 );
+            },
+
+
+            /**
+             * Get all the prescriptions belonging to a patient
+             * @param baseUrl
+             * @param token
+             * @param id
+             * @returns {*}
+             */
+            getPrescriptions: function (baseUrl, token, id) {
+                return $http.post(baseUrl + "/API/getPrescriptions/" + id, {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return response.data ? response.data : [];
+                });
+            },
+
+
+            /**
+             * Issue a prescription to the patient
+             * @param baseUrl
+             * @param token
+             * @param prescription
+             * @returns {*}
+             */
+            issuePrescription: function (baseUrl, token, prescription) {
+                return $http.post(baseUrl + "/API/issuePrescription", {
+                    _token: token,
+                    prescription: prescription
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return response.data ? response.data : [];
+                });
             }
         };
     }]);
+
 

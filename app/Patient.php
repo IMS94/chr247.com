@@ -35,4 +35,13 @@ class Patient extends Model
     public function creator(){
         return $this->belongsTo('App\User','created_by','id');
     }
+
+
+    /**
+     * Prescriptions of the patient
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function prescriptions(){
+        return $this->hasMany('App\Prescription','patient_id','id');
+    }
 }
