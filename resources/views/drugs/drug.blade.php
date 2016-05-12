@@ -80,7 +80,7 @@
 
 
     {{-- Recent Stocks --}}
-    <div class="box box-success">
+    <div class="box box-success box-solid">
         <!--    Box Header  -->
         <div class="box-header with-border">
             <h4 class="box-title">Recent Stocks (up to last 5 stocks)</h4>

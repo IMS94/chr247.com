@@ -62,12 +62,26 @@ class PatientPolicy
      * @param Patient $patient
      * @return bool
      */
-    public function issueID(User $user,Patient $patient){
+    public function issueID(User $user, Patient $patient)
+    {
         return $user->clinic->id === $patient->clinic->id;
     }
 
 
-    public function issueMedical(User $user,Patient $patient){
+    public function issueMedical(User $user, Patient $patient)
+    {
         return $user->isDoctor() && $user->clinic->id === $patient->clinic->id;
+    }
+
+
+    /**
+     * Determine who can prescribe medicine for a given patient.
+     * @param User $user
+     * @param Patient $patient
+     * @return bool
+     */
+    public function prescribeMedicine(User $user, Patient $patient)
+    {
+        return !$user->isNurse() && $user->clinic->id === $patient->clinic->id;
     }
 }

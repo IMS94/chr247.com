@@ -4,8 +4,8 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
         $interpolateProvider.startSymbol('[[');
         $interpolateProvider.endSymbol(']]');
     })
-    .controller('PrescriptionController', ['$scope', '$http', 'api', '$filter', '$timeout',
-        function ($scope, $http, api, $filter, $timeout) {
+    .controller('PrescriptionController', ['$scope', '$http', 'api', '$filter', '$timeout', '$window',
+        function ($scope, $http, api, $filter, $timeout, $window) {
             $scope.drugs = [];
             $scope.dosages = [];
             $scope.frequencies = [];
@@ -13,30 +13,38 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
 
             //things to be submitted
             $scope.prescribedDrugs = [];
-            $scope.complaints="";
-            $scope.investigations="";
-            $scope.diagnosis="";
-            $scope.remarks="";
+            $scope.complaints = "";
+            $scope.investigations = "";
+            $scope.diagnosis = "";
+            $scope.remarks = "";
+            $scope.id = null;
 
+            //variables to keep track of selected values
             $scope.drug = null;
             $scope.period = null;
             $scope.frequency = null;
             $scope.dosage = null;
+
+            //to track if submitted
+            $scope.submitted = false;
 
             $scope.baseUrl = "";
             $scope.token = "";
 
             //for error handling
             $scope.hasDrugError = false;
+            $scope.hasError = false;
             $scope.error = "";
-
+            $scope.hasSuccess = false;
 
             //to measure the timeout of errors
-            $scope.drugErrorTimeout=null;
+            $scope.drugErrorTimeout = null;
+            $scope.errorTimeout = null;
 
 
             /**
-             * Init function. loads relevant data from the API
+             * Init function. loads relevant data from the API.
+             * It also set the initial values of the drugs
              */
             $scope.init = function () {
                 api.getDrugs($scope.baseUrl, $scope.token).then(function (drugs) {
@@ -86,6 +94,7 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                     return;
                 }
 
+                $scope.hasDrugError = false;
                 $scope.prescribedDrugs.push(
                     {
                         drug: d[0],
@@ -95,6 +104,12 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                         type: 1
                     }
                 );
+
+                //reset the drugs
+                $scope.drug = null;
+                $scope.period = null;
+                $scope.frequency = null;
+                $scope.dosage = null;
             };
 
 
@@ -108,7 +123,7 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                 $timeout.cancel($scope.drugErrorTimeout);
                 $scope.drugErrorTimeout = $timeout(function () {
                     $scope.hasDrugError = false;
-                }, 5000);
+                }, 10000);
             };
 
 
@@ -118,7 +133,74 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
              */
             $scope.removeDrug = function (index) {
                 $scope.prescribedDrugs.splice(index, 1);
-            }
+            };
+
+
+            /**
+             * Saves the prescription in the database.
+             * Every prescription requires at least the diagnosis or the complaints to be present.
+             * If there are no prescribed drugs available, a confirm will ask to confirm the action.
+             */
+            $scope.savePrescription = function () {
+                $scope.hasSuccess = false;
+                if (!$scope.diagnosis && !$scope.complaints) {
+                    $scope.showError("At least one of diagnosis and presenting complaints has to be filled");
+                    return;
+                }
+                if ($scope.prescribedDrugs.length == 0 && !$window.confirm("You haven't added any drugs in the prescription. Do you wish to proceed?")) {
+                    return;
+                }
+                $scope.submitted = true;
+                var data = {
+                    id: $scope.id,
+                    complaints: $scope.complaints,
+                    investigations: $scope.investigations,
+                    diagnosis: $scope.diagnosis,
+                    remarks: $scope.remarks,
+                    prescribedDrugs: $scope.prescribedDrugs,
+                    _token: $scope.token
+                };
+                //call the api to save prescription and if successful, clear prescription
+                api.savePrescription($scope.baseUrl, data).then(function (data) {
+                    console.log(data);
+                    $scope.submitted = false;
+                    if (data && data.status == 1) {
+                        $scope.clearPrescription();
+                        $scope.hasSuccess = true;
+                        $window.scrollTo(0, 0);
+                    }
+                    else {
+                        $scope.showError("Unable to save the prescription. Please try again!");
+                    }
+                });
+            };
+
+
+            /**
+             * Helper method to show an error. An error will be visible for 5 seconds
+             * @param message
+             */
+            $scope.showError = function (message) {
+                $scope.error = message;
+                $scope.hasError = true;
+                $window.scrollTo(0, 0);
+                $timeout.cancel($scope.errorTimeout);
+                $scope.eTimeout = $timeout(function () {
+                    $scope.hasError = false;
+                }, 10000);
+            };
+
+
+            /**
+             * Clears the prescription by removing all the prescribed drugs.
+             */
+            $scope.clearPrescription = function () {
+                $scope.prescribedDrugs = [];
+                $scope.complaints="";
+                $scope.investigations="";
+                $scope.diagnosis="";
+                $scope.remarks="";
+            };
 
         }])
     .service('api', ['$http', function ($http) {
@@ -153,6 +235,23 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                 }, function () {
                     return null;
                 });
+            },
+
+
+            /**
+             * Save a prescription by sending to the server.
+             * @param baseUrl
+             * @param data
+             * @returns {*}
+             */
+            savePrescription: function (baseUrl, data) {
+                return $http.post(baseUrl + "/API/savePrescription", data).then(
+                    function (response) {
+                        return response.data;
+                    }, function (response) {
+                        return response.data;
+                    }
+                );
             }
         };
     }]);

@@ -17,8 +17,8 @@ class CreatePrescriptionDrugsTable extends Migration
             $table->integer('prescription_id')->unsigned();
             $table->integer('drug_id')->unsigned();
             $table->integer('dosage_id')->unsigned();
-            $table->integer('frequency_id')->unsigned();
-            $table->integer('period_id')->unsigned();
+            $table->integer('frequency_id')->unsigned()->nullable()->default(null);
+            $table->integer('period_id')->unsigned()->nullable()->default(null);
             $table->float('quantity')->default(0);
             $table->timestamps();
 

@@ -92,9 +92,14 @@ Route::group(['middleware' => 'web'], function () {
         });
 
 
-        Route::group(['prefix'=>'API'],function(){
-            Route::post('drugs','APIController@getDrugs');
-            Route::post('dosages','APIController@getDosages');
+        /*
+         * Routes to manage the internal API for AJAX calls
+         */
+        Route::group(['prefix' => 'API'], function () {
+            Route::post('drugs', 'APIController@getDrugs');
+            Route::post('dosages', 'APIController@getDosages');
+            Route::post('savePrescription', 'APIController@savePrescription');
+
         });
     });
 

@@ -22,8 +22,10 @@ class CreatePrescriptionsTable extends Migration
             $table->timestamps();
             $table->boolean('issued')->default(false);
             $table->timestamp('issued_at')->default(null);
+            $table->integer('created_by')->unsigned();
 
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('restrict');
+            $table->foreign("created_by")->references('id')->on('users')->onDelete('restrict');
         });
     }
 
