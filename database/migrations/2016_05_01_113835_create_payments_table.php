@@ -17,7 +17,6 @@ class CreatePaymentsTable extends Migration
             $table->integer('prescription_id')->unsigned();
             $table->timestamps();
             $table->float('amount')->default(0);
-            $table->boolean('paid')->default(false);
             $table->string('remarks',100)->default(null);
 
             $table->foreign('prescription_id')->references('id')->on('prescriptions')->onDelete('restrict');

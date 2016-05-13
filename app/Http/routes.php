@@ -101,6 +101,8 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('savePrescription', 'APIController@savePrescription');
             Route::post('getPrescriptions/{id}', 'APIController@getPrescriptions');
             Route::post('issuePrescription','APIController@issuePrescription');
+            Route::post('getPrescriptions/{id}', 'APIController@getPrescriptions');
+
         });
     });
 

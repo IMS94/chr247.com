@@ -4,8 +4,8 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
         $interpolateProvider.startSymbol('[[');
         $interpolateProvider.endSymbol(']]');
     })
-    .controller('PrescriptionController', ['$scope', '$http', 'api', '$filter', '$timeout', '$window',
-        function ($scope, $http, api, $filter, $timeout, $window) {
+    .controller('PrescriptionController', ['$scope', '$http', 'api', '$filter', '$timeout', '$window', '$rootScope',
+        function ($scope, $http, api, $filter, $timeout, $window, $rootScope) {
             $scope.drugs = [];
             $scope.dosages = [];
             $scope.frequencies = [];
@@ -162,12 +162,11 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                 };
                 //call the api to save prescription and if successful, clear prescription
                 api.savePrescription($scope.baseUrl, data).then(function (data) {
-                    console.log(data);
                     $scope.submitted = false;
                     if (data && data.status == 1) {
                         $scope.clearPrescription();
-                        $scope.hasSuccess = true;
-                        $window.scrollTo(0, 0);
+                        $scope.showSuccess();
+                        $scope.$emit('prescriptionAddedEvent', []);
                     }
                     else {
                         $scope.showError("Unable to save the prescription. Please try again!");
@@ -190,6 +189,17 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                 }, 10000);
             };
 
+            /**
+             * Helper method to show a success.
+             */
+            $scope.showSuccess = function () {
+                $scope.hasSuccess = true;
+                $window.scrollTo(0, 0);
+                $timeout(function () {
+                    $scope.hasSuccess = false;
+                }, 6000);
+            };
+
 
             /**
              * Clears the prescription by removing all the prescribed drugs.
@@ -203,8 +213,9 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
             };
 
         }])
-    .controller('IssueMedicineController', ['$scope', '$http', 'api', '$filter', '$timeout', '$window',
-        function ($scope, $http, api, $filter, $timeout, $window) {
+    .controller('IssueMedicineController', ['$scope', '$http', 'api', '$filter',
+        '$timeout', '$window', '$interval', '$rootScope',
+        function ($scope, $http, api, $filter, $timeout, $window, $interval, $rootScope) {
 
             //data for api
             $scope.baseUrl = "";
@@ -216,6 +227,12 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
 
             //error
             $scope.error = "";
+            $scope.hasSuccess = false;
+
+
+            $rootScope.$on('prescriptionAddedEvent', function (event, data) {
+                $scope.loadPrescriptions();
+            });
 
             /**
              * Load the prescriptions when the page loads
@@ -254,7 +271,22 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                 }
                 if (valid) {
                     api.issuePrescription($scope.baseUrl, $scope.token, prescription).then(function (data) {
-                        console.log(data);
+                        //show success if status is 1
+                        if (data && data.status == 1) {
+                            $scope.showSuccess();
+                        }
+                        else {
+                            //show error message
+                            $scope.showError(data && data.message ? data.message : "Unable to mark as issued",
+                                prescription);
+                            //if the status is -1, then the prescription is already issued.
+                            // The message will be shown and then the data will be reloaded.
+                            if (data && data.status == -1) {
+                                $timeout(function () {
+                                    $scope.loadPrescriptions();
+                                }, 2000);
+                            }
+                        }
                     });
                 }
                 else {
@@ -273,6 +305,27 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                     prescription.hasError = false;
                 }, 6000);
             };
+
+            /**
+             * Helper method to show a success. An error will be visible for 6 seconds
+             * @param message
+             */
+            $scope.showSuccess = function () {
+                $scope.hasSuccess = true;
+                $window.scrollTo(0, 0);
+                $scope.loadPrescriptions();
+                $timeout(function () {
+                    $scope.hasSuccess = false;
+                }, 6000);
+            };
+
+
+            $scope.deletePrescription = function (index) {
+                var prescription = $scope.prescriptions[index];
+                if (prescription) {
+                    ;
+                }
+            }
         }])
     .service('api', ['$http', function ($http) {
         return {
@@ -357,6 +410,16 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                 return $http.post(baseUrl + "/API/issuePrescription", {
                     _token: token,
                     prescription: prescription
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return response.data ? response.data : [];
+                });
+            },
+
+            deletePrescription: function (baseUrl, token, prescription) {
+                return $http.post(baseUrl + "/API/deletePrescription/" + prescription.id, {
+                    _token: token
                 }).then(function (response) {
                     return response.data;
                 }, function (response) {

@@ -8,6 +8,7 @@ use App\DosageFrequency;
 use App\DosagePeriod;
 use App\Drug;
 use App\Patient;
+use App\Payment;
 use App\Prescription;
 use App\PrescriptionDrug;
 use App\User;
@@ -114,26 +115,75 @@ class APIController extends Controller
     }
 
 
-
-    public function issuePrescription(Request $request){
-        $prescription=Prescription::find($request->prescription['id']);
+    /**
+     * Issue a prescription.
+     * Mark prescription as issued. Then register the payment.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function issuePrescription(Request $request)
+    {
+        $prescription = Prescription::find($request->prescription['id']);
         if (empty($prescription) || Gate::denies('issuePrescription', $prescription)) {
             return response()->json(['status' => 0], 404);
         }
 
-        $validator=Validator::make($request->all(),[
-            'prescription'=>'required',
-            'prescription.id'=>'required',
-            'prescription.payment'=>'required|numeric',
-            'prescription.prescription_drugs'=>'required|array',
-            'prescription.prescription_drugs.0.issuedQuantity'=>'numeric'
+        $validator = Validator::make($request->all(), [
+            'prescription' => 'required',
+            'prescription.id' => 'required',
+            'prescription.payment' => 'required|numeric',
+            'prescription.prescription_drugs' => 'array',
+            'prescription.prescription_drugs.0.issuedQuantity' => 'numeric'
         ]);
 
-        if($validator->fails()){
-            $errors=$validator->errors()->all();
-            return response()->json(['status' => 0,'message'=>$errors[0]], 404);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return response()->json(['status' => 0, 'message' => $errors[0]], 404);
+        }
+        if ($prescription->issued) {
+            return response()->json(['status' => -1, 'message' => "Prescription is already issued"], 200);
         }
 
-        return 1;
+        DB::beginTransaction();
+        try {
+            //mark prescription as updated
+            $prescription->issued = true;
+            $prescription->issued_at = date('Y-m-d H:i:s');
+            $prescription->update();
+
+            //save payment details
+            $payment = new Payment();
+            $payment->prescription()->associate($prescription);
+            $payment->amount = $request->prescription['payment'];
+            $payment->remarks = $request->prescription['paymentRemarks'];
+            $payment->save();
+
+            //save prescription drug quantities and decrease stocks
+            foreach ($request->prescription['prescription_drugs'] as $prescription_drug) {
+                //setting issued quantity of each drug in the prescription
+                $prescriptionDrug = $prescription->prescriptionDrugs()
+                    ->where('id', $prescription_drug['id'])->first();
+                $prescriptionDrug->quantity = $prescription_drug['issuedQuantity'];
+                $prescriptionDrug->update();
+
+                //decreasing stocks
+                $drug = $prescriptionDrug->drug;
+                $drug->quantity = $drug->quantity - $prescription_drug['issuedQuantity'];
+                $drug->update();
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['status' => 0, 'message' => $e->getMessage()], 500);
+        }
+        DB::commit();
+        return response()->json(['status' => 1]);
+    }
+
+
+    public function deletePrescription($id){
+        $prescription=Prescription::find($id);
+        if($prescription->issued){
+
+        }
     }
 }
