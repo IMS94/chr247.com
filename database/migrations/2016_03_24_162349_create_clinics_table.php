@@ -18,6 +18,7 @@ class CreateClinicsTable extends Migration
             $table->string('email',100)->unique();
             $table->text('address');
             $table->string('phone',30);
+            $table->string('timezone',30)->default('UTC');
             $table->timestamps();
         });
     }

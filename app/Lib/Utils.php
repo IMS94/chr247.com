@@ -9,7 +9,8 @@
 namespace App\Lib;
 
 
-use Illuminate\Support\Facades\Log;
+
+use App\Clinic;
 
 class Utils
 {
@@ -25,13 +26,14 @@ class Utils
 
 
     /**
-     * Get the readable date from a timestamp
+     * Get the readable date and time from a timestamp
      * @param $timestamp
      * @return bool|string
      */
     public static function getTimestamp($timestamp)
     {
-        return date("jS M,Y H:i:s", strtotime($timestamp));
+        $clinic=Clinic::getCurrentClinic();
+        return date("jS M, Y h:i A", strtotime($timestamp->timezone($clinic->timezone)));
     }
 
     /**
@@ -40,6 +42,7 @@ class Utils
      * @return bool|string
      */
     public static function getFormattedDate($date){
+        $clinic=Clinic::getCurrentClinic();
         return date("jS M,Y", strtotime($date.' 00:00:00'));
     }
 
