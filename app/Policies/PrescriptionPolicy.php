@@ -30,4 +30,17 @@ class PrescriptionPolicy
     {
         return $user->clinic->id === $prescription->patient->clinic->id;
     }
+
+    /**
+     * Determine who can delete a prescription. By default, only the admin can delete prescriptions
+     * @param User $user
+     * @param Prescription $prescription
+     * @return bool
+     */
+    public function deletePrescription(User $user, Prescription $prescription)
+    {
+        return $user->isAdmin() && $user->clinic->id === $prescription->patient->clinic->id;
+    }
+
+
 }

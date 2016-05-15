@@ -58,7 +58,7 @@ class APIController extends Controller
     {
         $patient = Patient::find($request->id);
         if (empty($patient) || Gate::denies('prescribeMedicine', $patient)) {
-            return response()->json(['status' => 0], 404);
+            return response()->json(['status' => 0,'message'=>'Unauthorized action'], 404);
         }
         //at least on of the complaints and diagnosis has to be present
         if (!$request->complaints && !$request->diagnosis) {
@@ -180,10 +180,53 @@ class APIController extends Controller
     }
 
 
-    public function deletePrescription($id){
-        $prescription=Prescription::find($id);
-        if($prescription->issued){
-
+    /**
+     * Deletes a prescription.
+     * Authorizes before deleting whether the user has permissions to delete the prescription.
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deletePrescription($id)
+    {
+        $prescription = Prescription::find($id);
+        if (empty($prescription) || Gate::denies('deletePrescription', $prescription)) {
+            return response()->json(['status' => 0, 'message' => 'You are not authorized to delete prescriptions'], 404);
         }
+        if ($prescription->issued) {
+            return response()->json(['status' => 0,
+                'message' => "The prescription is already issued. Therefore cannot be deleted"], 500);
+        }
+        DB::beginTransaction();
+        try {
+//            if($prescription->prescriptionDrugs()->count()>0) {
+            $prescription->prescriptionDrugs()->delete();
+//            }
+            $prescription->delete();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['status' => 0, 'message' => $e->getMessage()], 500);
+        }
+        DB::commit();
+        return response()->json(['status' => 1]);
+    }
+
+
+    /**
+     * Get the medical records of a patient.
+     * @param $patientId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getMedicalRecords($patientId)
+    {
+        $patient = Patient::find($patientId);
+        if (Gate::denies('viewMedicalRecords', $patient)) {
+            return response()->json(['status' => 0], 404);
+        }
+
+        $prescriptions = $patient->prescriptions()->where('issued', true)->orderBy('issued_at')
+            ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency',
+                'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType',
+                'payment')->get();
+        return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
     }
 }

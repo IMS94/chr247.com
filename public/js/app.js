@@ -1,11 +1,6 @@
-var app;
-
-app = angular.module('HIS', [], function ($interpolateProvider) {
-        $interpolateProvider.startSymbol('[[');
-        $interpolateProvider.endSymbol(']]');
-    })
-    .controller('PrescriptionController', ['$scope', '$http', 'api', '$filter', '$timeout', '$window', '$rootScope',
-        function ($scope, $http, api, $filter, $timeout, $window, $rootScope) {
+angular.module('HIS')
+    .controller('PrescriptionController', ['$scope', '$http', 'api', '$filter', '$timeout', '$window',
+        function ($scope, $http, api, $filter, $timeout, $window) {
             $scope.drugs = [];
             $scope.dosages = [];
             $scope.frequencies = [];
@@ -228,6 +223,7 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
             //error
             $scope.error = "";
             $scope.hasSuccess = false;
+            $scope.successMessage = "";
 
 
             $rootScope.$on('prescriptionAddedEvent', function (event, data) {
@@ -269,11 +265,15 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                 if (!angular.isNumber(prescription.payment)) {
                     $scope.showError("Please enter the payment for this prescription. (Enter 0 if none)", prescription);
                 }
+                if (!prescription.paymentRemarks) {
+                    prescription.paymentRemarks = "";
+                }
                 if (valid) {
                     api.issuePrescription($scope.baseUrl, $scope.token, prescription).then(function (data) {
                         //show success if status is 1
                         if (data && data.status == 1) {
-                            $scope.showSuccess();
+                            $scope.showSuccess("Prescription marked as issued");
+                            $scope.$emit('PrescriptionIssuedEvent', []);
                         }
                         else {
                             //show error message
@@ -281,7 +281,7 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                                 prescription);
                             //if the status is -1, then the prescription is already issued.
                             // The message will be shown and then the data will be reloaded.
-                            if (data && data.status == -1) {
+                            if (data.status == -1) {
                                 $timeout(function () {
                                     $scope.loadPrescriptions();
                                 }, 2000);
@@ -306,12 +306,14 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
                 }, 6000);
             };
 
+
             /**
-             * Helper method to show a success. An error will be visible for 6 seconds
+             * Helper method to show a success.
              * @param message
              */
-            $scope.showSuccess = function () {
+            $scope.showSuccess = function (message) {
                 $scope.hasSuccess = true;
+                $scope.successMessage = message;
                 $window.scrollTo(0, 0);
                 $scope.loadPrescriptions();
                 $timeout(function () {
@@ -320,113 +322,26 @@ app = angular.module('HIS', [], function ($interpolateProvider) {
             };
 
 
+            /**
+             * Deletes a prescription.The prescription will be deleted only if the user is authorized.
+             * @param index
+             */
             $scope.deletePrescription = function (index) {
                 var prescription = $scope.prescriptions[index];
-                if (prescription) {
-                    ;
+                if (prescription && $window.confirm("Are you sure to delete this prescription")) {
+                    api.deletePrescription($scope.baseUrl, $scope.token, prescription).then(function (data) {
+                        if (data.status == 1) {
+                            $scope.showSuccess("Prescription deleted successfully");
+                        }
+                        else {
+                            //show error message
+                            $scope.showError(data && data.message ? data.message : "Unable to delete the prescription",
+                                prescription);
+                        }
+                    });
                 }
             }
-        }])
-    .service('api', ['$http', function ($http) {
-        return {
-            /**
-             * Get the drugs from the server
-             * @param baseUrl
-             * @param token
-             * @returns {*}
-             */
-            getDrugs: function (baseUrl, token) {
-                return $http.post(baseUrl + "/API/drugs/", {
-                    _token: token
-                }).then(function (response) {
-                    return response.data;
-                }, function () {
-                    return {
-                        status: 0
-                    };
-                });
-            },
-
-            /**
-             * Get the dosages from API
-             * @param baseUrl
-             * @param token
-             * @returns {*}
-             */
-            getDosages: function (baseUrl, token) {
-                return $http.post(baseUrl + "/API/dosages", {
-                    _token: token
-                }).then(function (response) {
-                    return response.data;
-                }, function () {
-                    return null;
-                });
-            },
-
-
-            /**
-             * Save a prescription by sending to the server.
-             * @param baseUrl
-             * @param data
-             * @returns {*}
-             */
-            savePrescription: function (baseUrl, data) {
-                return $http.post(baseUrl + "/API/savePrescription", data).then(
-                    function (response) {
-                        return response.data;
-                    }, function (response) {
-                        return response.data;
-                    }
-                );
-            },
-
-
-            /**
-             * Get all the prescriptions belonging to a patient
-             * @param baseUrl
-             * @param token
-             * @param id
-             * @returns {*}
-             */
-            getPrescriptions: function (baseUrl, token, id) {
-                return $http.post(baseUrl + "/API/getPrescriptions/" + id, {
-                    _token: token
-                }).then(function (response) {
-                    return response.data;
-                }, function (response) {
-                    return response.data ? response.data : [];
-                });
-            },
-
-
-            /**
-             * Issue a prescription to the patient
-             * @param baseUrl
-             * @param token
-             * @param prescription
-             * @returns {*}
-             */
-            issuePrescription: function (baseUrl, token, prescription) {
-                return $http.post(baseUrl + "/API/issuePrescription", {
-                    _token: token,
-                    prescription: prescription
-                }).then(function (response) {
-                    return response.data;
-                }, function (response) {
-                    return response.data ? response.data : [];
-                });
-            },
-
-            deletePrescription: function (baseUrl, token, prescription) {
-                return $http.post(baseUrl + "/API/deletePrescription/" + prescription.id, {
-                    _token: token
-                }).then(function (response) {
-                    return response.data;
-                }, function (response) {
-                    return response.data ? response.data : [];
-                });
-            }
-        };
-    }]);
+        }]
+    );
 
 

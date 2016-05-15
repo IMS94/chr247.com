@@ -4,10 +4,19 @@
     <input type="hidden"
            ng-init="baseUrl='{{url("/")}}';id={{$patient->id}};token='{{csrf_token()}}';loadPrescriptions()">
 
+    {{--Success Mesage--}}
     <div class="alert alert-success alert-dismissable" ng-show="hasSuccess" ng-cloak>
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         <h4><i class="icon fa fa-check"></i> Success!</h4>
-        Prescription saved successfully.
+        [[successMessage]]
+    </div>
+
+
+    {{-- Info message if there are no prescriptions to be issued --}}
+    <div class="alert alert-info alert-dismissable" ng-if="prescriptions.length==0" ng-cloak>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-ban"></i> Sorry!</h4>
+        No Prescription to be issued for this patient.
     </div>
 
     {{--Prescription--}}
@@ -31,14 +40,14 @@
 
             <table class="table table-hover table-condensed table-bordered text-center">
                 <thead>
-                <tr>
+                <tr class="success">
                     <th class="col-sm-4">Drug</th>
                     <th class="col-sm-5">Dose</th>
                     <th class="col-sm-3">Quantity</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="prescribedDrug in prescription.prescription_drugs">
+                <tr class="success" ng-repeat="prescribedDrug in prescription.prescription_drugs">
                     <td>[[prescribedDrug.drug.name]] ([[prescribedDrug.drug.quantity_type.drug_type]])</td>
                     <td>
                         [[prescribedDrug.dosage.description]]<br>

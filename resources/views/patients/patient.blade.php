@@ -16,7 +16,9 @@
 
 @section('content')
     <script src="{{asset('plugins/angularjs/angular.min.js')}}"></script>
+    <script src="{{asset('js/services.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/RecordController.js')}}"></script>
 
     <div class="box box-primary">
         <!--    Box Header  -->
@@ -56,32 +58,58 @@
             {{--    Nav tabs    --}}
             <div class="nav-tabs-custom" ng-app="HIS">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation">
+
+                    @can('view',$patient)
+                    <li role="presentation" @if(Gate::denies('prescribeMedicine',$patient)) class="active" @endif>
                         <a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a>
                     </li>
+                    @endcan
+
+                    @can('prescribeMedicine',$patient)
                     <li role="presentation" class="active">
                         <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Prescribe Medicine</a>
                     </li>
+                    @endcan
+
+                    @can('issueMedicine',$patient)
                     <li role="presentation">
                         <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Issue Medicine</a>
                     </li>
+                    @endcan
+
+                    @can('viewMedicalRecords',$patient)
                     <li role="presentation">
                         <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Medical Records</a>
                     </li>
+                    @endcan
+
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade" id="info">
+                    @can('view',$patient)
+                    <div role="tabpanel" id="info"
+                         class="tab-pane fade @if(Gate::denies('prescribeMedicine',$patient)) in active @endif">
                         @include('patients.tabs.patientInfo')
                     </div>
+                    @endcan
 
+                    @can('prescribeMedicine',$patient)
                     <div role="tabpanel" class="tab-pane fade in active" id="profile">
                         @include('patients.tabs.prescribeMedicine')
                     </div>
+                    @endcan
+
+                    @can('issueMedicine',$patient)
                     <div role="tabpanel" class="tab-pane fade" id="messages">
                         @include('patients.tabs.issueMedicine')
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="settings">...</div>
+                    @endcan
+
+                    @can('viewMedicalRecords',$patient)
+                    <div role="tabpanel" class="tab-pane fade" id="settings">
+                        @include('patients.tabs.medicalRecords')
+                    </div>
+                    @endcan
                 </div>
             </div>
 

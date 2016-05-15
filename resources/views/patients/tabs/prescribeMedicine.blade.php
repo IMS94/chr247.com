@@ -29,8 +29,8 @@
                 <div class="form-group">
                     <label class="col-md-3 col-sm-12 control-label">Presenting Complaints</label>
                     <div class="col-md-9 col-sm-12">
-                <textarea id="presentingComplaints" placeholder="Presenting Complaints" ng-model="complaints"
-                          class="form-control"></textarea>
+                        <textarea id="presentingComplaints" placeholder="Presenting Complaints" ng-model="complaints"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
 
@@ -141,16 +141,18 @@
                         <h4 class="box-title">Prescribed Drugs</h4>
                     </div>
                     <div class="box-body">
-                        <table class="table table-condensed table-bordered table-hover text-center">
+                        {{--table to show prescribed drugs--}}
+                        <table class="table table-condensed table-bordered table-hover text-center"
+                               ng-if="prescribedDrugs.length>0">
                             <thead>
-                            <tr>
+                            <tr class="success">
                                 <th>Drug Name</th>
                                 <th>Dose</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="d in prescribedDrugs track by $index">
+                            <tr ng-repeat="d in prescribedDrugs track by $index" class="success" ng-cloak>
                                 <td>[[d.drug.name]]</td>
                                 <td>
                                     [[d.dose.description]]<br>[[d.frequency.description]]<br>[[d.period.description]]
@@ -163,6 +165,10 @@
                             </tr>
                             </tbody>
                         </table>
+
+                        <div class="alert bg-success" ng-if="prescribedDrugs.length==0" ng-cloak>
+                            No Drugs Prescribed!
+                        </div>
                     </div>
                 </div>
             </div>

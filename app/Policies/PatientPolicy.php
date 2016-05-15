@@ -87,6 +87,18 @@ class PatientPolicy
 
 
     /**
+     * Determine who can issue medicine to a patient.
+     * By default, anyone can issue medicine to a patient
+     * @param User $user
+     * @return bool
+     */
+    public function issueMedicine(User $user)
+    {
+        return true;
+    }
+
+
+    /**
      * Determine who can prescribe medicine for a given patient.
      * @param User $user
      * @param Patient $patient
@@ -96,4 +108,16 @@ class PatientPolicy
     {
         return $user->clinic->id === $patient->clinic->id;
     }
+
+    /**
+     * Determine who can view the medical records of a given patient.
+     * @param User $user
+     * @param Patient $patient
+     * @return bool
+     */
+    public function viewMedicalRecords(User $user, Patient $patient)
+    {
+        return !$user->isNurse() && $user->clinic->id === $patient->clinic->id;
+    }
+
 }
