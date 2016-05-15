@@ -9,7 +9,6 @@
 namespace App\Lib;
 
 
-
 use App\Clinic;
 
 class Utils
@@ -32,7 +31,7 @@ class Utils
      */
     public static function getTimestamp($timestamp)
     {
-        $clinic=Clinic::getCurrentClinic();
+        $clinic = Clinic::getCurrentClinic();
         return date("jS M, Y h:i A", strtotime($timestamp->timezone($clinic->timezone)));
     }
 
@@ -41,9 +40,11 @@ class Utils
      * @param $date
      * @return bool|string
      */
-    public static function getFormattedDate($date){
-        $clinic=Clinic::getCurrentClinic();
-        return date("jS M,Y", strtotime($date.' 00:00:00'));
+    public static function getFormattedDate($date)
+    {
+        $clinic = Clinic::getCurrentClinic();
+        $date = date_create($date, timezone_open($clinic->timezone));
+        return date_format($date, "jS M, Y");
     }
 
 
