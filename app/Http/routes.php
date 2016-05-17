@@ -48,15 +48,24 @@ Route::group(['middleware' => 'web'], function () {
                 'payments' => $payments]);
         }]);
 
+        // Global Search
+        Route::get('search', ['as' => 'search', 'uses' => 'UtilityController@search']);
 
-        Route::get('search',['as'=>'search','uses'=>'UtilityController@search']);
+        //Issue Medicine
+        Route::get('issueMedicine', ['as' => 'issueMedicine', 'uses' => 'PrescriptionController@viewIssueMedicine']);
 
 
         /*
-         * Issue Medicine Routes
+         * Routes related to the queue
          */
-        Route::get('issueMedicine',
-            ['as' => 'issueMedicine', 'uses' => 'PrescriptionController@viewIssueMedicine']);
+        Route::group(['prefix' => 'queue'], function () {
+            Route::get('/', ['as' => 'queue', 'uses' => 'QueueController@viewQueue']);
+
+            Route::get('addToQueue/{patientId}', ['as' => 'addToQueue', 'uses' => 'QueueController@addToQueue']);
+            Route::get('create', ['as' => 'createQueue', 'uses' => 'QueueController@createQueue']);
+            Route::get('close', ['as' => 'closeQueue', 'uses' => 'QueueController@closeQueue']);
+        });
+
 
         /*
          * Routes that manage all the content of patients
@@ -131,6 +140,11 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('getPrescriptions/{id}', 'APIController@getPrescriptions');
             Route::post('deletePrescription/{id}', 'APIController@deletePrescription');
             Route::post('getMedicalRecords/{patientId}', 'APIController@getMedicalRecords');
+
+            //queue
+            Route::post('getQueue', 'APIController@getQueue');
+            Route::post('updateQueue', 'APIController@updateQueue');
+
         });
     });
 

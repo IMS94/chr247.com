@@ -11,6 +11,7 @@ use App\Patient;
 use App\Payment;
 use App\Prescription;
 use App\PrescriptionDrug;
+use App\Queue;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -247,5 +248,44 @@ class APIController extends Controller
                 'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType',
                 'payment')->get();
         return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
+    }
+
+
+    /*
+     * ================= Queue Management ============================
+     */
+
+
+    /**
+     * Get the patients in the current queue
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getQueue()
+    {
+        $queue = Queue::getCurrentQueue();
+        if (is_null($queue)) {
+            return response()->json(['status' => 1, 'patients' => []]);
+        }
+        $patients = $queue->patients()->withPivot(['id', 'inProgress'])
+            ->wherePivot('completed', false)->orderBy('pivot_inProgress', 'desc')->orderBy('pivot_id')->get();
+        return response()->json(['status' => 1, 'patients' => $patients]);
+    }
+
+
+    public function updateQueue(Request $request)
+    {
+        $queue = Queue::getCurrentQueue();
+        $patient = Patient::find($request->patient['id']);
+        $this->authorize('update', [$queue, $patient]);
+
+        $patient = $queue->patients()->wherePivot('completed', false)->find($patient->id);
+        if (empty($patient)) {
+            return response()->json(['status' => 0, 'message' => "Patient not in the queue"]);
+        }
+        $patient->pivot->inProgress =
+            $request->patient['pivot']['inProgress'] == 1 ? true : false;
+        $patient->pivot->completed = $request->patient['pivot']['inProgress'] == 2 ? true : false;
+        $patient->pivot->update();
+        return response()->json(['status' => 1]);
     }
 }

@@ -55,6 +55,15 @@ class Clinic extends Model
 
 
     /**
+     * Queues of the clinic
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function queues(){
+        return $this->hasMany('App\Queue','clinic_id','id');
+    }
+
+
+    /**
      * Dosages related information of the clinic.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

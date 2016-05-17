@@ -45,6 +45,11 @@
             </button>
             @endcan
 
+            @can('addToQueue',$patient)
+            <a class="btn btn-primary margin-left" href="{{route('addToQueue',['patientId'=>$patient->id])}}">
+                <i class="fa fa-plus fa-lg"></i> Add to Queue
+            </a>
+            @endcan
         </div>
 
         <!--    Box Body  -->
@@ -57,6 +62,16 @@
                     {{session('success')}}
                 </div>
             @endif
+
+            {{--Error Message--}}
+            @if(session()->has('error'))
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                    {{session('error')}}
+                </div>
+            @endif
+
 
             {{--    Nav tabs    --}}
             <div class="nav-tabs-custom" ng-app="HIS">

@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Patient;
+use App\Queue;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -118,6 +119,22 @@ class PatientPolicy
     public function viewMedicalRecords(User $user, Patient $patient)
     {
         return !$user->isNurse() && $user->clinic->id === $patient->clinic->id;
+    }
+
+
+    /**
+     * Determine who can add patients to the queue
+     * @param User $user
+     * @param Patient $patient
+     * @return bool
+     */
+    public function addToQueue(User $user, Patient $patient)
+    {
+        $queue = Queue::getCurrentQueue();
+        if ($queue->patients()->wherePivot('completed', false)->find($patient->id) != null) {
+            return false;
+        }
+        return true;
     }
 
 }

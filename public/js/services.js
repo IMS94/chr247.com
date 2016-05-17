@@ -143,6 +143,33 @@ angular.module('HIS', [], function ($interpolateProvider) {
                 }, function (response) {
                     return response.data ? response.data : {status: 0};
                 });
+            },
+
+            /**
+             * Get the current queue of the clinic
+             * @param baseUrl
+             * @param token
+             * @returns {*}
+             */
+            getQueue: function (baseUrl, token) {
+                return $http.post(baseUrl + "/API/getQueue", {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return response.data ? response.data : {status: 0};
+                });
+            },
+
+            updateQueue: function (baseUrl, token, patient) {
+                return $http.post(baseUrl + "/API/updateQueue", {
+                    _token: token,
+                    patient: patient
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return response.data ? response.data : {status: 0};
+                });
             }
         };
     }]);
