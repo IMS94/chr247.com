@@ -67,6 +67,7 @@ angular.module('HIS', [], function ($interpolateProvider) {
                 return $http.post(baseUrl + "/API/getPrescriptions/" + id, {
                     _token: token
                 }).then(function (response) {
+                    //console.log(response.data);
                     return response.data;
                 }, function (response) {
                     return response.data ? response.data : [];
@@ -84,6 +85,7 @@ angular.module('HIS', [], function ($interpolateProvider) {
                 return $http.post(baseUrl + "/API/getAllPrescriptions", {
                     _token: token
                 }).then(function (response) {
+                    //console.log(response.data);
                     return response.data;
                 }, function (response) {
                     return response.data ? response.data : [];
@@ -133,9 +135,10 @@ angular.module('HIS', [], function ($interpolateProvider) {
              * @returns {*}
              */
             getMedicalRecords: function (baseUrl, token, patientId) {
-                return $http.post(baseUrl + "/API/getMedicalRecords/"+patientId, {
+                return $http.post(baseUrl + "/API/getMedicalRecords/" + patientId, {
                     _token: token
                 }).then(function (response) {
+                    //console.log(response.data);
                     return response.data;
                 }, function (response) {
                     return response.data ? response.data : {status: 0};

@@ -19,6 +19,7 @@ class CreateClinicsTable extends Migration
             $table->text('address');
             $table->string('phone',30);
             $table->string('timezone',30)->default('UTC');
+            $table->string('currency',10)->default('Rs.');
             $table->timestamps();
         });
     }

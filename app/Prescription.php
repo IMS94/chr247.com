@@ -9,6 +9,16 @@ class Prescription extends Model
     protected $table = "prescriptions";
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'complaints','investigations','diagnosis','remarks','issued_at','issued'
+    ];
+
+
+    /**
      * Get the user who created the drug
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

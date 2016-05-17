@@ -13,10 +13,11 @@
 
 $factory->define(App\Clinic::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->company.' Clinic',
+        'name' => $faker->company . ' Clinic',
         'email' => $faker->unique()->email,
         'address' => $faker->address,
         'phone' => $faker->phoneNumber,
+        'timezone' => $faker->timezone,
     ];
 });
 
@@ -31,11 +32,10 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 
-
 $factory->define(App\DrugType::class, function (Faker\Generator $faker) {
-    $types=['Pills','Litres','Tablets','Milli Litres','Units','Bottles'];
+    $types = ['Pills', 'Litres', 'Tablets', 'Milli Litres', 'Units', 'Bottles'];
     return [
-        'drug_type' =>$types[rand(0,count($types)-1)]
+        'drug_type' => $types[rand(0, count($types) - 1)]
     ];
 });
 
@@ -54,7 +54,7 @@ $factory->define(App\Patient::class, function (Faker\Generator $faker) {
         'last_name' => $faker->lastName,
         'address' => $faker->address,
         'dob' => $faker->date(),
-        'phone'=>$faker->phoneNumber
+        'phone' => $faker->phoneNumber
     ];
 });
 
@@ -62,8 +62,26 @@ $factory->define(App\Stock::class, function (Faker\Generator $faker) {
     return [
         'manufactured_date' => $faker->dateTimeThisDecade()->format('Y-m-d'),
         'received_date' => $faker->dateTimeThisMonth()->format('Y-m-d'),
-        'expiry_date' => date('Y-m-d',time()+$faker->randomNumber()),
-        'quantity'=>$faker->numberBetween(100,2000),
-        'remarks'=>$faker->realText(),
+        'expiry_date' => date('Y-m-d', time() + $faker->randomNumber()),
+        'quantity' => $faker->numberBetween(100, 2000),
+        'remarks' => $faker->realText(),
     ];
+});
+
+$factory->define(App\Prescription::class, function (Faker\Generator $faker) {
+    $issued = rand(0, 1) == 1;
+    $issuedAt = $issued ? $faker->dateTimeThisMonth()->format('Y-m-d H:i:s') : null;
+
+    return [
+        'complaints' => $faker->realText(50),
+        'investigations' => $faker->realText(50),
+        'diagnosis' => $faker->sentence,
+        'remarks' => $faker->realText(100),
+        'issued_at' => $issuedAt,
+        'issued' => $issued
+    ];
+});
+
+$factory->define(App\PrescriptionDrug::class, function (Faker\Generator $faker) {
+    return [];
 });

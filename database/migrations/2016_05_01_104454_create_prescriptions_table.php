@@ -15,10 +15,10 @@ class CreatePrescriptionsTable extends Migration
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('patient_id')->unsigned();
-            $table->string('complaints',200)->default(null);
-            $table->string('investigations',200)->default(null);
-            $table->string('diagnosis',200)->default(null);
-            $table->string('remarks',200)->default(null);
+            $table->string('complaints',150)->default(null);
+            $table->string('investigations',150)->default(null);
+            $table->string('diagnosis',150)->default(null);
+            $table->string('remarks',150)->default(null);
             $table->timestamps();
             $table->boolean('issued')->default(false);
             $table->timestamp('issued_at')->default(null);

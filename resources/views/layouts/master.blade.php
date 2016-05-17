@@ -1,5 +1,5 @@
 <?php
-$user = Auth::user();
+$user = \App\User::getCurrentUser();
 ?>
 
         <!DOCTYPE html>
@@ -32,7 +32,6 @@ $user = Auth::user();
 
     <!-- jQuery 2.1.4 Moved to the top to load without an error-->
     <script src="{{asset('plugins/jQuery/jQuery-2.1.4.min.js')}}"></script>
-
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -113,19 +112,18 @@ $user = Auth::user();
                 </div>
                 <div class="pull-left info">
                     <p>{{$user->name}}</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <a href="#"><i class="fa fa-circle text-success"></i> {{$user->role->role}}</a>
                 </div>
             </div>
 
             <!-- search form -->
-            <form action="{{url('search')}}" method="get" class="sidebar-form">
+            <form action="{{route('search')}}" method="get" class="sidebar-form">
                 {{csrf_field()}}
                 <div class="input-group">
-                    <input type="text" name="indexNumber" class="form-control" placeholder="Search...">
-
+                    <input type="text" name="q" class="form-control" placeholder="Search..." required>
                       <span class="input-group-btn">
-                        <button type="submit" id="search-btn" class="btn btn-flat"><i
-                                    class="fa fa-search"></i>
+                        <button type="submit" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search"></i>
                         </button>
                       </span>
                 </div>
@@ -159,6 +157,13 @@ $user = Auth::user();
                     </a>
                 </li>
                 @endcan
+
+                <li @if(strpos(Request::url(),'queue')!=false) class="active" @endif>
+                    <a href="{{url('queue')}}">
+                        <i class="fa fa-ambulance"></i> <span>Queue</span>
+                    </a>
+                </li>
+
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -216,7 +221,7 @@ $user = Auth::user();
 <script>
     $(document).ready(function () {
         setInterval(function () {
-            var d = new Date;
+            var d = new Date();
             var hours = d.getHours();
             var mins = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
             var seconds = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
@@ -230,10 +235,11 @@ $user = Auth::user();
             else {
                 var ampm = "AM";
             }
+            var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
             hours = hours < 10 ? "0" + hours : hours;
             var date = year + "/" + month + "/" + day;
             var time = hours + ":" + mins + ":" + seconds + " " + ampm;
-            $("#timer").html(date + " | " + time);
+            $("#timer").html(days[d.getDay()] + ", " + date + " | " + time);
         }, 1000);
     });
 </script>
