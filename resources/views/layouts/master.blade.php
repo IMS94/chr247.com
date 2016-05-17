@@ -26,7 +26,7 @@ $user = Auth::user();
     <link href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css">
     {{--//Data Tables CSS--}}
 
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
+            <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
 
@@ -152,11 +152,13 @@ $user = Auth::user();
                     </a>
                 </li>
 
+                @can('issueMedicine','App\Patient')
                 <li @if(strpos(Request::url(),'issueMedicine')!=false) class="active" @endif>
                     <a href="{{url('issueMedicine')}}">
                         <i class="fa fa-medkit"></i> <span>Issue Medicine</span>
                     </a>
                 </li>
+                @endcan
             </ul>
         </section>
         <!-- /.sidebar -->
