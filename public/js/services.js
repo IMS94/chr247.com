@@ -73,6 +73,22 @@ angular.module('HIS', [], function ($interpolateProvider) {
                 });
             },
 
+            /**
+             * Get all the prescriptions belonging to a patient
+             * @param baseUrl
+             * @param token
+             * @param id
+             * @returns {*}
+             */
+            getAllPrescriptions: function (baseUrl, token) {
+                return $http.post(baseUrl + "/API/getAllPrescriptions", {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return response.data ? response.data : [];
+                });
+            },
 
             /**
              * Issue a prescription to the patient

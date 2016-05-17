@@ -15,9 +15,12 @@
 
 
 @section('content')
+    {{--AngularJs Scripts--}}
     <script src="{{asset('plugins/angularjs/angular.min.js')}}"></script>
     <script src="{{asset('js/services.js')}}"></script>
-    <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/filters.js')}}"></script>
+    <script src="{{asset('js/PrescriptionController.js')}}"></script>
+    <script src="{{asset('js/IssueMedicineController.js')}}"></script>
     <script src="{{asset('js/RecordController.js')}}"></script>
 
     <div class="box box-primary">

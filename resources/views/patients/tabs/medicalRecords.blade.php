@@ -10,14 +10,6 @@
         [[successMessage]]
     </div>
 
-    {{-- Info message if there are no prescriptions to be issued --}}
-    <div class="alert alert-info alert-dismissable" ng-if="prescriptions.length==0" ng-cloak>
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-ban"></i> Sorry!</h4>
-        No medical record to be displayed for this patient.
-    </div>
-
-
     <div class="row margin">
         <label class="control-label col-md-4 col-md-offset-4 text-left">Search (by dianosis,date and etc...)</label>
         <div class="col-md-4">
@@ -25,12 +17,19 @@
         </div>
     </div>
 
+    {{-- Info message if there are no prescriptions to be issued --}}
+    <div class="alert alert-info alert-dismissable" ng-if="prescriptions.length==0" ng-cloak>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-info"></i> Sorry!</h4>
+        No medical record to be displayed for this patient.
+    </div>
+
     {{--Prescription--}}
     <div class="box box-primary box-solid"
          ng-repeat="prescription in prescriptions | filter:searchText">
         <div class="box-header">
             <h4 class="box-title">
-                [[prescription.created_at]]
+                [[prescription.created_at | dateToISO | date:"EEEE, d/M/yy h:mm a"]]
             </h4>
         </div>
 

@@ -152,6 +152,11 @@ $user = Auth::user();
                     </a>
                 </li>
 
+                <li @if(strpos(Request::url(),'issueMedicine')!=false) class="active" @endif>
+                    <a href="{{url('issueMedicine')}}">
+                        <i class="fa fa-medkit"></i> <span>Issue Medicine</span>
+                    </a>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->

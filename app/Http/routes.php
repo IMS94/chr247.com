@@ -37,6 +37,12 @@ Route::group(['middleware' => 'web'], function () {
 
 
         /*
+         * Issue Medicine Routes
+         */
+        Route::get('issueMedicine',
+            ['as' => 'issueMedicine', 'uses' => 'PrescriptionController@viewIssueMedicine']);
+
+        /*
          * Routes that manage all the content of patients
          */
         Route::group(['prefix' => 'patients'], function () {
@@ -93,14 +99,19 @@ Route::group(['middleware' => 'web'], function () {
 
 
         /*
+         * API
          * Routes to manage the internal API for AJAX calls
          */
         Route::group(['prefix' => 'API'], function () {
             Route::post('drugs', 'APIController@getDrugs');
             Route::post('dosages', 'APIController@getDosages');
             Route::post('savePrescription', 'APIController@savePrescription');
+
+            //getting prescriptions
             Route::post('getPrescriptions/{id}', 'APIController@getPrescriptions');
-            Route::post('issuePrescription','APIController@issuePrescription');
+            Route::post('getAllPrescriptions', 'APIController@getAllRemainingPrescriptions');
+
+            Route::post('issuePrescription', 'APIController@issuePrescription');
             Route::post('getPrescriptions/{id}', 'APIController@getPrescriptions');
             Route::post('deletePrescription/{id}', 'APIController@deletePrescription');
             Route::post('getMedicalRecords/{patientId}', 'APIController@getMedicalRecords');

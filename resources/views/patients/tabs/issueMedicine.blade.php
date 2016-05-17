@@ -15,7 +15,7 @@
     {{-- Info message if there are no prescriptions to be issued --}}
     <div class="alert alert-info alert-dismissable" ng-if="prescriptions.length==0" ng-cloak>
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-ban"></i> Sorry!</h4>
+        <h4><i class="icon fa fa-info"></i> Sorry!</h4>
         No Prescription to be issued for this patient.
     </div>
 
@@ -23,7 +23,7 @@
     <div class="box box-primary box-solid" ng-repeat="prescription in prescriptions track by $index">
         <div class="box-header">
             <h4 class="box-title">
-                [[prescription.created_at]]
+                [[prescription.created_at | dateToISO | date:"EEEE, d/M/yy h:mm a"]]
             </h4>
             <button class="btn btn-sm btn-danger pull-right" ng-click="deletePrescription([[$index]])">
                 Delete Prescription

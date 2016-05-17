@@ -58,7 +58,7 @@ class APIController extends Controller
     {
         $patient = Patient::find($request->id);
         if (empty($patient) || Gate::denies('prescribeMedicine', $patient)) {
-            return response()->json(['status' => 0,'message'=>'Unauthorized action'], 404);
+            return response()->json(['status' => 0, 'message' => 'Unauthorized action'], 404);
         }
         //at least on of the complaints and diagnosis has to be present
         if (!$request->complaints && !$request->diagnosis) {
@@ -111,6 +111,23 @@ class APIController extends Controller
         $prescriptions = $patient->prescriptions()->where('issued', false)
             ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency',
                 'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType')->get();
+        return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
+    }
+
+    /**
+     * Get the prescriptions to be issued of the clinic.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllRemainingPrescriptions()
+    {
+        if (Gate::denies('issueMedicine', 'App\Patient')) {
+            return response()->json(['status' => 0], 404);
+        }
+
+        $clinic = Clinic::getCurrentClinic();
+        $prescriptions = Prescription::whereIn('id', $clinic->patients()->lists('id'))
+            ->where('issued', false)->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency',
+                'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType', 'patient')->get();
         return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
     }
 
