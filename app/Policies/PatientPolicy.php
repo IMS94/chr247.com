@@ -131,7 +131,7 @@ class PatientPolicy
     public function addToQueue(User $user, Patient $patient)
     {
         $queue = Queue::getCurrentQueue();
-        if ($queue->patients()->wherePivot('completed', false)->find($patient->id) != null) {
+        if (!empty($queue) && $queue->patients()->wherePivot('completed', false)->find($patient->id) != null) {
             return false;
         }
         return true;
