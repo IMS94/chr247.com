@@ -96,7 +96,6 @@ class PatientController extends Controller
      */
     public function editPatient($id, Request $request)
     {
-        Log::info($request->all());
         $patient = Patient::find($id);
         if (empty($patient)) {
             throw new NotFoundException("Patient Not Found");

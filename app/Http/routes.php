@@ -36,16 +36,30 @@ Route::group(['middleware' => 'web'], function () {
             $payments = \App\Payment::whereIn('prescription_id',
                 $prescriptions->where('issued', 1)->lists('id'))->sum('amount');
 
-            return view('dashboard', ['clinic' => $clinic, 'prescriptionCount' => $prescriptionCount,
-                'payments' => $payments]);
+            return view('dashboard', ['clinic'   => $clinic, 'prescriptionCount' => $prescriptionCount,
+                                      'payments' => $payments]);
         }]);
 
         // Global Search
         Route::get('search', ['as' => 'search', 'uses' => 'UtilityController@search']);
 
-        //Issue Medicine
+        // Issue Medicine
         Route::get('issueMedicine', ['as' => 'issueMedicine', 'uses' => 'PrescriptionController@viewIssueMedicine']);
 
+
+        /*
+         * SETTINGS
+         */
+        Route::group(['prefix' => 'settings'], function () {
+            Route::get('/', ['as' => 'settings', 'uses' => 'SettingsController@viewSettings']);
+            Route::post('changePassword', ['as' => 'changePassword', 'uses' => 'SettingsController@changePassword']);
+            Route::post('createAccount', ['as' => 'createAccount', 'uses' => 'SettingsController@createAccount']);
+
+            // Routes to compensate the get methods of post requests
+            Route::get('changePassword', ['uses' => 'SettingsController@viewSettings']);
+            Route::get('createAccount', ['uses' => 'SettingsController@viewSettings']);
+
+        });
 
         /*
          * Routes related to the queue
@@ -139,7 +153,6 @@ Route::group(['middleware' => 'web'], function () {
         });
     });
 
-
     /*
      * SUPPORT API
      */
@@ -150,5 +163,4 @@ Route::group(['middleware' => 'web'], function () {
     });
 
 });
-
 

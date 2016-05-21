@@ -11,14 +11,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 
-class QueueController extends Controller
-{
+class QueueController extends Controller {
     /**
      * View the page consisting of the queue
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function viewQueue()
-    {
+    public function viewQueue() {
         return view('queue.queue', ['queue' => Queue::getCurrentQueue()]);
     }
 
@@ -28,8 +26,7 @@ class QueueController extends Controller
      * @param $patientId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function addToQueue($patientId)
-    {
+    public function addToQueue($patientId) {
         $patient = Patient::find($patientId);
         $queue = Queue::getCurrentQueue();
         if (empty($queue)) {
@@ -53,8 +50,7 @@ class QueueController extends Controller
      * Creates a new Queue
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function createQueue()
-    {
+    public function createQueue() {
         $currentQueue = Queue::getCurrentQueue();
         $this->authorize('create', 'App\Queue');
 
@@ -81,8 +77,7 @@ class QueueController extends Controller
      * Close the current Queue
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function closeQueue()
-    {
+    public function closeQueue() {
         $currentQueue = Queue::getCurrentQueue();
         $this->authorize('close', $currentQueue);
 

@@ -15,14 +15,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
-class DrugController extends Controller
-{
+class DrugController extends Controller {
     /**
      * Get the view to display all the drugs.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getDrugList()
-    {
+    public function getDrugList() {
         $clinic = Clinic::getCurrentClinic();
         $drugs = $clinic->drugs;
         return view('drugs.drugs', ['drugs' => $drugs]);
@@ -34,8 +32,7 @@ class DrugController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getDrug($id)
-    {
+    public function getDrug($id) {
         $drug = Drug::find($id);
         $this->authorize('view', $drug);
         return view('drugs.drug', ['drug' => $drug]);
@@ -47,18 +44,17 @@ class DrugController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function addDrug(Request $request)
-    {
+    public function addDrug(Request $request) {
         $this->authorize('add', 'App\Drug');
 
         //if the user is adding a stock, then the ability to add stocks will also be checked.
         if (!empty($request->quantity)) {
             $this->authorize('add', 'App\Stock');
             $validator = Validator::make($request->all(), [
-                'quantity' => 'required|numeric',
+                'quantity'         => 'required|numeric',
                 'manufacturedDate' => 'required|date|before:' . date('Y-m-d') . '|after:' . date('Y-m-d', strtotime('1900-01-01')),
-                'receivedDate' => 'required|date|before:' . date('Y-m-d', time() + 3600 * 24) . '|after:' . $request->manufacturedDate,
-                'expiryDate' => 'required|date|after:' . date('Y-m-d'),
+                'receivedDate'     => 'required|date|before:' . date('Y-m-d', time() + 3600 * 24) . '|after:' . $request->manufacturedDate,
+                'expiryDate'       => 'required|date|after:' . date('Y-m-d'),
             ]);
             if ($validator->fails()) {
                 return back()->with('type', 'drug')->withErrors($validator)->withInput();
@@ -66,7 +62,7 @@ class DrugController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'drugName' => 'required',
+            'drugName'     => 'required',
             'manufacturer' => 'required',
             'quantityType' => 'required|exists:drug_types,id',
         ]);
@@ -122,8 +118,7 @@ class DrugController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteDrug($id)
-    {
+    public function deleteDrug($id) {
         $drug = Drug::find($id);
         $this->authorize('delete', $drug);
 
@@ -145,13 +140,12 @@ class DrugController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function editDrug($id, Request $request)
-    {
-        $drug=Drug::find($id);
-        $this->authorize('edit',$drug);
+    public function editDrug($id, Request $request) {
+        $drug = Drug::find($id);
+        $this->authorize('edit', $drug);
 
         $validator = Validator::make($request->all(), [
-            'drugName' => 'required',
+            'drugName'     => 'required',
             'manufacturer' => 'required',
             'quantityType' => 'required|exists:drug_types,id',
         ]);
