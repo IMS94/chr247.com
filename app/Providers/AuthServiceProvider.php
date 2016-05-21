@@ -23,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\DosagePeriod' => 'App\Policies\DosagePolicy',
         'App\Prescription' => 'App\Policies\PrescriptionPolicy',
         'App\Queue' => 'App\Policies\QueuePolicy',
+        'App\User' => 'App\Policies\UserPolicy',
     ];
 
     /**

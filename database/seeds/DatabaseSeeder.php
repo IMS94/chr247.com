@@ -33,7 +33,7 @@ class ClinicsTableSeeder extends Seeder
     public function run()
     {
         //create clinics
-        factory(App\Clinic::class, 1)->create();
+        factory(App\Clinic::class, 2)->create();
     }
 }
 

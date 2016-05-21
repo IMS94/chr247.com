@@ -170,6 +170,16 @@ angular.module('HIS', [], function ($interpolateProvider) {
                 }, function (response) {
                     return response.data ? response.data : {status: 0};
                 });
+            },
+
+            getTimezones: function (baseUrl, token, countryCode) {
+                return $http.post(baseUrl + "/API/support/timezones/" + countryCode, {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return [];
+                });
             }
         };
     }]);

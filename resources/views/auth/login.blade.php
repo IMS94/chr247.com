@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title',"HIS | Login")
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -10,15 +12,32 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
 
+                        {{--Success Message--}}
+                        @if(session()->has('success'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                                {{session('success')}}
+                            </div>
+                        @endif
+
+                        {{-- General error message --}}
+                        @if ($errors->has('general'))
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4><i class="icon fa fa-ban"></i> Oops!</h4>
+                                {{ $errors->first('general') }}
+                            </div>
+                        @endif
+
+                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Username</label>
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
+                                <input type="text" class="form-control" name="username" value="{{ old('username') }}">
+                                @if ($errors->has('username'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -26,10 +45,8 @@
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Password</label>
-
                             <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
+                                <input type="password" class="form-control" name="password" value="{{old('password')}}">
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>

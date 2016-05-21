@@ -153,7 +153,7 @@ class APIController extends Controller
             'prescription.id' => 'required',
             'prescription.payment' => 'required|numeric',
             'prescription.prescription_drugs' => 'array',
-            'prescription.prescription_drugs.0.issuedQuantity' => 'numeric'
+            'prescription.prescription_drugs.*.issuedQuantity' => 'numeric'
         ]);
 
         if ($validator->fails()) {

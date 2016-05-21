@@ -2,18 +2,6 @@
 
 /*
 |--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-
-/*
-|--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
 |
@@ -26,6 +14,10 @@
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
+
+    //register clinics
+    Route::get('registerClinic', ['as' => 'registerClinic', 'uses' => 'ClinicController@showRegistrationForm']);
+    Route::post('registerClinic', ['as' => 'registerClinic', 'uses' => 'ClinicController@postRegister']);
 
     /*
      * Routes that require to be authenticated
@@ -144,8 +136,17 @@ Route::group(['middleware' => 'web'], function () {
             //queue
             Route::post('getQueue', 'APIController@getQueue');
             Route::post('updateQueue', 'APIController@updateQueue');
-
         });
+    });
+
+
+    /*
+     * SUPPORT API
+     */
+    Route::group(['prefix' => 'API'], function () {
+        //clinic registration support
+        Route::post('support/timezones/{countryCode}', 'SupportController@getTimezones');
+
     });
 
 });

@@ -24,7 +24,6 @@ $factory->define(App\Clinic::class, function (Faker\Generator $faker) {
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
-        'email' => $faker->unique()->email,
         'username' => $faker->unique()->userName,
         'password' => bcrypt('1234'),
         'role_id' => rand(1, 3)

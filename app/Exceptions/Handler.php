@@ -49,11 +49,11 @@ class Handler extends ExceptionHandler
         Log::info(get_class($e));
         switch ($e) {
             case($e instanceof \App\Exceptions\NotFoundException):
-                return response(view('errors.503'), 404);
+                return response(view('errors.404'), 404);
                 break;
 
             case($e instanceof \Illuminate\Auth\Access\AuthorizationException):
-                return "Unauthorized";
+                return response(view('errors.401'), 401);
                 break;
 
             default:
