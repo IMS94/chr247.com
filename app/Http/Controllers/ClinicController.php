@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
-class ClinicController extends Controller
-{
+class ClinicController extends Controller {
 
     use RegistersUsers;
 
@@ -26,8 +25,7 @@ class ClinicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showRegistrationForm()
-    {
+    public function showRegistrationForm() {
         return view('auth.registerClinic');
     }
 
@@ -37,8 +35,7 @@ class ClinicController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function postRegister(Request $request)
-    {
+    public function postRegister(Request $request) {
         return $this->register($request);
     }
 
@@ -48,8 +45,7 @@ class ClinicController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
-    {
+    public function register(Request $request) {
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
@@ -74,19 +70,18 @@ class ClinicController extends Controller
      * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
+    protected function validator(array $data) {
         return Validator::make($data, [
-            'name' => 'required|max:255|min:3',
-            'email' => 'required|email|max:255|unique:clinics',
-            'address' => 'required|min:6',
-            'phone' => 'required',
-            'country' => 'required|in:' . implode(",", array_keys(Country::$countries)),
-            'timezone' => 'required|timezone',
-            'currency' => 'required',
+            'name'      => 'required|max:255|min:3',
+            'email'     => 'required|email|max:255|unique:clinics',
+            'address'   => 'required|min:6',
+            'phone'     => 'required',
+            'country'   => 'required|in:' . implode(",", array_keys(Country::$countries)),
+            'timezone'  => 'required|timezone',
+            'currency'  => 'required',
             'adminName' => 'required|min:6',
-            'username' => 'required|unique:users',
-            'password' => 'required|confirmed|min:6'
+            'username'  => 'required|unique:users',
+            'password'  => 'required|confirmed|min:6'
         ]);
     }
 
@@ -96,16 +91,15 @@ class ClinicController extends Controller
      * @param  array $data
      * @return Clinic
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data) {
         DB::beginTransaction();
         try {
             $clinic = Clinic::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'address' => $data['address'],
-                'phone' => $data['phone'],
-                'country' => Country::$countries[$data['country']],
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'address'  => $data['address'],
+                'phone'    => $data['phone'],
+                'country'  => Country::$countries[$data['country']],
                 'timezone' => $data['timezone'],
                 'currency' => $data['currency'],
                 'accepted' => false

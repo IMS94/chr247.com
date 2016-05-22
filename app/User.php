@@ -5,15 +5,14 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id', 'username','clinic_id',
+        'name', 'email', 'password', 'role_id', 'username', 'clinic_id',
     ];
 
     /**
@@ -30,8 +29,7 @@ class User extends Authenticatable
      * User's clinic
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function clinic()
-    {
+    public function clinic() {
         return $this->belongsTo('App\Clinic', 'clinic_id', 'id');
     }
 
@@ -39,8 +37,7 @@ class User extends Authenticatable
      * User's role
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function role()
-    {
+    public function role() {
         return $this->belongsTo('App\Role');
     }
 
@@ -48,8 +45,7 @@ class User extends Authenticatable
      * Returns if this user is an admin
      * @return bool
      */
-    public function isAdmin()
-    {
+    public function isAdmin() {
         return $this->role->role === 'Admin';
     }
 
@@ -58,8 +54,7 @@ class User extends Authenticatable
      * Returns if this user is a doctor
      * @return bool
      */
-    public function isDoctor()
-    {
+    public function isDoctor() {
         return $this->role->role === 'Doctor';
     }
 
@@ -67,9 +62,18 @@ class User extends Authenticatable
      * Returns if this user is a nurse
      * @return bool
      */
-    public function isNurse()
-    {
+    public function isNurse() {
         return $this->role->role === 'Nurse';
+    }
+
+
+    /**
+     * Get the e-mail address where password reset links are sent.
+     *
+     * @return string
+     */
+    public function getEmailForPasswordReset() {
+        return $this->clinic->email;
     }
 
 
@@ -77,8 +81,7 @@ class User extends Authenticatable
      * Get the currently signed in user
      * @return mixed
      */
-    public static function getCurrentUser()
-    {
+    public static function getCurrentUser() {
         return Auth::user();
     }
 }
