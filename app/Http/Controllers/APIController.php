@@ -21,14 +21,12 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
-class APIController extends Controller
-{
+class APIController extends Controller {
     /**
      * Get the clinic's drugs
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getDrugs()
-    {
+    public function getDrugs() {
         $clinic = Clinic::getCurrentClinic();
         $data = $clinic->drugs()->orderBy('name')->select('id', 'name', 'quantity')->get()->toArray();
         return response()->json($data);
@@ -39,8 +37,7 @@ class APIController extends Controller
      * Get the Dosages, Frequencies and Periods of the clinic
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getDosages()
-    {
+    public function getDosages() {
         $clinic = Clinic::getCurrentClinic();
         $dosages = $clinic->dosages()->orderBy('description')->select('id', 'description')->get()->toArray();
         $frequencies = $clinic->dosageFrequencies()->orderBy('description')->select('id', 'description')->get()->toArray();
@@ -55,8 +52,7 @@ class APIController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function savePrescription(Request $request)
-    {
+    public function savePrescription(Request $request) {
         $patient = Patient::find($request->id);
         if (empty($patient) || Gate::denies('prescribeMedicine', $patient)) {
             return response()->json(['status' => 0, 'message' => 'Unauthorized action'], 404);
@@ -102,8 +98,7 @@ class APIController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getPrescriptions($id)
-    {
+    public function getPrescriptions($id) {
         $patient = Patient::find($id);
         if (Gate::denies('viewPrescriptions', $patient)) {
             return response()->json(['status' => 0], 404);
@@ -119,8 +114,7 @@ class APIController extends Controller
      * Get the prescriptions to be issued of the clinic.
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAllRemainingPrescriptions()
-    {
+    public function getAllRemainingPrescriptions() {
         if (Gate::denies('issueMedicine', 'App\Patient')) {
             return response()->json(['status' => 0], 404);
         }
@@ -141,18 +135,17 @@ class APIController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function issuePrescription(Request $request)
-    {
+    public function issuePrescription(Request $request) {
         $prescription = Prescription::find($request->prescription['id']);
         if (empty($prescription) || Gate::denies('issuePrescription', $prescription)) {
             return response()->json(['status' => 0], 404);
         }
 
         $validator = Validator::make($request->all(), [
-            'prescription' => 'required',
-            'prescription.id' => 'required',
-            'prescription.payment' => 'required|numeric',
-            'prescription.prescription_drugs' => 'array',
+            'prescription'                                     => 'required',
+            'prescription.id'                                  => 'required',
+            'prescription.payment'                             => 'required|numeric',
+            'prescription.prescription_drugs'                  => 'array',
             'prescription.prescription_drugs.*.issuedQuantity' => 'numeric'
         ]);
 
@@ -162,6 +155,9 @@ class APIController extends Controller
         }
         if ($prescription->issued) {
             return response()->json(['status' => -1, 'message' => "Prescription is already issued"], 200);
+        }
+        if ($prescription->prescriptionDrugs()->count() != count($request->prescription['prescription_drugs'])) {
+            return response()->json(['status' => -1, 'message' => "Invalid prescription"], 403);
         }
 
         DB::beginTransaction();
@@ -206,15 +202,14 @@ class APIController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deletePrescription($id)
-    {
+    public function deletePrescription($id) {
         $prescription = Prescription::find($id);
         if (empty($prescription) || Gate::denies('deletePrescription', $prescription)) {
             return response()->json(['status' => 0, 'message' => 'You are not authorized to delete prescriptions'], 404);
         }
         if ($prescription->issued) {
-            return response()->json(['status' => 0,
-                'message' => "The prescription is already issued. Therefore cannot be deleted"], 500);
+            return response()->json(['status'  => 0,
+                                     'message' => "The prescription is already issued. Therefore cannot be deleted"], 500);
         }
         DB::beginTransaction();
         try {
@@ -236,8 +231,7 @@ class APIController extends Controller
      * @param $patientId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getMedicalRecords($patientId)
-    {
+    public function getMedicalRecords($patientId) {
         $patient = Patient::find($patientId);
         if (Gate::denies('viewMedicalRecords', $patient)) {
             return response()->json(['status' => 0], 404);
@@ -260,8 +254,7 @@ class APIController extends Controller
      * Get the patients in the current queue
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getQueue()
-    {
+    public function getQueue() {
         $queue = Queue::getCurrentQueue();
         if (is_null($queue)) {
             return response()->json(['status' => 1, 'patients' => []]);
@@ -272,8 +265,12 @@ class APIController extends Controller
     }
 
 
-    public function updateQueue(Request $request)
-    {
+    /**
+     * Update the current queue
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateQueue(Request $request) {
         $queue = Queue::getCurrentQueue();
         $patient = Patient::find($request->patient['id']);
         $this->authorize('update', [$queue, $patient]);

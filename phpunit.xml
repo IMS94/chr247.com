@@ -9,8 +9,14 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory>./tests/</directory>
+        <testsuite name="Routing and Views Tests">
+            <directory>./tests/views/</directory>
+        </testsuite>
+        <testsuite name="Controller action tests">
+            <directory>./tests/controllers/</directory>
+        </testsuite>
+        <testsuite name="Database and data integrity tests">
+            <directory>./tests/database/</directory>
         </testsuite>
     </testsuites>
     <filter>

@@ -3,22 +3,20 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePrescriptionsTable extends Migration
-{
+class CreatePrescriptionsTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('patient_id')->unsigned();
-            $table->string('complaints',150)->default(null);
-            $table->string('investigations',150)->default(null);
-            $table->string('diagnosis',150)->default(null);
-            $table->string('remarks',150)->default(null);
+            $table->string('complaints', 150)->nullable()->default(null);
+            $table->string('investigations', 150)->nullable()->default(null);
+            $table->string('diagnosis', 150)->nullable()->default(null);
+            $table->string('remarks', 150)->nullable()->default(null);
             $table->timestamps();
             $table->boolean('issued')->default(false);
             $table->timestamp('issued_at')->default(null);
@@ -34,8 +32,7 @@ class CreatePrescriptionsTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::drop('prescriptions');
     }
 }

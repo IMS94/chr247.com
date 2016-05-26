@@ -14,7 +14,7 @@ class BeforeLoginViewsTest extends TestCase {
     /**
      * Test method to test the Login page
      */
-    public function testLogin() {
+    public function testLoginSuccess() {
         // see the login page
         $this->visit('/')->see('Login');
 
@@ -24,6 +24,24 @@ class BeforeLoginViewsTest extends TestCase {
             ->type($this->password, 'password')
             ->press('Login')
             ->see('Home');
+    }
+
+
+    /**
+     * Login fail test
+     */
+    public function testLoginFailure() {
+        // test with blank fields
+        $this->visit('/')
+            ->press('Login')
+            ->see('The username field is required')
+            ->see('The password field is required');
+
+        $this->visit('/')
+            ->type('none', 'username')
+            ->type('wrong', 'password')
+            ->press('Login')
+            ->see('These credentials do not match our records.');
     }
 
     /**
