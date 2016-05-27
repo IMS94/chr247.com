@@ -116,7 +116,4 @@ class APIControllerTest extends TestCase {
             ->json('POST', 'API/getMedicalRecords/' . $patient->id)
             ->seeJson(['status' => 1]);
     }
-
-
-
 }

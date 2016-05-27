@@ -62,7 +62,7 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         /*
-         * Routes related to the queue
+         * Queue    :   Routes related to the queue
          */
         Route::group(['prefix' => 'queue'], function () {
             Route::get('/', ['as' => 'queue', 'uses' => 'QueueController@viewQueue']);

@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Validator;
 class DosageController extends Controller
 {
 
+    /**
+     * Get dosages as a list
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getDosageList()
     {
         $clinic = Clinic::getCurrentClinic();
