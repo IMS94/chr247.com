@@ -6,10 +6,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class BeforeLoginViewsTest extends TestCase {
 
-    use DatabaseTransactions;
-
-    private $username = 'florian06';
-    private $password = "123456";
+    private $username = 'drew.schamberger';
+    private $password = "1234";
 
     /**
      * Test method to test the Login page
@@ -104,6 +102,13 @@ class BeforeLoginViewsTest extends TestCase {
         $this->type('imesha@highflyer.lk', 'email')
             ->press('Send Password Reset Link')
             ->see('We have e-mailed your password reset link!');
+    }
 
+    public function testDeleteClinic() {
+        $clinic = \App\Clinic::where('email', 'imesha@highflyer.lk')->first();
+        $clinic->users()->delete();
+        $clinic->delete();
+
+        $this->dontSeeInDatabase('clinics', ['id' => $clinic->id]);
     }
 }

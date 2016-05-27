@@ -101,13 +101,11 @@ class DrugController extends Controller {
                 $drug->quantity = $drug->quantity + $request->quantity;
                 $drug->update();
             }
-
         } catch (\Exception $e) {
             DB::rollback();
             $validator->getMessageBag()->add('general', 'Drug already exists or Stock data is incorrect');
             return back()->with('type', 'drug')->withInput()->withErrors($validator);
         }
-
         DB::commit();
         return back()->with('success', "Drug added successfully !");
     }
@@ -172,6 +170,6 @@ class DrugController extends Controller {
             return back()->withInput()->withErrors($validator);
         }
         DB::commit();
-        return back()->with('type', 'drug')->with('success', "Drug added successfully !");
+        return back()->with('type', 'drug')->with('success', "Drug updated successfully !");
     }
 }

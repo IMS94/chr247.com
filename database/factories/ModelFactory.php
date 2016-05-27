@@ -61,8 +61,8 @@ $factory->define(App\Stock::class, function (Faker\Generator $faker) {
     return [
         'manufactured_date' => $faker->dateTimeThisDecade()->format('Y-m-d'),
         'received_date' => $faker->dateTimeThisMonth()->format('Y-m-d'),
-        'expiry_date' => date('Y-m-d', time() + $faker->randomNumber()),
-        'quantity' => $faker->numberBetween(100, 2000),
+        'expiry_date' => date('Y-m-d', time() + $faker->randomNumber(7)),
+        'quantity' => $faker->numberBetween(100, 1000),
         'remarks' => $faker->realText(),
     ];
 });

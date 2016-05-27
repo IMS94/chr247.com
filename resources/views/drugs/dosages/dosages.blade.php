@@ -2,7 +2,7 @@
 
 
 @section('page_header')
-    Drugs
+    Dosages
 @endsection
 
 
