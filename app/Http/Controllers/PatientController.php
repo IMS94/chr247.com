@@ -15,14 +15,12 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 
-class PatientController extends Controller
-{
+class PatientController extends Controller {
     /**
      * Get the patients list
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getPatientList()
-    {
+    public function getPatientList() {
         $clinic = Clinic::getCurrentClinic();
         $patients = $clinic->patients;
         return view('patients.patients', ['patients' => $patients]);
@@ -34,16 +32,16 @@ class PatientController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function addPatient(Request $request)
-    {
+    public function addPatient(Request $request) {
         $validator = Validator::make($request->all(), [
-            'firstName' => 'required',
-            'gender' => 'required|in:Male,Female',
-            'nic' => 'regex:/[0-9]{9}[vV]/',
+            'firstName'  => 'required',
+            'gender'     => 'required|in:Male,Female',
+            'nic'        => 'regex:/[0-9]{9}[vV]/',
             'bloodGroup' => 'required|in:A +,A -,B +,B -,AB +,AB -,O +,O -,N/A'
         ]);
 
         if ($validator->fails()) {
+            Log::error($validator->errors());
             return back()->with('type', 'patient')->withErrors($validator)->withInput();
         }
 
@@ -54,6 +52,7 @@ class PatientController extends Controller
          */
         if (!empty($request->nic) && $clinic->patients()->where('nic', $request->nic)->count() > 0) {
             $validator->getMessageBag()->add('nic', 'A patient with this NIC already exists');
+            Log::error($validator->errors());
             return back()->with('type', 'patient')->withInput()->withErrors($validator);
         }
 
@@ -73,7 +72,7 @@ class PatientController extends Controller
         $patient->remarks = $request->remarks ?: null;
 
         try {
-            $patient->user()->associate(Auth::user());
+            $patient->creator()->associate(Auth::user());
             $patient->clinic()->associate($clinic);
             $patient->save();
         } catch (Exception $e) {
@@ -94,8 +93,7 @@ class PatientController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws NotFoundException
      */
-    public function editPatient($id, Request $request)
-    {
+    public function editPatient($id, Request $request) {
         $patient = Patient::find($id);
         if (empty($patient)) {
             throw new NotFoundException("Patient Not Found");
@@ -103,9 +101,9 @@ class PatientController extends Controller
         $this->authorize('edit', $patient);
 
         $validator = Validator::make($request->all(), [
-            'firstName' => 'required',
-            'gender' => 'required|in:Male,Female',
-            'nic' => 'regex:/[0-9]{9}[vV]/',
+            'firstName'  => 'required',
+            'gender'     => 'required|in:Male,Female',
+            'nic'        => 'regex:/[0-9]{9}[vV]/',
             'bloodGroup' => 'required|in:A +,A -,B +,B -,AB +,AB -,O +,O -,N/A'
         ]);
 
@@ -157,8 +155,7 @@ class PatientController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws NotFoundException
      */
-    public function getPatient($id)
-    {
+    public function getPatient($id) {
         $patient = Patient::find($id);
         if (empty($patient)) {
             throw new NotFoundException("Patient Not Found");
@@ -175,8 +172,7 @@ class PatientController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws NotFoundException
      */
-    public function deletePatient($id)
-    {
+    public function deletePatient($id) {
         $patient = Patient::find($id);
         if (empty($patient)) {
             throw new NotFoundException("Patient Not Found");
