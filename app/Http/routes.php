@@ -46,7 +46,6 @@ Route::group(['middleware' => 'web'], function () {
         // Issue Medicine
         Route::get('issueMedicine', ['as' => 'issueMedicine', 'uses' => 'PrescriptionController@viewIssueMedicine']);
 
-
         /*
          * SETTINGS
          */
@@ -58,7 +57,6 @@ Route::group(['middleware' => 'web'], function () {
             // Routes to compensate the get methods of post requests
             Route::get('changePassword', ['uses' => 'SettingsController@viewSettings']);
             Route::get('createAccount', ['uses' => 'SettingsController@viewSettings']);
-
         });
 
         /*
