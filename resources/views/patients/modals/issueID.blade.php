@@ -28,7 +28,7 @@
                                     <small>{{$patient->address}}</small>
                                 </h4>
                                 <?php
-                                $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+                                $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
                                 ?>
                                 <div class="row">
                                     <div class="col-md-8 col-md-offset-4">
