@@ -11,7 +11,8 @@
     "php": ">=5.5.9",
     "laravel/framework": "5.2.*",
     "guzzlehttp/guzzle": "~5.3|~6.0",
-    "barryvdh/laravel-ide-helper": "^2.1"
+    "barryvdh/laravel-ide-helper": "^2.1",
+    "picqer/php-barcode-generator": "^0.2.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

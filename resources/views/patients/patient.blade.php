@@ -40,7 +40,7 @@
             @endcan
 
             @can('issueID',$patient)
-            <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#addPatientModal">
+            <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#issueIDModal">
                 <i class="fa fa-tag fa-lg"></i> Issue ID
             </button>
             @endcan
@@ -137,4 +137,10 @@
     @can('edit',$patient)
     @include('patients.modals.editPatient')
     @endcan
+
+    {{--Add the issue ID modal, if the user can issue IDs--}}
+    @can('issueID',$patient)
+    @include('patients.modals.issueID')
+    @endcan
+
 @endsection
