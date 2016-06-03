@@ -77,7 +77,7 @@
                                 <div class="col-sm-12">
                                     <select id="prescriptionDrug" class="form-control" size="6" ng-model="drug">
                                         <option value="">None</option>
-                                        <option ng-repeat="drug in drugs" value="[[drug.id]]">
+                                        <option ng-repeat="drug in drugs" value="[[drug.id]]" ng-cloak>
                                             [[drug.name]] [[drug.quantity | number:0]]
                                         </option>
                                     </select>
@@ -91,7 +91,8 @@
                                 <div class="col-sm-12">
                                     <select id="prescriptionDose" class="form-control" size="6" ng-model="dosage">
                                         <option value="">None</option>
-                                        <option ng-repeat="dose in dosages track by dose.id" value="[[dose.id]]">
+                                        <option ng-repeat="dose in dosages track by dose.id" value="[[dose.id]]"
+                                                ng-cloak>
                                             [[dose.description]]
                                         </option>
                                     </select>
@@ -104,8 +105,7 @@
                                     <select id="prescriptionFrequency" class="form-control" size="6"
                                             ng-model="frequency">
                                         <option value="">None</option>
-                                        <option ng-repeat="f in frequencies track by f.id"
-                                                value="[[f.id]]">
+                                        <option ng-repeat="f in frequencies track by f.id" value="[[f.id]]" ng-cloak>
                                             [[f.description]]
                                         </option>
                                     </select>
@@ -117,7 +117,7 @@
                                 <div class="col-sm-12">
                                     <select id="prescriptionPeriod" class="form-control" size="6" ng-model="period">
                                         <option value="">None</option>
-                                        <option ng-repeat="p in periods track by p.id" value="[[p.id]]">
+                                        <option ng-repeat="p in periods track by p.id" value="[[p.id]]" ng-cloak>
                                             [[p.description]]
                                         </option>
                                     </select>
