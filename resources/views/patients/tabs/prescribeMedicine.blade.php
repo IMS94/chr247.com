@@ -66,8 +66,7 @@
 
                     <div class="box-body">
 
-                        <div class="alert alert-danger alert-dismissable" ng-show="hasDrugError" ng-cloak>
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <div class="alert alert-danger" ng-show="hasDrugError" ng-cloak>
                             <h4><i class="icon fa fa-ban"></i> Oops!</h4>
                             [[error]]
                         </div>
@@ -128,7 +127,10 @@
                     </div>
 
                     <div class="box-footer">
-                        <button class="btn btn-success btn-lg pull-right" ng-click="add()">
+                        <button class="btn bg-gray btn-lg btn-flat pull-left" data-toggle="modal"
+                                data-target="#addPharmacyDrugsModal"> Pharmacy Drugs
+                        </button>
+                        <button class="btn btn-success btn-lg btn-flat pull-right" ng-click="add()">
                             Add
                         </button>
                     </div>
@@ -166,7 +168,35 @@
                             </tbody>
                         </table>
 
-                        <div class="alert bg-success" ng-if="prescribedDrugs.length==0" ng-cloak>
+                        {{--table to show pharmacy drugs--}}
+                        <h4 ng-if="pharmacyDrugs.length>0">Pharmacy Drugs</h4>
+                        <table class="table table-condensed table-bordered table-hover text-center"
+                               ng-if="pharmacyDrugs.length>0">
+                            <thead>
+                            <tr class="success">
+                                <th>Drug Name</th>
+                                <th>Remarks</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="d in pharmacyDrugs track by $index" class="success" ng-cloak>
+                                <td>[[d.name]]</td>
+                                <td>
+                                    [[d.remarks]]
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger" ng-click="removePharmacyDrug([[$index]])">
+                                        <i class="fa fa-recycle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                        <div class="alert bg-success" ng-if="prescribedDrugs.length==0 && pharmacyDrugs.length==0"
+                             ng-cloak>
                             No Drugs Prescribed!
                         </div>
                     </div>
@@ -189,6 +219,10 @@
                 Cancel Prescription
             </button>
         </div>
+
+        {{--Modal to add pharmacy Drugs--}}
+        @include('patients.modals.addPharmacyDrugs')
+
     </div>
     {{--/Main Box--}}
 </div>

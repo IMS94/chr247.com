@@ -84,6 +84,9 @@ $factory->define(App\Prescription::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\PrescriptionDrug::class, function (Faker\Generator $faker) {
-    return [];
+$factory->define(App\PrescriptionPharmacyDrug::class, function (Faker\Generator $faker) {
+    return [
+        'drug'    => $faker->word,
+        'remarks' => $faker->sentence()
+    ];
 });

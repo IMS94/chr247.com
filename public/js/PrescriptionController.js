@@ -8,6 +8,7 @@ angular.module('HIS')
 
             //things to be submitted
             $scope.prescribedDrugs = [];
+            $scope.pharmacyDrugs = [];
             $scope.complaints = "";
             $scope.investigations = "";
             $scope.diagnosis = "";
@@ -142,7 +143,8 @@ angular.module('HIS')
                     $scope.showError("At least one of diagnosis and presenting complaints has to be filled");
                     return;
                 }
-                if ($scope.prescribedDrugs.length == 0 && !$window.confirm("You haven't added any drugs in the prescription. Do you wish to proceed?")) {
+                if ($scope.prescribedDrugs.length == 0 && $scope.pharmacyDrugs.length == 0
+                    && !$window.confirm("You haven't added any drugs in the prescription. Do you wish to proceed?")) {
                     return;
                 }
                 $scope.submitted = true;
@@ -153,6 +155,7 @@ angular.module('HIS')
                     diagnosis: $scope.diagnosis,
                     remarks: $scope.remarks,
                     prescribedDrugs: $scope.prescribedDrugs,
+                    pharmacyDrugs: $scope.pharmacyDrugs,
                     _token: $scope.token
                 };
                 //call the api to save prescription and if successful, clear prescription
@@ -201,10 +204,44 @@ angular.module('HIS')
              */
             $scope.clearPrescription = function () {
                 $scope.prescribedDrugs = [];
+                $scope.pharmacyDrugs = [];
+                $scope.pharmacyDrug = "";
+                $scope.pharmacyDrugRemarks = "";
                 $scope.complaints = "";
                 $scope.investigations = "";
                 $scope.diagnosis = "";
                 $scope.remarks = "";
+            };
+
+            /**
+             * =======================================================
+             * HANDLING PHARMACY DRUGS
+             * =======================================================
+             */
+
+            /**
+             * Adds a pharmacy drug to the prescription
+             */
+            $scope.addPharmacyDrug = function () {
+                var results = $filter('filter')($scope.pharmacyDrugs, {name: $scope.pharmacyDrug}, false);
+                if (results.length > 0) {
+                    console.log("Drug already added!");
+                    return;
+                }
+                $scope.pharmacyDrugs.push({
+                    name: $scope.pharmacyDrug,
+                    remarks: $scope.pharmacyDrugRemarks
+                });
+                $scope.pharmacyDrug = "";
+                $scope.pharmacyDrugRemarks = "";
+            };
+
+            /**
+             * Remove a pharmacy drug from the list
+             * @param index
+             */
+            $scope.removePharmacyDrug = function (index) {
+                $scope.pharmacyDrugs.splice(index, 1);
             };
 
         }]);

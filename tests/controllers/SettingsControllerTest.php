@@ -49,15 +49,16 @@ class SettingsControllerTest extends TestCase {
         $newUser = factory(App\User::class, 1)->make();
         $response = $this->actingAs($this->adminUser)
             ->call('POST', 'settings/createAccount', [
-                'user_name'     => $newUser->name,
-                'user_username' => $newUser->username,
-                'user_role'     => $newUser->role_id,
-                'user_password' => "123456"
+                'user_name'                  => $newUser->name,
+                'user_username'              => $newUser->username,
+                'user_role'                  => $newUser->role_id,
+                'user_password'              => "123456",
+                'user_password_confirmation' => '123456'
             ]);
         if ($newUser->role_id == 1) {
             $this->assertSessionHas("errors");
         } else {
-            $this->assertResponseOk();
+            $this->assertSessionHas("success");
             $this->seeInDatabase('users', ['username' => $newUser->username]);
         }
 

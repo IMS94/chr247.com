@@ -2,15 +2,13 @@
 
 use Illuminate\Database\Seeder;
 
-class PrescriptionSeeder extends Seeder
-{
+class PrescriptionSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
-    {
+    public function run() {
 
         foreach (\App\Clinic::all() as $clinic) {
             foreach ($clinic->users as $user) {
@@ -62,6 +60,14 @@ class PrescriptionSeeder extends Seeder
                                 }
                                 $prescriptionDrug->save();
                             }
+
+                            $drugCount = rand(0, 3);
+                            for ($x = 0; $x < $drugCount; $x++) {
+                                $pharmacyDrug = factory('App\PrescriptionPharmacyDrug', 1)->make();
+                                $pharmacyDrug->prescription()->associate($prescription);
+                                $pharmacyDrug->save();
+                            }
+
                             if ($prescription->issued) {
                                 $payment = new \App\Payment();
                                 $payment->amount = rand(100, 1000);

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class BeforeLoginViewsTest extends TestCase {
 
-    private $username = 'drew.schamberger';
+    private $username = 'imesha';
     private $password = "1234";
 
     /**
@@ -75,7 +75,7 @@ class BeforeLoginViewsTest extends TestCase {
         //register a clinic and check if the clinic registers correctly
         $response = $this->call('POST', '/registerClinic', [
             'name'                  => 'Admin\'s Clinic',
-            'email'                 => 'imesha@highflyer.lk',
+            'email'                 => 'imesha4450@gmail.com',
             'address'               => '24, Divulapitiya',
             'phone'                 => '0717086160',
             'country'               => 'LK',
@@ -87,7 +87,7 @@ class BeforeLoginViewsTest extends TestCase {
             'password_confirmation' => '123456'
         ]);
 
-        $this->seeInDatabase('clinics', ['email' => 'imesha@highflyer.lk']);
+        $this->seeInDatabase('clinics', ['email' => 'imesha4450@gmail.com']);
     }
 
     /**
@@ -105,7 +105,7 @@ class BeforeLoginViewsTest extends TestCase {
     }
 
     public function testDeleteClinic() {
-        $clinic = \App\Clinic::where('email', 'imesha@highflyer.lk')->first();
+        $clinic = \App\Clinic::where('email', 'imesha4450@gmail.com')->first();
         $clinic->users()->delete();
         $clinic->delete();
 

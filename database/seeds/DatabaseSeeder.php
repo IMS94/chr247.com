@@ -2,15 +2,13 @@
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
-{
+class DatabaseSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
-    {
+    public function run() {
         $this->call(RolesTableSeeder::class);
 
         $this->call(ClinicsTableSeeder::class);
@@ -28,12 +26,13 @@ class DatabaseSeeder extends Seeder
 /**
  * Class ClinicsTableSeeder
  */
-class ClinicsTableSeeder extends Seeder
-{
-    public function run()
-    {
+class ClinicsTableSeeder extends Seeder {
+    public function run() {
         //create clinics
-        factory(App\Clinic::class, 2)->create();
+        $clinic = factory(App\Clinic::class, 1)->create(['email' => 'imesha@highflyer.lk', 'accepted' => true]);
+        $user = factory(App\User::class)->make(['username' => 'imesha', 'name' => 'Imesha Sudasingha', 'role_id' => 1]);
+        $clinic->users()->save($user);
+        factory(App\Clinic::class, 1)->create();
     }
 }
 
@@ -41,10 +40,8 @@ class ClinicsTableSeeder extends Seeder
 /**
  * Class RolesTableSeeder
  */
-class RolesTableSeeder extends Seeder
-{
-    public function run()
-    {
+class RolesTableSeeder extends Seeder {
+    public function run() {
         $role = new \App\Role();
         $role->role = "Admin";
         $role->save();
@@ -63,10 +60,8 @@ class RolesTableSeeder extends Seeder
 /**
  * Class DosagesSeeder
  */
-class DosagesSeeder extends Seeder
-{
-    public function run()
-    {
+class DosagesSeeder extends Seeder {
+    public function run() {
         foreach (\App\Clinic::all() as $clinic) {
             $user = $clinic->users()->first();
             $dosages = [
@@ -108,10 +103,8 @@ class DosagesSeeder extends Seeder
 /**
  * Class UserTableSeeder
  */
-class UserTableSeeder extends Seeder
-{
-    public function run()
-    {
+class UserTableSeeder extends Seeder {
+    public function run() {
         foreach (\App\Clinic::all() as $clinic) {
             //create users of the clinic
             factory(App\User::class, 3)->make()->each(function (App\User $user) use ($clinic) {

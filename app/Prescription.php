@@ -45,6 +45,14 @@ class Prescription extends Model
     }
 
     /**
+     * Get the pharmacy drugs in this prescription.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function prescriptionPharmacyDrugs(){
+        return $this->hasMany('App\PrescriptionPharmacyDrug','prescription_id','id');
+    }
+
+    /**
      * Get the payment of this prescription
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -43,7 +43,8 @@ class APIControllerTest extends TestCase {
                 'complaints'      => "Fever",
                 'id'              => $patient->id,
                 'diagnosis'       => 'Fever',
-                'prescribedDrugs' => []
+                'prescribedDrugs' => [],
+                'pharmacyDrugs'   => []
             ])
             ->seeJson(['status' => 1])
             ->seeInDatabase('prescriptions', ['patient_id' => $patient->id, 'complaints' => 'Fever', 'diagnosis' => 'Fever']);

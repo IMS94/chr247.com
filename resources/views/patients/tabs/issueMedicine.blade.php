@@ -38,7 +38,8 @@
                 [[error]]
             </div>
 
-            <table class="table table-hover table-condensed table-bordered text-center">
+            <table class="table table-hover table-condensed table-bordered text-center"
+                   ng-if="prescription.prescription_drugs.length>0">
                 <thead>
                 <tr class="success">
                     <th class="col-sm-4">Drug</th>
@@ -57,6 +58,27 @@
                     <td>
                         <input class="form-control" type="number" step="0.01"
                                ng-model="prescribedDrug.issuedQuantity" min="0">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            {{--table to show pharmacy drugs--}}
+            <h4 ng-if="prescription.prescription_pharmacy_drugs.length>0">Pharmacy Drugs</h4>
+            <table class="table table-condensed table-bordered table-hover text-center"
+                   ng-if="prescription.prescription_pharmacy_drugs.length>0">
+                <thead>
+                <tr class="success">
+                    <th>Drug Name</th>
+                    <th>Remarks</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="drug in prescription.prescription_pharmacy_drugs track by $index" class="success"
+                    ng-cloak>
+                    <td>[[drug.drug]]</td>
+                    <td>
+                        [[drug.remarks]]
                     </td>
                 </tr>
                 </tbody>

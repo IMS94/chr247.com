@@ -52,6 +52,10 @@ class Handler extends ExceptionHandler {
                 return response(view('errors.401'), 401);
                 break;
 
+            case($e instanceof ValidationException):
+                return parent::render($request, $e);
+                break;
+
             default:
                 return response(view('errors.error'), 500);
                 break;

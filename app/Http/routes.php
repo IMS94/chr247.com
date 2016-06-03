@@ -23,7 +23,6 @@ Route::group(['middleware' => 'web'], function () {
      * Routes that require to be authenticated
      */
     Route::group(['middleware' => 'auth'], function () {
-
         /*
          * Dashboard
          * The data required for the dashboard will be returned from this function

@@ -11,6 +11,7 @@ use App\Patient;
 use App\Payment;
 use App\Prescription;
 use App\PrescriptionDrug;
+use App\PrescriptionPharmacyDrug;
 use App\Queue;
 use App\User;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
+use \Log;
 use Illuminate\Support\Facades\Validator;
 
 class APIController extends Controller {
@@ -83,8 +84,15 @@ class APIController extends Controller {
                 $prescription->prescriptionDrugs()->save($drug);
             }
 
+            //save the pharmacy drugs
+            foreach ($request->pharmacyDrugs as $pharmacyDrug) {
+                $drug = new PrescriptionPharmacyDrug();
+                $drug->drug = $pharmacyDrug['name'];
+                $drug->remarks = $pharmacyDrug['remarks'];
+                $prescription->prescriptionPharmacyDrugs()->save($drug);
+            }
         } catch (\Exception $e) {
-            Log::info($e->getMessage());
+            Log::error($e->getMessage());
             DB::rollback();
             return response()->json(['status' => 0], 500);
         }
@@ -105,7 +113,7 @@ class APIController extends Controller {
         }
 
         $prescriptions = $patient->prescriptions()->where('issued', false)
-            ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency',
+            ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency', 'prescriptionPharmacyDrugs',
                 'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType')->get();
         return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
     }
@@ -123,7 +131,7 @@ class APIController extends Controller {
         Log::info($clinic->patients()->count());
         $prescriptions = Prescription::whereIn('patient_id', $clinic->patients()->lists('id'))
             ->where('issued', false)->orderBy('id')
-            ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency',
+            ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency', 'prescriptionPharmacyDrugs',
                 'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType', 'patient')->get();
         return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
     }
@@ -215,9 +223,11 @@ class APIController extends Controller {
         try {
 //            if($prescription->prescriptionDrugs()->count()>0) {
             $prescription->prescriptionDrugs()->delete();
+            $prescription->prescriptionPharmacyDrugs()->delete();
 //            }
             $prescription->delete();
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             DB::rollback();
             return response()->json(['status' => 0, 'message' => $e->getMessage()], 500);
         }
@@ -238,7 +248,7 @@ class APIController extends Controller {
         }
 
         $prescriptions = $patient->prescriptions()->where('issued', true)->orderBy('issued_at')
-            ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency',
+            ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency', 'prescriptionPharmacyDrugs',
                 'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType',
                 'payment')->get();
         return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
@@ -248,7 +258,6 @@ class APIController extends Controller {
     /*
      * ================= Queue Management ============================
      */
-
 
     /**
      * Get the patients in the current queue
