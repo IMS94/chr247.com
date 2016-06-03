@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler {
                 return response(view('errors.404'), 404);
                 break;
 
-            case($e instanceof \Illuminate\Auth\Access\AuthorizationException):
+            case($e instanceof AuthorizationException):
                 return response(view('errors.401'), 401);
                 break;
 
