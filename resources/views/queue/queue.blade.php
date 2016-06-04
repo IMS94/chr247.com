@@ -81,14 +81,12 @@
 
             @else
                 {{-- Info message if there are patients in the queue --}}
-                <div class="alert alert-info alert-dismissable" ng-if="patients.length==0" ng-cloak>
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <div class="alert alert-info" ng-if="patients.length==0" ng-cloak>
                     <h4><i class="icon fa fa-info"></i> Sorry!</h4>
                     No Patient in the queue at the moment.
                 </div>
 
-                <div class="alert alert-danger alert-dismissable" ng-show="hasError" ng-cloak>
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <div class="alert alert-danger" ng-show="hasError" ng-cloak>
                     <h4><i class="icon fa fa-ban"></i> Oops!</h4>
                     [[error]]
                 </div>

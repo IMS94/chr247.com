@@ -9,14 +9,12 @@
         {{--Main Box Body--}}
         <div class="box-body">
 
-            <div class="alert alert-danger alert-dismissable" ng-show="hasError" ng-cloak>
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <div class="alert alert-danger" ng-show="hasError" ng-cloak>
                 <h4><i class="icon fa fa-ban"></i> Oops!</h4>
                 [[error]]
             </div>
 
-            <div class="alert alert-success alert-dismissable" ng-show="hasSuccess" ng-cloak>
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <div class="alert alert-success" ng-show="hasSuccess" ng-cloak>
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
                 Prescription saved successfully.
             </div>

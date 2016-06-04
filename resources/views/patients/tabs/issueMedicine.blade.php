@@ -5,16 +5,14 @@
            ng-init="baseUrl='{{url("/")}}';id={{$patient->id}};token='{{csrf_token()}}';loadPrescriptions()">
 
     {{--Success Mesage--}}
-    <div class="alert alert-success alert-dismissable" ng-show="hasSuccess" ng-cloak>
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <div class="alert alert-success" ng-show="hasSuccess" ng-cloak>
         <h4><i class="icon fa fa-check"></i> Success!</h4>
         [[successMessage]]
     </div>
 
 
     {{-- Info message if there are no prescriptions to be issued --}}
-    <div class="alert alert-info alert-dismissable" ng-if="prescriptions.length==0" ng-cloak>
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <div class="alert alert-info" ng-if="prescriptions.length==0" ng-cloak>
         <h4><i class="icon fa fa-info"></i> Sorry!</h4>
         No Prescription to be issued for this patient.
     </div>
