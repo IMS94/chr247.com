@@ -44,7 +44,8 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                Health Informatic Systems
+                Health Informatics System
+                <small>Beta</small>
             </a>
         </div>
 

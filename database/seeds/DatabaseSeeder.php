@@ -9,7 +9,8 @@ class DatabaseSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        $this->call(RolesTableSeeder::class);
+        // Roles moved to the migrations.
+        // $this->call(RolesTableSeeder::class);
 
         $this->call(ClinicsTableSeeder::class);
         $this->call(UserTableSeeder::class);
@@ -33,26 +34,6 @@ class ClinicsTableSeeder extends Seeder {
         $user = factory(App\User::class)->make(['username' => 'imesha', 'name' => 'Imesha Sudasingha', 'role_id' => 1]);
         $clinic->users()->save($user);
         factory(App\Clinic::class, 1)->create();
-    }
-}
-
-
-/**
- * Class RolesTableSeeder
- */
-class RolesTableSeeder extends Seeder {
-    public function run() {
-        $role = new \App\Role();
-        $role->role = "Admin";
-        $role->save();
-
-        $role = new \App\Role();
-        $role->role = "Doctor";
-        $role->save();
-
-        $role = new \App\Role();
-        $role->role = "Nurse";
-        $role->save();
     }
 }
 

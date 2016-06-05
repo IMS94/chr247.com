@@ -99,7 +99,6 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('deleteDrug/{id}', ['as' => 'deleteDrug', 'uses' => 'DrugController@deleteDrug']);
             Route::post('editDrug/{id}', ['as' => 'editDrug', 'uses' => 'DrugController@editDrug']);
 
-
             /*
              * Stocks
              */
@@ -158,6 +157,20 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('support/timezones/{countryCode}', 'SupportController@getTimezones');
 
     });
+
+
+    /**
+     * ==================================================================================
+     * Admin Section    -    The section which manage all the clinics and similar functions
+     * ==================================================================================
+     */
+    Route::group(['prefix' => 'Admin'], function () {
+        Route::get("login", 'Auth\AdminAuthController@getLogin');
+        Route::post("login", 'Auth\AdminAuthController@postLogin');
+
+        Route::get('/','AdminController@index');
+    });
+
 
 });
 
