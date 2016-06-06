@@ -19,8 +19,29 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('registerClinic', ['as' => 'registerClinic', 'uses' => 'ClinicController@showRegistrationForm']);
     Route::post('registerClinic', ['as' => 'registerClinic', 'uses' => 'ClinicController@postRegister']);
 
+
+    /**
+     * ==================================================================================
+     * Admin Section    -    The section which manage all the clinics and similar functions
+     * ==================================================================================
+     */
+    Route::get("Admin/login", 'Auth\AdminAuthController@getLogin');
+    Route::post("Admin/login", 'Auth\AdminAuthController@postLogin');
+
     /*
-     * Routes that require to be authenticated
+     * Auth routes of the admin
+     */
+    Route::group(['middleware' => 'auth:admin', 'prefix' => 'Admin'], function () {
+        Route::get('/', ['uses' => 'AdminController@index']);
+        Route::get('acceptClinic/{id}', ['as' => 'acceptClinic', 'uses' => 'AdminController@acceptClinic']);
+        Route::get('logout', ['as' => 'adminLogout', 'uses' => 'Auth\AdminAuthController@getLogout']);
+    });
+
+
+    /**
+     * =================================================================================
+     * Normal User Section  -   Routes for the normal users
+     * =================================================================================
      */
     Route::group(['middleware' => 'auth'], function () {
         /*
@@ -157,22 +178,5 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('support/timezones/{countryCode}', 'SupportController@getTimezones');
 
     });
-
-
-    /**
-     * ==================================================================================
-     * Admin Section    -    The section which manage all the clinics and similar functions
-     * ==================================================================================
-     */
-    Route::group(['prefix' => 'Admin'], function () {
-        Route::get("login", 'Auth\AdminAuthController@getLogin');
-        Route::post("login", 'Auth\AdminAuthController@postLogin');
-
-        Route::get('/acceptClinics', ['uses' => 'AdminController@index']);
-        Route::get('acceptClinic/{id}', ['as' => 'acceptClinic', 'uses' => 'AdminController@acceptClinic']);
-        Route::get('logout', ['as' => 'adminLogout', 'uses' => 'Auth\AdminAuthController@getLogout']);
-    });
-
-
 });
 

@@ -8,7 +8,9 @@
         <div class="container-fluid">
             <a href="{{route('adminLogout')}}" class="btn btn-primary">Logout</a>
         </div>
+
         <br>
+        <h4>Clinics To Be Accepted</h4>
 
         @if(session()->has('success'))
             <div class="alert alert-success alert-dismissable">
