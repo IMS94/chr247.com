@@ -168,7 +168,9 @@ Route::group(['middleware' => 'web'], function () {
         Route::get("login", 'Auth\AdminAuthController@getLogin');
         Route::post("login", 'Auth\AdminAuthController@postLogin');
 
-        Route::get('/','AdminController@index');
+        Route::get('/', ['uses' => 'AdminController@index']);
+        Route::get('acceptClinic/{id}', ['as' => 'acceptClinic', 'uses' => 'AdminController@acceptClinic']);
+        Route::get('logout', ['as' => 'adminLogout', 'uses' => 'Auth\AdminAuthController@getLogout']);
     });
 
 

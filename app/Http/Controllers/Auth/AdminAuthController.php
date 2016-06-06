@@ -54,6 +54,13 @@ class AdminAuthController extends Controller {
     protected $redirectTo = 'Admin/';
 
     /**
+     * After Logout
+     *
+     * @var string
+     */
+    protected $redirectAfterLogout = "Admin/login";
+
+    /**
      * AuthController constructor.
      */
     public function __construct() {
