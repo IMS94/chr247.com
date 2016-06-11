@@ -31,8 +31,8 @@ Route::group(['middleware' => 'web'], function () {
     /*
      * Auth routes of the admin
      */
-    Route::group(['middleware' => 'auth:admin', 'prefix' => 'Admin'], function () {
-        Route::get('/', ['uses' => 'AdminController@index']);
+    Route::group(['middleware' => 'admin', 'prefix' => 'Admin'], function () {
+        Route::get('admin', ['uses' => 'AdminController@index']);
         Route::get('acceptClinic/{id}', ['as' => 'acceptClinic', 'uses' => 'AdminController@acceptClinic']);
         Route::get('logout', ['as' => 'adminLogout', 'uses' => 'Auth\AdminAuthController@getLogout']);
     });
