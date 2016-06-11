@@ -50,7 +50,7 @@ class AdminAuthController extends Controller {
      *
      * @var string
      */
-    protected $redirectTo = 'Admin/';
+    protected $redirectTo = 'Admin/admin';
 
     /**
      * After Logout

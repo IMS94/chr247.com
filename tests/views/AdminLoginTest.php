@@ -18,4 +18,9 @@ class AdminLoginTest extends TestCase {
             ->seePageIs("Admin")
             ->see("Clinics To Be Accepted");
     }
+
+    public function testAdminURLAccess() {
+        $this->visit("Admin")
+            ->see("Login");
+    }
 }
