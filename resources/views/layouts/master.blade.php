@@ -21,7 +21,7 @@ $user = \App\User::getCurrentUser();
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.css')}}">
+    <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
     <!-- Custom styles -->
     <link rel="stylesheet" href="{{asset('dist/css/style.css')}}">
 
