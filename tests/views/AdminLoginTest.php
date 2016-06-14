@@ -15,12 +15,12 @@ class AdminLoginTest extends TestCase {
         $this->type($this->username, 'username')
             ->type($this->password, 'password')
             ->press("Login")
-            ->seePageIs("Admin")
+            ->seePageIs("Admin/admin")
             ->see("Clinics To Be Accepted");
     }
 
     public function testAdminURLAccess() {
-        $this->visit("Admin")
+        $this->visit("Admin/admin")
             ->see("Login");
     }
 }

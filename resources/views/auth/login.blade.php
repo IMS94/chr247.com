@@ -6,7 +6,7 @@
 
     <div class="container-fluid">
 
-        <div class="row container-fluid">
+        <div class="row">
             <div class="alert alert-success alert-dismissable wow bounceInDown" data-wow-delay="1s">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
                 </button>
@@ -20,10 +20,10 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-xs-12 container-fluid">
+            <div class="col-md-6 col-xs-12 container-fluid bg-black-gradient">
                 <div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
-                    <div id="carousel-example-generic" class="carousel slide wow rotateIn" data-ride="carousel">
-                        <?php $files = Storage::disk('public')->allFiles("images");?>
+                    <div id="carousel-example-generic" class="carousel slide wow rotateIn margin" data-ride="carousel">
+                        <?php $files = Storage::disk('global_public')->allFiles("images");?>
                                 <!-- Indicators -->
                         <ol class="carousel-indicators">
                             <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -41,8 +41,8 @@
                                         active
                                          <?php $first = false; ?>
                                 @endif">
-                                    <img src="{{asset("storage/".$file)}}" alt="...">
-                                    <div class="carousel-caption" style="font-size: 24px;">
+                                    <img src="{{asset($file)}}" alt="...">
+                                    <div class="carousel-caption text-black" style="font-size: 24px;">
                                         Try Our New Beta ...
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
             </div>
 
             <div class="col-md-6 col-xs-12 container-fluid">
-                <div class="box box-primary box-solid wow zoomIn">
+                <div class="box box-primary box-solid wow zoomIn pull-right">
                     <div class="box-header with-border">
                         <h4 class="box-title">
                             Login
@@ -135,7 +135,7 @@
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary btn-flat">
-                                        <i class="fa fa-btn fa-sign-in"></i>Login
+                                        <i class="fa fa-btn fa-sign-in"></i> Login
                                     </button>
 
                                     <a class="btn btn-link" href="{{ url('/password/reset') }}">
@@ -148,9 +148,9 @@
                 </div>
 
                 <div class="col-md-12 col-xs-12">
-                    <a href="{{route('registerClinic')}}" class="btn btn-primary btn-flat btn-lg pull-left wow bounceIn"
-                       data-wow-delay="2s">
-                        RegsiterNow <i class="fa fa-hand-o-right fa-lg"></i>
+                    <a href="{{route('registerClinic')}}" class="btn btn-primary btn-flat btn-lg pull-left wow shake"
+                       data-wow-delay="1s" data-wow-iteration="infinite" data-wow-duration="5s">
+                        RegsiterNow <i class="fa fa-arrow-right fa-lg"></i>
                     </a>
                 </div>
             </div>

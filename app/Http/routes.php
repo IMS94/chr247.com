@@ -48,17 +48,7 @@ Route::group(['middleware' => 'web'], function () {
          * Dashboard
          * The data required for the dashboard will be returned from this function
          */
-        Route::get('/', ['as' => 'root', 'uses' => function () {
-            $clinic = \App\Clinic::getCurrentClinic();
-            $prescriptions = \App\Prescription::whereIn('patient_id', $clinic->patients()->lists('id'));
-
-            $prescriptionCount = $prescriptions->where('issued', 1)->count();
-            $payments = \App\Payment::whereIn('prescription_id',
-                $prescriptions->where('issued', 1)->lists('id'))->sum('amount');
-
-            return view('dashboard', ['clinic'   => $clinic, 'prescriptionCount' => $prescriptionCount,
-                                      'payments' => $payments]);
-        }]);
+        Route::get('/', ['as' => 'root', 'uses' => 'UtilityController@getDashboard']);
 
         // Global Search
         Route::get('search', ['as' => 'search', 'uses' => 'UtilityController@search']);

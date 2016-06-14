@@ -12,6 +12,7 @@
 
 @section('content')
 
+    @can('view','App\Payment')
     <div class="row">
         {{--Patient Info--}}
         <div class="col-lg-3 col-xs-6">
@@ -83,41 +84,33 @@
             </div>
         </div>
     </div>
+    @endcan
 
     <div class="row container-fluid">
         <div class="box box-primary">
+            <div class="box-header">
+                <h4 class="box-title">Patient Visits - Last 6 months</h4>
+            </div>
             <div class="box-body">
                 <div class="chart">
-                    <canvas id="patientChart" style="height: 400px;"></canvas>
+                    <canvas id="patientChart" style="height: 350px;"></canvas>
                     <div id="legend"></div>
                 </div>
             </div>
         </div>
     </div>
 
-
     <script src="{{asset('plugins/chartjs/Chart.min.js')}}"></script>
     <script>
         $(document).ready(function () {
-
             // Get context with jQuery - using jQuery's .get() method.
             var areaChartCanvas = $("#patientChart").get(0).getContext("2d");
             // This will get the first returned node in the jQuery collection.
             var areaChart = new Chart(areaChartCanvas);
 
             var areaChartData = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: {!! json_encode($stats['visits']['m']) !!},
                 datasets: [
-                    {
-                        label: "Electronics",
-                        fillColor: "rgba(210, 214, 222, 1)",
-                        strokeColor: "rgba(210, 214, 222, 1)",
-                        pointColor: "rgba(210, 214, 222, 1)",
-                        pointStrokeColor: "#c1c7d1",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [65, 59, 80, 81, 56, 55, 40]
-                    },
                     {
                         label: "Digital Goods",
                         fillColor: "rgba(60,141,188,0.9)",
@@ -126,7 +119,7 @@
                         pointStrokeColor: "rgba(60,141,188,1)",
                         pointHighlightFill: "#fff",
                         pointHighlightStroke: "rgba(60,141,188,1)",
-                        data: [28, 48, 40, 19, 86, 27, 90]
+                        data:  {!! json_encode($stats['visits']['c']) !!}
                     }
                 ]
             };
@@ -175,8 +168,7 @@
 
             //Create the line chart
             var chart = areaChart.Line(areaChartData, areaChartOptions);
-            var legend = chart.generateLegend();
-            $('#legend').append(legend);
+
         });
     </script>
 @endsection
