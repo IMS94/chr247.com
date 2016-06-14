@@ -63,6 +63,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/', ['as' => 'settings', 'uses' => 'SettingsController@viewSettings']);
             Route::post('changePassword', ['as' => 'changePassword', 'uses' => 'SettingsController@changePassword']);
             Route::post('createAccount', ['as' => 'createAccount', 'uses' => 'SettingsController@createAccount']);
+            Route::get('deleteAccount/{id}',['as' => 'deleteAccount', 'uses' => 'SettingsController@deleteAccount']);
 
             // Routes to compensate the get methods of post requests
             Route::get('changePassword', ['uses' => 'SettingsController@viewSettings']);

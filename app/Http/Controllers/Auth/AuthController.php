@@ -131,7 +131,9 @@ class AuthController extends Controller {
             return $this->sendLockoutResponse($request);
         }
 
+        //An account has to be active in order to login.
         $credentials = $this->getCredentials($request);
+        $credentials['active']=1;
 
         // First, check if the credentials are correct.
         // Then the user's clinic will be checked if it is accepted.

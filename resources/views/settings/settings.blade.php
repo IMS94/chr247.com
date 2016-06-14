@@ -17,6 +17,15 @@
         </div>
     @endif
 
+    {{--Error Message--}}
+    @if(session()->has('error'))
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Success!</h4>
+            {{session('success')}}
+        </div>
+    @endif
+
 
     {{--Change Password--}}
     <div class="box box-primary">
@@ -187,11 +196,20 @@
                 </thead>
                 <tbody>
                 @foreach(\App\Clinic::getCurrentClinic()->users as $user)
-                    <tr @if(\App\User::getCurrentUser()->id===$user->id) class="success" @endif>
+                    <tr @if(\App\User::getCurrentUser()->id===$user->id) class="success"
+                        @elseif($user->deactivated()) class="danger"
+                            @endif>
                         <td>{{$user->name}}</td>
                         <td>{{$user->username}}</td>
                         <td>{{$user->role->role}}</td>
-                        <td></td>
+                        <td>
+                            @can('delete',$user)
+                            <a class="btn @if($user->deactivated()) btn-success @else btn-danger @endif
+                                    btn-sm" href="{{route('deleteAccount',['id'=>$user->id])}}">
+                                <i class="fa @if($user->deactivated()) fa-check @else fa-recycle @endif"></i>
+                            </a>
+                            @endcan
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
