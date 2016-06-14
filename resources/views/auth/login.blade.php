@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
-@section('title',"HIS | Login")
+@section('title',"CHR247 | Login")
 
 @section('content')
     <div class="container-fluid">
-
         <div class="row">
             <div class="alert alert-success alert-dismissable wow bounceInDown" data-wow-delay="1s">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×

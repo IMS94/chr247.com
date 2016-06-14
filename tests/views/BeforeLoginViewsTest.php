@@ -84,7 +84,8 @@ class BeforeLoginViewsTest extends TestCase {
             'adminName'             => 'Imesha Sudasingha',
             'username'              => 'imesha94',
             'password'              => '123456',
-            'password_confirmation' => '123456'
+            'password_confirmation' => '123456',
+            'terms'                 => '1'
         ]);
 
         $this->seeInDatabase('clinics', ['email' => 'imesha4450@gmail.com']);

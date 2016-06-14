@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class ClinicController extends Controller {
 
@@ -71,7 +70,7 @@ class ClinicController extends Controller {
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data) {
-        return Validator::make($data, [
+        return \Validator::make($data, [
             'name'      => 'required|max:255|min:3',
             'email'     => 'required|email|max:255|unique:clinics',
             'address'   => 'required|min:6',
@@ -81,7 +80,10 @@ class ClinicController extends Controller {
             'currency'  => 'required',
             'adminName' => 'required|min:6',
             'username'  => 'required|unique:users',
-            'password'  => 'required|confirmed|min:6'
+            'password'  => 'required|confirmed|min:6',
+            'terms'     => 'required|accepted'
+        ], [
+            'terms.*' => "You have to accept the Terms and Conditions along with the Privacy Policy in order to register"
         ]);
     }
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title',"HIS | Register")
+@section('title',"CHR247 | Register")
 
 @section('content')
 
@@ -33,6 +33,15 @@
                                     </button>
                                     <h4><i class="icon fa fa-ban"></i> Oops!</h4>
                                     {{session('error')}}
+                                </div>
+                            @endif
+
+                            @if($errors->has('terms'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                                    </button>
+                                    <h4><i class="icon fa fa-ban"></i> Oops!</h4>
+                                    {{$errors->first('terms')}}
                                 </div>
                             @endif
 
@@ -217,11 +226,26 @@
                                 </div>
                             </div>
 
-
+                            <div class="form-group {{ $errors->has('terms') ? ' has-error' : '' }}">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="terms"> I hereby agree on CHR247.com's
+                                        <a href="#" data-toggle="modal" data-target="#privacyPolicyModal">Privacy
+                                            Policy</a> and
+                                        <a href="#" data-toggle="modal" data-target="#termsModal">Terms &
+                                            Conditions</a>
+                                    </div>
+                                    @if ($errors->has('terms'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('terms') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary btn-flat">
-                                        <i class="fa fa-btn fa-check"></i>Register
+                                        <i class="fa fa-btn fa-check"></i> Register
                                     </button>
                                 </div>
                             </div>
@@ -231,4 +255,7 @@
             </div>
         </div>
     </div>
+
+    @include('auth.modals.privacyPolicy')
+    @include('auth.modals.terms')
 @endsection

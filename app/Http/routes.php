@@ -15,7 +15,9 @@
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
-    //register clinics
+    /*
+     * Register Clinic and show privacy policy if required.
+     */
     Route::get('registerClinic', ['as' => 'registerClinic', 'uses' => 'ClinicController@showRegistrationForm']);
     Route::post('registerClinic', ['as' => 'registerClinic', 'uses' => 'ClinicController@postRegister']);
 
@@ -25,7 +27,6 @@ Route::group(['middleware' => 'web'], function () {
      * Else, it will return the start page.
      */
     Route::get('/', ['as' => 'root', 'uses' => 'UtilityController@getDashboard']);
-
 
     /**
      * ==================================================================================
