@@ -20,6 +20,16 @@
             </div>
         @endif
 
+        {{--Success Message--}}
+        @if(session()->has('error'))
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                </button>
+                <h4><i class="icon fa fa-ban"></i> Success!</h4>
+                {{session('success')}}
+            </div>
+        @endif
+
         <table class="table table-hover table-condensed table-bordered text-center">
             <tr>
                 <th>Name</th>

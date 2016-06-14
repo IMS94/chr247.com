@@ -48,7 +48,6 @@ class UtilityController extends Controller {
             $prescriptions->where('issued', 1)->lists('id'))->sum('amount');
 
         $stats = $this->calcClinicStats($clinic);
-        \Log::info($stats);
         return view('dashboard', ['clinic'   => $clinic, 'prescriptionCount' => $prescriptionCount,
                                   'payments' => $payments, 'stats' => $stats]);
     }
