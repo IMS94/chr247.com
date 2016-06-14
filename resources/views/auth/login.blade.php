@@ -3,7 +3,6 @@
 @section('title',"HIS | Login")
 
 @section('content')
-
     <div class="container-fluid">
 
         <div class="row">
@@ -12,7 +11,7 @@
                 </button>
                 <h4><i class="icon fa fa-info"></i> We are Preparing Something Awesome!</h4>
                 <p>
-                    It is the most simple user friendly <strong>Health Informatics System</strong> you will
+                    It is the most simple user friendly <strong>Cloud Health Records</strong> system you will
                     ever see. All functions to carry on day-to-day operation of your small scale clinic in one
                     place.
                 </p>
@@ -20,7 +19,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-xs-12 container-fluid bg-black-gradient">
+            <div class="col-md-7 col-xs-12 container-fluid bg-black-gradient">
                 <div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
                     <div id="carousel-example-generic" class="carousel slide wow rotateIn margin" data-ride="carousel">
                         <?php $files = Storage::disk('global_public')->allFiles("images");?>
@@ -64,7 +63,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6 col-xs-12 container-fluid">
+            <div class="col-md-5 col-xs-12 container-fluid">
                 <div class="box box-primary box-solid wow zoomIn pull-right">
                     <div class="box-header with-border">
                         <h4 class="box-title">
@@ -97,8 +96,8 @@
                             @endif
 
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Username</label>
-                                <div class="col-md-6">
+                                <label class="col-md-3 control-label">Username</label>
+                                <div class="col-md-7">
                                     <input type="text" class="form-control" name="username"
                                            value="{{ old('username') }}">
                                     @if ($errors->has('username'))
@@ -110,8 +109,8 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Password</label>
-                                <div class="col-md-6">
+                                <label class="col-md-3 control-label">Password</label>
+                                <div class="col-md-7">
                                     <input type="password" class="form-control" name="password"
                                            value="{{old('password')}}">
                                     @if ($errors->has('password'))
@@ -123,7 +122,7 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
+                                <div class="col-md-7 col-md-offset-3">
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" name="remember"> Remember Me
@@ -133,7 +132,7 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
+                                <div class="col-md-7 col-md-offset-3">
                                     <button type="submit" class="btn btn-primary btn-flat">
                                         <i class="fa fa-btn fa-sign-in"></i> Login
                                     </button>
@@ -149,8 +148,8 @@
 
                 <div class="col-md-12 col-xs-12">
                     <a href="{{route('registerClinic')}}" class="btn btn-primary btn-flat btn-lg pull-left wow shake"
-                       data-wow-delay="1s" data-wow-iteration="infinite" data-wow-duration="5s">
-                        RegsiterNow <i class="fa fa-arrow-right fa-lg"></i>
+                       data-wow-delay="1s" data-wow-iteration="infinite" data-wow-duration="6s">
+                        Regsiter Now <i class="fa fa-arrow-right fa-lg"></i>
                     </a>
                 </div>
             </div>

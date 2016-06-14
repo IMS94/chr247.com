@@ -39,12 +39,7 @@ class AuthController extends Controller {
      */
     protected $redirectTo = '/';
 
-    /**
-     * Guard for the User Login
-     *
-     * @var string
-     */
-//    protected $guard = "web";
+    protected $loginView = "auth.login";
 
     /**
      * AuthController constructor.
@@ -133,7 +128,7 @@ class AuthController extends Controller {
 
         //An account has to be active in order to login.
         $credentials = $this->getCredentials($request);
-        $credentials['active']=1;
+        $credentials['active'] = 1;
 
         // First, check if the credentials are correct.
         // Then the user's clinic will be checked if it is accepted.

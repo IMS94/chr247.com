@@ -14,10 +14,10 @@ class BeforeLoginViewsTest extends TestCase {
      */
     public function testLoginSuccess() {
         // see the login page
-        $this->visit('/')->see('Login');
+        $this->visit('/')->see('"CHR247"');
 
         //type username and press login
-        $this->visit('/')
+        $this->visit('/login')
             ->type($this->username, 'username')
             ->type($this->password, 'password')
             ->press('Login')
@@ -30,12 +30,12 @@ class BeforeLoginViewsTest extends TestCase {
      */
     public function testLoginFailure() {
         // test with blank fields
-        $this->visit('/')
+        $this->visit('/login')
             ->press('Login')
             ->see('The username field is required')
             ->see('The password field is required');
 
-        $this->visit('/')
+        $this->visit('/login')
             ->type('none', 'username')
             ->type('wrong', 'password')
             ->press('Login')
@@ -46,7 +46,7 @@ class BeforeLoginViewsTest extends TestCase {
      * Test method to test registration of a clinic
      */
     public function testRegisterClinicFail() {
-        $this->visit('/')
+        $this->visit('/login')
             ->click('Register')
             ->seePageIs('/registerClinic');
 
@@ -94,7 +94,7 @@ class BeforeLoginViewsTest extends TestCase {
      * Test forgot password page
      */
     public function testForgotPasswordView() {
-        $this->visit('/')
+        $this->visit('/login')
             ->click('Forgot Your Password?')
             ->seePageIs('/password/reset')
             ->see('Reset Password');

@@ -35,11 +35,16 @@ class UtilityController extends Controller {
 
 
     /**
-     * Calculates and returns the dashboard along with the required data
+     * Calculates and returns the dashboard along with the required data.
+     * Will return the start page if the user is not logged in.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getDashboard() {
+        if (\Auth::guest()) {
+            return view('startpage');
+        }
+
         $clinic = Clinic::getCurrentClinic();
         $prescriptions = Prescription::whereIn('patient_id', $clinic->patients()->lists('id'));
 

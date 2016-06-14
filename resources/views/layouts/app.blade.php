@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
-        @yield('title',"HIS")
+        @yield('title',"CHR247")
     </title>
 
     <link rel="shortcut" href="favicon.ico"/>
@@ -36,20 +36,19 @@
     <![endif]-->
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue-light layout-top-nav">
+<body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
     <header class="main-header">
         <nav class="navbar navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="{{url('/')}}" class="navbar-brand">
-                        <b>Health Informatics System</b> Beta
-                    </a>
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar-collapse">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                    <div class="row">
+                        <a href="{{url('/')}}" class="navbar-brand">
+                            <b>CHR247 - Cloud Health Records</b>
+                            <small>Beta</small>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Navbar Right Menu -->
@@ -57,6 +56,10 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{url('login')}}">Login</a></li>
                         <li><a href="{{route('registerClinic')}}">Register</a></li>
+                        <li class="user user-menu">
+                            <!-- The user image in the navbar-->
+                            <img src="{{asset('logo.png')}}" class="user-image" alt="User Image">
+                        </li>
                     </ul>
                 </div><!-- /.navbar-custom-menu -->
             </div><!-- /.container-fluid -->
@@ -68,11 +71,7 @@
 
             <!-- Main content -->
             <section class="content">
-                {{--<div class="box box-default">--}}
-                {{--<div class="box-body">--}}
                 @yield('content')
-                {{--</div><!-- /.box-body -->--}}
-                {{--</div><!-- /.box -->--}}
             </section><!-- /.content -->
         </div><!-- /.container -->
     </div><!-- /.content-wrapper -->

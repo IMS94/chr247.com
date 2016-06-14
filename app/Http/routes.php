@@ -19,6 +19,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('registerClinic', ['as' => 'registerClinic', 'uses' => 'ClinicController@showRegistrationForm']);
     Route::post('registerClinic', ['as' => 'registerClinic', 'uses' => 'ClinicController@postRegister']);
 
+    /*
+     * Dashboard.
+     * This controller method will return the dashboard if the user is logged in.
+     * Else, it will return the start page.
+     */
+    Route::get('/', ['as' => 'root', 'uses' => 'UtilityController@getDashboard']);
+
 
     /**
      * ==================================================================================
@@ -44,12 +51,6 @@ Route::group(['middleware' => 'web'], function () {
      * =================================================================================
      */
     Route::group(['middleware' => 'auth'], function () {
-        /*
-         * Dashboard
-         * The data required for the dashboard will be returned from this function
-         */
-        Route::get('/', ['as' => 'root', 'uses' => 'UtilityController@getDashboard']);
-
         // Global Search
         Route::get('search', ['as' => 'search', 'uses' => 'UtilityController@search']);
 
@@ -63,7 +64,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/', ['as' => 'settings', 'uses' => 'SettingsController@viewSettings']);
             Route::post('changePassword', ['as' => 'changePassword', 'uses' => 'SettingsController@changePassword']);
             Route::post('createAccount', ['as' => 'createAccount', 'uses' => 'SettingsController@createAccount']);
-            Route::get('deleteAccount/{id}',['as' => 'deleteAccount', 'uses' => 'SettingsController@deleteAccount']);
+            Route::get('deleteAccount/{id}', ['as' => 'deleteAccount', 'uses' => 'SettingsController@deleteAccount']);
 
             // Routes to compensate the get methods of post requests
             Route::get('changePassword', ['uses' => 'SettingsController@viewSettings']);

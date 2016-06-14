@@ -6,10 +6,6 @@
 @endsection
 
 
-@section('sub_header')
-    Health Informatics System
-@endsection
-
 @section('content')
 
     @can('view','App\Payment')
