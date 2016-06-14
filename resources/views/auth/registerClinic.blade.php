@@ -15,9 +15,13 @@
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Register Clinic</div>
-                    <div class="panel-body">
+                <div class="box box-default wow fadeInUp" data-wow-delay="1s" ng-cloak>
+                    <div class="box-header with-border">
+                        <h4 class="box-title">
+                            Register Clinic
+                        </h4>
+                    </div>
+                    <div class="box-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('registerClinic') }}"
                               ng-controller="ClinicRegistrationController">
                             {!! csrf_field() !!}
@@ -25,7 +29,8 @@
                             {{--Error Message--}}
                             @if(session()->has('error'))
                                 <div class="alert alert-danger alert-dismissable">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                                    </button>
                                     <h4><i class="icon fa fa-ban"></i> Oops!</h4>
                                     {{session('error')}}
                                 </div>
@@ -146,8 +151,8 @@
 
 
                             {{--Panel to add an admin--}}
-                            <div class="panel panel-default">
-                                <div class="panel-body">
+                            <div class="box box-default">
+                                <div class="box-body">
 
                                     <div class="alert alert-info alert-dismissable">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
@@ -215,8 +220,8 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-btn fa-user"></i>Register
+                                    <button type="submit" class="btn btn-primary btn-flat">
+                                        <i class="fa fa-btn fa-check"></i>Register
                                     </button>
                                 </div>
                             </div>

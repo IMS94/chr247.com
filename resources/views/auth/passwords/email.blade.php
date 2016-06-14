@@ -5,9 +5,13 @@
     <div class="container" xmlns="http://www.w3.org/1999/html">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Reset Password</div>
-                    <div class="panel-body">
+                <div class="box box-default box-solid wow fadeInRight">
+                    <div class="box-header with-border">
+                        <h4 class="box-title">
+                            Reset Password
+                        </h4>
+                    </div>
+                    <div class="box-body">
                         @if (session('status'))
                             <div class="alert alert-success">
                                 {{ session('status') }}
@@ -35,7 +39,7 @@
                                     <input type="email" class="form-control" name="email" value="{{ old('email') }}">
 
                                     @if ($errors->has('email'))
-                                        <span class="help-block">
+                                        <span class="help-block wow wobble" data-wow-delay="1s">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                     @endif

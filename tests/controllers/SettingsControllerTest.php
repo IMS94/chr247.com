@@ -73,4 +73,28 @@ class SettingsControllerTest extends TestCase {
             ]);
         $this->assertTrue($response->status() == 401);
     }
+
+
+    public function testAccountDeactivation() {
+        $user = $this->adminUser->clinic->users()->where('role_id', '<>', 1)
+            ->where('active', true)->first();
+
+        $this->actingAs($this->adminUser)
+            ->call("GET", 'settings/deleteAccount/' . $user->id);
+        $this->seeInDatabase('users', ['id' => $user->id, 'active' => false]);
+
+        $this->actingAs($this->adminUser)
+            ->call("GET", 'settings/deleteAccount/' . $user->id);
+        $this->seeInDatabase('users', ['id' => $user->id, 'active' => true]);
+
+        $response = $this->actingAs($this->doctorUser)
+            ->call("GET", 'settings/deleteAccount/' . $user->id);
+        $this->assertEquals(401, $response->status());
+        $this->dontSeeInDatabase('users', ['id' => $user->id, 'active' => false]);
+
+        $response = $this->actingAs($this->nurseUser)
+            ->call("GET", 'settings/deleteAccount/' . $user->id);
+        $this->assertEquals(401, $response->status());
+        $this->dontSeeInDatabase('users', ['id' => $user->id, 'active' => false]);
+    }
 }

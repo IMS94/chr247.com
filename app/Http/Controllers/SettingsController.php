@@ -73,4 +73,25 @@ class SettingsController extends Controller {
         $user->save();
         return back()->with('success', 'User Created Successfully');
     }
+
+    /**
+     * Deletes an account.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteAccount($id) {
+        $target = User::find($id);
+        $this->authorize('delete', $target);
+        \DB::beginTransaction();
+        try {
+            $target->active = $target->active ? false : true;
+            $target->update();
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return back()->with('error', "Unable to delete the account");
+        }
+        \DB::commit();
+        return back()->with('success', "Account successfully " . ($target->active ? "activated" : "deactivated"));
+    }
 }

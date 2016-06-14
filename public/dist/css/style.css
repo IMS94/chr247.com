@@ -1,15 +1,23 @@
-.breadcrumb li{
+.breadcrumb li {
     font-size: 15px;
 }
 
-.btn{
+.btn {
     font-size: 15px;
 }
 
-.box-title{
+.box-title {
     font-size: 18px;
 }
 
-select,select option{
+select, select option {
+    font-size: 15px !important;
+}
+
+p {
+    font-size: 15px !important;
+}
+
+.alert {
     font-size: 15px !important;
 }

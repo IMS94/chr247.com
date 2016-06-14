@@ -43,6 +43,7 @@ class User extends Authenticatable {
 
     /**
      * Returns if this user is an admin
+     *
      * @return bool
      */
     public function isAdmin() {
@@ -52,6 +53,7 @@ class User extends Authenticatable {
 
     /**
      * Returns if this user is a doctor
+     *
      * @return bool
      */
     public function isDoctor() {
@@ -60,12 +62,21 @@ class User extends Authenticatable {
 
     /**
      * Returns if this user is a nurse
+     *
      * @return bool
      */
     public function isNurse() {
         return $this->role->role === 'Nurse';
     }
 
+    /**
+     * Check if the user account is deactivated.
+     *
+     * @return bool
+     */
+    public function deactivated() {
+        return $this->active == false;
+    }
 
     /**
      * Get the e-mail address where password reset links are sent.

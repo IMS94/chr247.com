@@ -31,8 +31,8 @@ Route::group(['middleware' => 'web'], function () {
     /*
      * Auth routes of the admin
      */
-    Route::group(['middleware' => 'auth:admin', 'prefix' => 'Admin'], function () {
-        Route::get('/', ['uses' => 'AdminController@index']);
+    Route::group(['middleware' => 'admin', 'prefix' => 'Admin'], function () {
+        Route::get('admin', ['uses' => 'AdminController@index']);
         Route::get('acceptClinic/{id}', ['as' => 'acceptClinic', 'uses' => 'AdminController@acceptClinic']);
         Route::get('logout', ['as' => 'adminLogout', 'uses' => 'Auth\AdminAuthController@getLogout']);
     });
@@ -48,17 +48,7 @@ Route::group(['middleware' => 'web'], function () {
          * Dashboard
          * The data required for the dashboard will be returned from this function
          */
-        Route::get('/', ['as' => 'root', 'uses' => function () {
-            $clinic = \App\Clinic::getCurrentClinic();
-            $prescriptions = \App\Prescription::whereIn('patient_id', $clinic->patients()->lists('id'));
-
-            $prescriptionCount = $prescriptions->where('issued', 1)->count();
-            $payments = \App\Payment::whereIn('prescription_id',
-                $prescriptions->where('issued', 1)->lists('id'))->sum('amount');
-
-            return view('dashboard', ['clinic'   => $clinic, 'prescriptionCount' => $prescriptionCount,
-                                      'payments' => $payments]);
-        }]);
+        Route::get('/', ['as' => 'root', 'uses' => 'UtilityController@getDashboard']);
 
         // Global Search
         Route::get('search', ['as' => 'search', 'uses' => 'UtilityController@search']);
@@ -73,6 +63,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/', ['as' => 'settings', 'uses' => 'SettingsController@viewSettings']);
             Route::post('changePassword', ['as' => 'changePassword', 'uses' => 'SettingsController@changePassword']);
             Route::post('createAccount', ['as' => 'createAccount', 'uses' => 'SettingsController@createAccount']);
+            Route::get('deleteAccount/{id}',['as' => 'deleteAccount', 'uses' => 'SettingsController@deleteAccount']);
 
             // Routes to compensate the get methods of post requests
             Route::get('changePassword', ['uses' => 'SettingsController@viewSettings']);
