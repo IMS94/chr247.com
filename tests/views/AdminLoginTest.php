@@ -1,8 +1,10 @@
 <?php
+namespace Tests\Views;
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class AdminLoginTest extends TestCase {
     private $username = "Admin";

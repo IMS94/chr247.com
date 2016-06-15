@@ -1,9 +1,12 @@
 <?php
+namespace Tests\Controllers;
 
+use App\Patient;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\User;
+use Tests\TestCase;
 
 class PatientControllerTest extends TestCase {
 
@@ -19,7 +22,7 @@ class PatientControllerTest extends TestCase {
 
     public function testAddPatient() {
         $user = User::where('role_id', 1)->first();
-        $patient = factory(App\Patient::class, 1)->make();
+        $patient = factory(Patient::class, 1)->make();
         $this->actingAs($user)
             ->call('POST', "patients/addPatient", [
                 'firstName'  => $patient->first_name,

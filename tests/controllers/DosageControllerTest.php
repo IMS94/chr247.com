@@ -1,15 +1,18 @@
 <?php
+namespace Tests\Controllers;
 
+use App\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class DosageControllerTest extends TestCase {
 
 //    use DatabaseTransactions;
 
     public function testViewDosages() {
-        $user = \App\User::first();
+        $user = User::first();
         $this->actingAs($user)
             ->visit('drugs/dosages')
             ->see("Dosages")
@@ -18,7 +21,7 @@ class DosageControllerTest extends TestCase {
     }
 
     public function testAddDosage() {
-        $user = \App\User::first();
+        $user = User::first();
         $this->actingAs($user)
             ->call('POST', 'drugs/addDosage', ['dosageDescription' => 'Some Description']);
         $this->assertSessionHas('success', "Dosage added successfully !");
@@ -29,7 +32,7 @@ class DosageControllerTest extends TestCase {
     }
 
     public function testAddFrequency() {
-        $user = \App\User::first();
+        $user = User::first();
         $this->actingAs($user)
             ->call('POST', 'drugs/addFrequency', ['frequencyDescription' => 'Some Description']);
         $this->assertSessionHas('success', "Dosage Frequency added successfully !");
@@ -41,7 +44,7 @@ class DosageControllerTest extends TestCase {
     }
 
     public function testAddPeriod() {
-        $user = \App\User::first();
+        $user = User::first();
         $this->actingAs($user)
             ->call('POST', 'drugs/addPeriod', ['description' => 'Some Description']);
         $this->assertSessionHas('success', "Dosage Period added successfully !");
@@ -53,7 +56,7 @@ class DosageControllerTest extends TestCase {
     }
 
     public function testDeleteDosage() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $dosage = $user->clinic->dosages()->where('description', 'Some Description')->first();
         $this->actingAs($user)
             ->call('GET', 'drugs/deleteDosage/' . $dosage->id);
@@ -62,7 +65,7 @@ class DosageControllerTest extends TestCase {
 
 
     public function testDeleteFrequency() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $dosage = $user->clinic->dosageFrequencies()->where('description', 'Some Description')->first();
         $this->actingAs($user)
             ->call('GET', 'drugs/deleteFrequency/' . $dosage->id);
@@ -71,7 +74,7 @@ class DosageControllerTest extends TestCase {
 
 
     public function testDeletePeriod() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $dosage = $user->clinic->dosagePeriods()->where('description', 'Some Description')->first();
         $this->actingAs($user)
             ->call('GET', 'drugs/deletePeriod/' . $dosage->id);
