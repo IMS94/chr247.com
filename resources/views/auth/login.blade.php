@@ -63,16 +63,12 @@
             </div>
 
             <div class="col-md-5 col-xs-12 container-fluid">
-                <div class="box box-primary box-solid wow zoomIn pull-right">
-                    <div class="box-header with-border">
-                        <h4 class="box-title">
-                            Login
-                        </h4>
-                    </div>
-                    <div class="box-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                            {!! csrf_field() !!}
+                <div class="login-box" style="font-size: 15px !important;">
+                    <div class="login-box-body">
+                        <p class="login-box-msg">Sign in to start your session</p>
+                        <form action="{{url('login')}}" method="post">
 
+                            {!! csrf_field() !!}
 
                             {{--Success Message--}}
                             @if(session()->has('success'))
@@ -94,54 +90,41 @@
                                 </div>
                             @endif
 
-                            <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label">Username</label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control" name="username"
-                                           value="{{ old('username') }}">
-                                    @if ($errors->has('username'))
-                                        <span class="help-block">
+
+                            <div class="form-group has-feedback{{ $errors->has('username') ? ' has-error' : '' }}">
+                                <input type="text" class="form-control" name="username" placeholder="Username"
+                                       value="{{ old('username') }}">
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                @if ($errors->has('username'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
                                     </span>
-                                    @endif
-                                </div>
+                                @endif
                             </div>
-
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label">Password</label>
-                                <div class="col-md-7">
-                                    <input type="password" class="form-control" name="password"
-                                           value="{{old('password')}}">
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
+                            <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <input type="password" class="form-control" name="password" placeholder="Password"
+                                       value="{{old('password')}}">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                    @endif
-                                </div>
+                                @endif
                             </div>
-
-                            <div class="form-group">
-                                <div class="col-md-7 col-md-offset-3">
-                                    <div class="checkbox">
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="checkbox icheck">
                                         <label>
-                                            <input type="checkbox" name="remember"> Remember Me
+                                            <input type="checkbox"> Remember Me
                                         </label>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-7 col-md-offset-3">
-                                    <button type="submit" class="btn btn-primary btn-flat">
-                                        <i class="fa fa-btn fa-sign-in"></i> Login
-                                    </button>
-
-                                    <a class="btn btn-link" href="{{ url('/password/reset') }}">
-                                        Forgot Your Password?
-                                    </a>
-                                </div>
+                                </div><!-- /.col -->
+                                <div class="col-xs-4">
+                                    <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
+                                </div><!-- /.col -->
                             </div>
                         </form>
+                        <a href="{{ url('/password/reset') }}">Forgot Your Password?</a><br>
                     </div>
                 </div>
 

@@ -28,6 +28,9 @@
     {{--Animate.css--}}
     <link href="{{asset('plugins/wowjs/animate.css')}}" rel="stylesheet">
 
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{asset('plugins/iCheck/square/blue.css')}}">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -45,7 +48,7 @@
                 <div class="navbar-header">
                     <div class="row">
                         <a href="{{url('/')}}" class="navbar-brand">
-                            <b>CHR247 - Cloud Health Records</b>
+                            <b>CHR 24x7 - Cloud Health Records</b>
                             <small>Beta</small>
                         </a>
                     </div>
@@ -101,5 +104,18 @@
         new WOW().init();
     });
 </script>
+
+<!-- iCheck -->
+<script src="{{asset('plugins/iCheck/icheck.min.js')}}"></script>
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+    });
+</script>
+
 </body>
 </html>

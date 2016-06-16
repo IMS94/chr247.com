@@ -11,7 +11,7 @@ $user = \App\User::getCurrentUser();
         @yield('title',$user->clinic->name)
     </title>
 
-    <link rel="shortcut" href="favicon.ico"/>
+    <link rel="shortcut" href="{{asset('favicon.ico')}}"/>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -27,10 +27,9 @@ $user = \App\User::getCurrentUser();
 
     {{--Data Tables CSS--}}
     <link href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css">
-    {{--//Data Tables CSS--}}
 
-            <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+ folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
 
     <!-- jQuery 2.1.4 Moved to the top to load without an error-->

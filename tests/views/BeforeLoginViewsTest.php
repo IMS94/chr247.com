@@ -17,7 +17,7 @@ class BeforeLoginViewsTest extends TestCase {
      */
     public function testLoginSuccess() {
         // see the login page
-        $this->visit('/')->see('"CHR247"');
+        $this->visit('/')->see('24 x 7');
 
         //type username and press login
         $this->visit('/login')
