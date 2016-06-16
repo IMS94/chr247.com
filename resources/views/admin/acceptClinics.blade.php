@@ -32,14 +32,14 @@
 
         <table class="table table-hover table-condensed table-bordered text-center">
             <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Phone</th>
-                <th>Country</th>
-                <th>Currency</th>
-                <th>Timezone</th>
-                <th></th>
+                <th class="col-md-2">Name</th>
+                <th class="col-md-2">Email</th>
+                <th class="col-md-2">Address</th>
+                <th class="col-md-1">Phone</th>
+                <th class="col-md-1">Country</th>
+                <th class="col-md-1">Currency</th>
+                <th class="col-md-1">Timezone</th>
+                <th class="col-md-2"></th>
             </tr>
 
             <tbody>
@@ -55,6 +55,9 @@
                     <td>
                         <a href="{{route('acceptClinic',['id'=>$clinic->id])}}" class="btn btn-sm btn-success">
                             Accept
+                        </a>
+                        <a href="{{route('deleteClinic',['id'=>$clinic->id])}}" class="btn btn-sm btn-danger">
+                            Delete
                         </a>
                     </td>
                 </tr>

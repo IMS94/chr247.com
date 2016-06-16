@@ -1,8 +1,11 @@
 <?php
+namespace Tests\Views;
 
+use App\Clinic;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class BeforeLoginViewsTest extends TestCase {
 
@@ -106,7 +109,7 @@ class BeforeLoginViewsTest extends TestCase {
     }
 
     public function testDeleteClinic() {
-        $clinic = \App\Clinic::where('email', 'imesha4450@gmail.com')->first();
+        $clinic = Clinic::where('email', 'imesha4450@gmail.com')->first();
         $clinic->users()->delete();
         $clinic->delete();
 

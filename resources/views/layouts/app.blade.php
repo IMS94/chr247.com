@@ -56,10 +56,6 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{url('login')}}">Login</a></li>
                         <li><a href="{{route('registerClinic')}}">Register</a></li>
-                        <li class="user user-menu">
-                            <!-- The user image in the navbar-->
-                            <img src="{{asset('logo.png')}}" class="user-image" alt="User Image">
-                        </li>
                     </ul>
                 </div><!-- /.navbar-custom-menu -->
             </div><!-- /.container-fluid -->

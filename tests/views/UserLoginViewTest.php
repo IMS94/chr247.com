@@ -1,8 +1,11 @@
 <?php
+namespace Tests\Views;
 
+use App\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class UserLoginViewTest extends TestCase {
     use DatabaseTransactions;
@@ -11,7 +14,7 @@ class UserLoginViewTest extends TestCase {
     private $password = "1234";
 
     public function testDeactivatedUserLogin() {
-        $user = \App\User::where('username', $this->username)->first();
+        $user = User::where('username', $this->username)->first();
         $user->active = false;
         $user->update();
 
@@ -22,7 +25,7 @@ class UserLoginViewTest extends TestCase {
             ->seePageIs('login')
             ->see("These credentials do not match our records.");
 
-        $user->active=true;
+        $user->active = true;
         $user->update();
 
         $this->visit('login')

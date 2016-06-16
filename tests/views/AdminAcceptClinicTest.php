@@ -1,8 +1,12 @@
 <?php
+namespace Tests\Views;
 
+use App\Admin;
+use App\Clinic;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 
 class AdminAcceptClinicTest extends TestCase {
@@ -14,12 +18,12 @@ class AdminAcceptClinicTest extends TestCase {
     private $clinicEmail = "imesha@highflyer.lk";
 
     public function testSendMailOnAcceptance() {
-        $admin = \App\Admin::first();
-        $clinic = \App\Clinic::where('email', $this->clinicEmail)->first();
+        $admin = Admin::first();
+        $clinic = Clinic::where('email', $this->clinicEmail)->first();
         if (!$admin || !$clinic) {
             return;
         }
-        \App\Clinic::where('accepted', true)->update(['accepted' => true]);
+        Clinic::where('accepted', true)->update(['accepted' => true]);
         $clinic->accepted = false;
         $clinic->update();
 
