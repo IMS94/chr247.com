@@ -76,7 +76,7 @@
             <!-- For centering the content vertically -->
             <div class="outer">
                 <div class="inner text-center">
-                    <h1 class="white-color">The simplest Health Informatics system on the Cloud.</h1>
+                    <h1 class="white-color">The simplest Health Informatics System on the Cloud.</h1>
                     <h5 class="">Cloud Health Records 24 x 7.</h5>
                     <a href="{{route('registerClinic')}}" class="btn se-btn-white btn-rounded">Sign up for free!</a>
                 </div> <!-- end inner -->
