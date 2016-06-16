@@ -42,7 +42,7 @@ class UtilityController extends Controller {
      */
     public function getDashboard() {
         if (\Auth::guest()) {
-            return view('startpage');
+            return view('main');
         }
 
         $clinic = Clinic::getCurrentClinic();

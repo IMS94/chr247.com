@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA;;GAEG;AAEF,uBAAU;EACT,kBAAkB,EAAE,MAAM;EAC1B,mBAAmB,EAAE,IAAI;AAE1B,8BAAiB;EAChB,OAAO,EAAE,CAAC;AAEX,+BAAkB;EACjB,OAAO,EAAE,CAAC;AAEX,sBAAS;EACR,cAAc,EAAE,OAAO;;AAIzB,kBAQC;EAPA,EAAG;IACF,OAAO,EAAE,CAAC;EAGX,IAAK;IACJ,OAAO,EAAE,CAAC",
+"sources": ["owl.animate.scss"],
+"names": [],
+"file": "owl.animate.css"
+}
