@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-md-7 col-xs-12 container-fluid bg-black-gradient">
                 <div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
-                    <div id="carousel-example-generic" class="carousel slide wow rotateIn margin" data-ride="carousel">
+                    <div id="carousel-generic" class="carousel slide wow zoomIn margin" data-ride="carousel">
                         <?php $files = Storage::disk('global_public')->allFiles("images");?>
                                 <!-- Indicators -->
                         <ol class="carousel-indicators">
@@ -100,7 +100,7 @@
                                     <input type="text" class="form-control" name="username"
                                            value="{{ old('username') }}">
                                     @if ($errors->has('username'))
-                                        <span class="help-block wow wobble" data-wow-delay="1s">
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
                                     </span>
                                     @endif
@@ -113,7 +113,7 @@
                                     <input type="password" class="form-control" name="password"
                                            value="{{old('password')}}">
                                     @if ($errors->has('password'))
-                                        <span class="help-block wow wobble" data-wow-delay="1s">
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                     @endif

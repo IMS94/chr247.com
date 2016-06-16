@@ -34,10 +34,10 @@ class DrugTypeControllerTest extends TestCase {
         $this->actingAs($user)
             ->call("POST", "drugs/deleteDrugType/" . $drugType->id);
         if (Drug::where('drug_type_id', $drugType->id)->count() > 0) {
+            $this->seeInSession("error");
+        } else {
             $this->seeInSession("success");
             $this->dontSeeInDatabase('drug_types', ['id' => $drugType->id]);
-        } else {
-            $this->seeInSession("error");
         }
     }
 }
