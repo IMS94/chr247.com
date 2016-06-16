@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8000/" />
+<title>PrescribeMedicine</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PrescribeMedicine</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=username</td>
+	<td>imesha</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=password</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Patients</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=td.sorting_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=bloodGroup</td>
+	<td>label=A +</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=option[value=&quot;A +&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=allergies</td>
+	<td>Allergic to Prawn</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//button[@type='submit'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=presentingComplaints</td>
+	<td>Fever</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=prescriptionInvestigations</td>
+	<td>Cough</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=prescriptionDiagnosis</td>
+	<td>Denguw</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=prescriptionDiagnosis</td>
+	<td>Dengue</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='profile']/div/div/div[4]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>You haven't added any drugs in the prescription. Do you wish to proceed?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[contains(text(),'Issue Medicine')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Medical Records</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[contains(text(),'Issue Medicine')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Info</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Prescribe Medicine</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=presentingComplaints</td>
+	<td>Fever</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='addPharmacyDrugsModal']/div/div/div[2]/div/div[3]/div/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='addPharmacyDrugsModal']/div/div/div[3]/button[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='profile']/div/div/div[4]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=button.close</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[contains(text(),'Issue Medicine')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='number'])[22]</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='number'])[22]</td>
+	<td>0.01</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='number'])[22]</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='number'])[22]</td>
+	<td>0.01</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='number'])[22]</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='number'])[22]</td>
+	<td>100</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@id='messages']/div/div[8]/div[2]/div[3]/div/textarea</td>
+	<td>Paid in Cash</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='messages']/div/div[8]/div[3]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='number'])[20]</td>
+	<td>30</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='number'])[21]</td>
+	<td>30</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='messages']/div/div[8]/div[3]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Medical Records</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=(//input[@type='text'])[4]</td>
+	<td>Fever</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Info</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Info</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.hidden-xs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Sign out</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

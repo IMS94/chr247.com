@@ -10,6 +10,7 @@
 <tr><td><b>Test Suite</b></td></tr>
 <tr><td><a href="RegsiterClinic">RegsiterClinic</a></td></tr>
 <tr><td><a href="DeleteClinic">DeleteClinic</a></td></tr>
+<tr><td><a href="PrescribeMedicine">PrescribeMedicine</a></td></tr>
 </tbody></table>
 </body>
 </html>
