@@ -16,7 +16,7 @@
             <directory>./tests/controllers/</directory>
         </testsuite>
         <testsuite name="Database and data integrity tests">
-            <directory>./tests/database/</directory>
+            <directory>./tests/data/</directory>
         </testsuite>
     </testsuites>
     <filter>
