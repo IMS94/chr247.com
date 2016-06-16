@@ -1,4 +1,8 @@
 <?php
+namespace Tests\Controllers;
+
+use App\User;
+use Tests\TestCase;
 
 /**
  * Created by PhpStorm.
@@ -14,7 +18,7 @@ class APIControllerTest extends TestCase {
      * Check if get drugs method functions correctly.
      */
     public function testGetDrugs() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $drug = $user->clinic->drugs()->first();
         $this->actingAs($user)
             ->json('POST', 'API/drugs')
@@ -25,7 +29,7 @@ class APIControllerTest extends TestCase {
      * test get dosages method
      */
     public function testGetDosages() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $dasage = $user->clinic->dosages()->first();
         $this->actingAs($user)
             ->json('POST', 'API/dosages')
@@ -36,7 +40,7 @@ class APIControllerTest extends TestCase {
      * test save prescription method
      */
     public function testSavePrescription() {
-        $user = \App\User::where('role_id', 2)->first();
+        $user = User::where('role_id', 2)->first();
         $patient = $user->clinic->patients()->first();
         $this->actingAs($user)
             ->json('POST', 'API/savePrescription', [
@@ -54,7 +58,7 @@ class APIControllerTest extends TestCase {
      * Test get prescriptions method
      */
     public function testGetPrescriptions() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $patient = $user->clinic->patients()->first();
         $this->actingAs($user)
             ->json('POST', 'API/getPrescriptions/' . $patient->id)
@@ -65,7 +69,7 @@ class APIControllerTest extends TestCase {
      * Test get remaining prescriptions method
      */
     public function testGetAllRemainingPrescriptions() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $this->actingAs($user)
             ->json('POST', 'API/getAllPrescriptions')
             ->seeJson(['status' => 1]);
@@ -75,7 +79,7 @@ class APIControllerTest extends TestCase {
      * test issue prescription method
      */
     public function testIssuePrescription() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $patient = $user->clinic->patients()->first();
         $prescription = $patient->prescriptions()->where('issued', false)->first();
         $drugs = [];
@@ -98,7 +102,7 @@ class APIControllerTest extends TestCase {
      * test delete prescription method
      */
     public function testDeletePrescription() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $patient = $user->clinic->patients()->first();
         $prescription = $patient->prescriptions()->where('issued', false)->first();
         $this->actingAs($user)
@@ -111,7 +115,7 @@ class APIControllerTest extends TestCase {
      * Test get medical records method
      */
     public function testGetMedicalRecords() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $patient = $user->clinic->patients()->first();
         $this->actingAs($user)
             ->json('POST', 'API/getMedicalRecords/' . $patient->id)

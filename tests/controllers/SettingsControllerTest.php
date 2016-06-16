@@ -1,9 +1,11 @@
 <?php
+namespace Tests\Controllers;
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\User;
+use Tests\TestCase;
 
 class SettingsControllerTest extends TestCase {
 
@@ -46,7 +48,7 @@ class SettingsControllerTest extends TestCase {
 
     public function testCreateAccount() {
         //success scenario
-        $newUser = factory(App\User::class, 1)->make();
+        $newUser = factory(User::class, 1)->make();
         $response = $this->actingAs($this->adminUser)
             ->call('POST', 'settings/createAccount', [
                 'user_name'                  => $newUser->name,
@@ -63,7 +65,7 @@ class SettingsControllerTest extends TestCase {
         }
 
         //fail scenarios - unauthorized accesses.
-        $newUser = factory(App\User::class, 1)->make();
+        $newUser = factory(User::class, 1)->make();
         $response = $this->actingAs($this->nurseUser)
             ->call('POST', 'settings/createAccount', [
                 'user_name'     => $newUser->name,

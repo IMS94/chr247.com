@@ -31,7 +31,6 @@
         <div class="box-body">
 
             <div class="alert alert-danger alert-dismissable" ng-show="prescription.hasError" ng-cloak>
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4><i class="icon fa fa-ban"></i> Oops!</h4>
                 [[error]]
             </div>

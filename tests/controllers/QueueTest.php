@@ -1,8 +1,11 @@
 <?php
+namespace Tests\Controllers;
 
+use App\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class QueueTest extends TestCase {
 
@@ -12,11 +15,14 @@ class QueueTest extends TestCase {
      * test creating a new queue, success and fail
      */
     public function testAllQueueFunctions() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $patient = $user->clinic->patients()->first();
         $this->actingAs($user)
             ->visit('queue')
             ->see('Queue');
+
+        //close current queues
+        $user->clinic->queues()->where('active', true)->update(['active' => false]);
 
         // Create Queue
         $this->actingAs($user)

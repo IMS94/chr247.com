@@ -46,4 +46,21 @@ class AdminController extends Controller {
         return back()->with("success", $clinic->name . " clinic Accepted");
     }
 
+
+    /**
+     * Remove a clinic which is to be accepted
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteClinic($id) {
+        $clinic = Clinic::find($id);
+        if ($clinic->accepted) {
+            return back();
+        }
+        $clinic->users()->delete();
+        $clinic->delete();
+        return back()->with("success", $clinic->name . " clinic removed");
+    }
+
 }

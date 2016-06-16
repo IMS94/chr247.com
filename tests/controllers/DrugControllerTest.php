@@ -1,15 +1,21 @@
 <?php
+namespace Tests\Controllers;
 
+use App\Drug;
+use App\PrescriptionDrug;
+use App\Stock;
+use App\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class DrugControllerTest extends TestCase {
 
     use DatabaseTransactions;
 
     public function testGetDrugListView() {
-        $user = \App\User::first();
+        $user = User::first();
         $this->actingAs($user)
             ->visit('drugs')
             ->see("Drugs")
@@ -17,7 +23,7 @@ class DrugControllerTest extends TestCase {
     }
 
     public function testGetDrugView() {
-        $user = \App\User::first();
+        $user = User::first();
         $drug = $user->clinic->drugs()->first();
         $this->actingAs($user)
             ->visit('drugs/drug/' . $drug->id)
@@ -26,8 +32,8 @@ class DrugControllerTest extends TestCase {
 
     public function testAddDrug() {
         // Add a drug without initial stock
-        $user = \App\User::first();
-        $drug = factory(App\Drug::class, 1)->make();
+        $user = User::first();
+        $drug = factory(Drug::class, 1)->make();
         $quantityType = $user->clinic->quantityTypes()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/addDrug', [
@@ -43,8 +49,8 @@ class DrugControllerTest extends TestCase {
         ]);
 
         // Add a drug with initial stock
-        $drug = factory(App\Drug::class, 1)->make();
-        $stock = factory(App\Stock::class, 1)->make();
+        $drug = factory(Drug::class, 1)->make();
+        $stock = factory(Stock::class, 1)->make();
         $quantityType = $user->clinic->quantityTypes()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/addDrug', [
@@ -64,7 +70,7 @@ class DrugControllerTest extends TestCase {
             'drug_type_id' => $quantityType->id
         ]);
         // Check entry in the database
-        $drug = \App\Drug::where('name', $drug->name)->where('clinic_id', $user->clinic->id)
+        $drug = Drug::where('name', $drug->name)->where('clinic_id', $user->clinic->id)
             ->where('drug_type_id', $quantityType->id)->first();
         $this->seeInDatabase('stocks', [
             'drug_id'           => $drug->id,
@@ -75,11 +81,11 @@ class DrugControllerTest extends TestCase {
 
 
     public function testDeleteDrug() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $drug = $user->clinic->drugs()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/deleteDrug/' . $drug->id);
-        if (\App\PrescriptionDrug::where('drug_id', $drug->id)->count() > 0) {
+        if (PrescriptionDrug::where('drug_id', $drug->id)->count() > 0) {
             $this->assertSessionHas('error', "The drug cannot be deleted!");
             $this->seeInDatabase('drugs', ['id' => $drug->id]);
         } else {
@@ -89,7 +95,7 @@ class DrugControllerTest extends TestCase {
     }
 
     public function testEditDrug() {
-        $user = \App\User::where('role_id', 1)->first();
+        $user = User::where('role_id', 1)->first();
         $drug = $user->clinic->drugs()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/editDrug/' . $drug->id, [
