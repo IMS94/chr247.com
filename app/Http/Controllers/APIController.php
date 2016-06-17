@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Validator;
 class APIController extends Controller {
     /**
      * Get the clinic's drugs
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDrugs() {
@@ -36,6 +37,7 @@ class APIController extends Controller {
 
     /**
      * Get the Dosages, Frequencies and Periods of the clinic
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDosages() {
@@ -50,6 +52,7 @@ class APIController extends Controller {
 
     /**
      * Saves a prescription
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -103,6 +106,7 @@ class APIController extends Controller {
 
     /**
      * Get the prescriptions of a given patient
+     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -120,6 +124,7 @@ class APIController extends Controller {
 
     /**
      * Get the prescriptions to be issued of the clinic.
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getAllRemainingPrescriptions() {
@@ -140,6 +145,7 @@ class APIController extends Controller {
     /**
      * Issue a prescription.
      * Mark prescription as issued. Then register the payment.
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -207,6 +213,7 @@ class APIController extends Controller {
     /**
      * Deletes a prescription.
      * Authorizes before deleting whether the user has permissions to delete the prescription.
+     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -238,6 +245,7 @@ class APIController extends Controller {
 
     /**
      * Get the medical records of a patient.
+     *
      * @param $patientId
      * @return \Illuminate\Http\JsonResponse
      */
@@ -261,6 +269,7 @@ class APIController extends Controller {
 
     /**
      * Get the patients in the current queue
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getQueue() {
@@ -276,6 +285,7 @@ class APIController extends Controller {
 
     /**
      * Update the current queue
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
