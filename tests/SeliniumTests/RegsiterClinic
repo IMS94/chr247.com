@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:8000/" />
-<title>SeliniumTests</title>
+<title>RegsiterClinic</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">SeliniumTests</td></tr>
+<tr><td rowspan="1" colspan="3">RegsiterClinic</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -18,12 +18,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Login</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Register</td>
+	<td>link=Sign up for free!</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,12 +29,12 @@
 <tr>
 	<td>type</td>
 	<td>name=email</td>
-	<td>test@gmail.com</td>
+	<td>imesha@highflyer.lk</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>name=address</td>
-	<td>24, Gampaha</td>
+	<td>2310 Fermin GardensNew Elliotborough, WA 30013-6341</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -52,14 +47,9 @@
 	<td>label=Sri Lanka</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//button[@type='submit']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>name=currency</td>
-	<td>Rupees</td>
+	<td>Dollars</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -79,16 +69,6 @@
 <tr>
 	<td>type</td>
 	<td>name=password_confirmation</td>
-	<td>1234</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//button[@type='submit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>name=password_confirmation</td>
 	<td>123456</td>
 </tr>
 <tr>
@@ -98,7 +78,27 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>name=terms</td>
+	<td>css=ins.iCheck-helper</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=ins.iCheck-helper</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=email</td>
+	<td>test@gmail.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=ins.iCheck-helper</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,6 +106,7 @@
 	<td>//button[@type='submit']</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

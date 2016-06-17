@@ -228,12 +228,14 @@
 
                             <div class="form-group {{ $errors->has('terms') ? ' has-error' : '' }}">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <div class="checkbox">
-                                        <input type="checkbox" name="terms"> I hereby agree on CHR247.com's
-                                        <a href="#" data-toggle="modal" data-target="#privacyPolicyModal">Privacy
-                                            Policy</a> and
-                                        <a href="#" data-toggle="modal" data-target="#termsModal">Terms &
-                                            Conditions</a>
+                                    <div class="checkbox icheck">
+                                        <label>
+                                            <input type="checkbox" name="terms"> I hereby agree on CHR247.com's
+                                            <a href="#" data-toggle="modal" data-target="#privacyPolicyModal">Privacy
+                                                Policy</a> and
+                                            <a href="#" data-toggle="modal" data-target="#termsModal">Terms &
+                                                Conditions</a>
+                                        </label>
                                     </div>
                                     @if ($errors->has('terms'))
                                         <span class="help-block">

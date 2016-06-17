@@ -33,12 +33,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xpath=(//a[contains(text(),'Delete')])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=button.close</td>
+	<td>xpath=(//a[contains(text(),'Delete')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,6 +46,7 @@
 	<td>css=b</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>
