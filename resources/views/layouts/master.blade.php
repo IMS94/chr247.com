@@ -52,7 +52,7 @@ $user = \App\User::getCurrentUser();
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>CHR</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>CHR</b>247</span>
+            <span class="logo-lg"><b>CHR</b> 24x7</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -179,7 +179,7 @@ $user = \App\User::getCurrentUser();
         <section class="content-header">
             <h1>
                 @yield('page_header')
-                <small>@yield('sub_header','Cloud Health Records - CHR247')</small>
+                <small>@yield('sub_header','Cloud Health Records - CHR 24x7')</small>
             </h1>
             @yield('breadcrumb','')
         </section>

@@ -5,9 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class Clinic extends Model
-{
-    protected $table="clinics";
+class Clinic extends Model {
+    protected $table = "clinics";
 
 
     /**
@@ -16,7 +15,7 @@ class Clinic extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'address', 'phone','timezone'
+        'name', 'email', 'address', 'phone', 'timezone', 'country','currency'
     ];
 
 
@@ -24,15 +23,15 @@ class Clinic extends Model
      * Users of the clinic
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function users(){
-        return $this->hasMany('App\User','clinic_id','id');
+    public function users() {
+        return $this->hasMany('App\User', 'clinic_id', 'id');
     }
 
     /**
      * Get the patients of the clinic
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function patients(){
+    public function patients() {
         return $this->hasMany('App\Patient');
     }
 
@@ -40,8 +39,8 @@ class Clinic extends Model
      * Drugs of the clinic
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function drugs(){
-        return $this->hasMany('App\Drug','clinic_id','id');
+    public function drugs() {
+        return $this->hasMany('App\Drug', 'clinic_id', 'id');
     }
 
 
@@ -49,8 +48,8 @@ class Clinic extends Model
      * Drug types of the clinic
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function quantityTypes(){
-        return $this->hasMany('App\DrugType','clinic_id','id');
+    public function quantityTypes() {
+        return $this->hasMany('App\DrugType', 'clinic_id', 'id');
     }
 
 
@@ -58,8 +57,8 @@ class Clinic extends Model
      * Queues of the clinic
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function queues(){
-        return $this->hasMany('App\Queue','clinic_id','id');
+    public function queues() {
+        return $this->hasMany('App\Queue', 'clinic_id', 'id');
     }
 
 
@@ -67,29 +66,25 @@ class Clinic extends Model
      * Dosages related information of the clinic.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function dosages(){
-        return $this->hasMany('App\Dosage','clinic_id','id');
+    public function dosages() {
+        return $this->hasMany('App\Dosage', 'clinic_id', 'id');
     }
 
-    public function dosageFrequencies(){
-        return $this->hasMany('App\DosageFrequency','clinic_id','id');
+    public function dosageFrequencies() {
+        return $this->hasMany('App\DosageFrequency', 'clinic_id', 'id');
     }
 
-    public function dosagePeriods(){
-        return $this->hasMany('App\DosagePeriod','clinic_id','id');
+    public function dosagePeriods() {
+        return $this->hasMany('App\DosagePeriod', 'clinic_id', 'id');
     }
-
-
-
-
 
 
     /**
      * Get the currently logged in user's clinic
      * @return mixed
      */
-    public static function getCurrentClinic(){
-        $user=Auth::user();
+    public static function getCurrentClinic() {
+        $user = Auth::user();
         return $user->clinic;
     }
 }

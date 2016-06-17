@@ -89,6 +89,7 @@ class ClinicController extends Controller {
 
     /**
      * Create a new user instance after a valid registration.
+     * REMEMBER :   Update the $fillable array whenever adding additional attribute to Clinic table
      *
      * @param  array $data
      * @return Clinic

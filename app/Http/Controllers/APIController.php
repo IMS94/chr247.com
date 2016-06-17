@@ -57,12 +57,27 @@ class APIController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function savePrescription(Request $request) {
+        $validator = \Validator::make($request->all(), [
+            'id'                      => 'required|exists:patients,id',
+            'complaints'              => 'required_without:diagnosis|max:150',
+            'diagnosis'               => 'required_without:complaints|max:150',
+            'investigations'          => 'max:150',
+            'remarks'                 => 'max:150',
+            'prescribedDrugs'         => 'array',
+            'prescribedDrugs.*.drug'  => 'required_with:prescribedDrugs',
+            'prescribedDrugs.*.dose'  => 'required_with:prescribedDrugs',
+            'pharmacyDrugs'           => 'array',
+            'pharmacyDrugs.*.name'    => 'required_with:pharmacyDrugs',
+            'pharmacyDrugs.*.remarks' => 'max:200'
+        ]);
+
         $patient = Patient::find($request->id);
-        if (empty($patient) || Gate::denies('prescribeMedicine', $patient)) {
+        if (Gate::denies('prescribeMedicine', $patient)) {
             return response()->json(['status' => 0, 'message' => 'Unauthorized action'], 404);
         }
+
         //at least on of the complaints and diagnosis has to be present
-        if (!$request->complaints && !$request->diagnosis) {
+        if ($validator->fails()) {
             return response()->json(['status' => 0], 404);
         }
 
@@ -72,7 +87,7 @@ class APIController extends Controller {
             $prescription->complaints = $request->complaints;
             $prescription->investigations = $request->investigations;
             $prescription->diagnosis = $request->diagnosis;
-            $prescription->remarks = $request->remarks;
+            $prescription->remarks = $request->remarks ?: "";
             $prescription->creator()->associate(User::getCurrentUser());
             $prescription->patient()->associate($patient);
             $prescription->save();
@@ -91,7 +106,7 @@ class APIController extends Controller {
             foreach ($request->pharmacyDrugs as $pharmacyDrug) {
                 $drug = new PrescriptionPharmacyDrug();
                 $drug->drug = $pharmacyDrug['name'];
-                $drug->remarks = $pharmacyDrug['remarks'];
+                $drug->remarks = isset($pharmacyDrug['remarks']) ? $pharmacyDrug['remarks'] : "";
                 $prescription->prescriptionPharmacyDrugs()->save($drug);
             }
         } catch (\Exception $e) {

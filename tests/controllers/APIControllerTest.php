@@ -39,19 +39,141 @@ class APIControllerTest extends TestCase {
     /**
      * test save prescription method
      */
-    public function testSavePrescription() {
+    public function testSavePrescriptionWithoutAnyDrug() {
         $user = User::where('role_id', 2)->first();
         $patient = $user->clinic->patients()->first();
         $this->actingAs($user)
             ->json('POST', 'API/savePrescription', [
                 'complaints'      => "Fever",
                 'id'              => $patient->id,
-                'diagnosis'       => 'Fever',
+                'diagnosis'       => 'Fever with No Drugs',
                 'prescribedDrugs' => [],
                 'pharmacyDrugs'   => []
             ])
             ->seeJson(['status' => 1])
-            ->seeInDatabase('prescriptions', ['patient_id' => $patient->id, 'complaints' => 'Fever', 'diagnosis' => 'Fever']);
+            ->seeInDatabase('prescriptions',
+                ['patient_id' => $patient->id, 'complaints' => 'Fever', 'diagnosis' => 'Fever with No Drugs']);
+    }
+
+    public function testSavePrescriptionWithPharmacyDrugsOnly() {
+        $user = User::where('role_id', 2)->first();
+        $patient = $user->clinic->patients()->first();
+        $this->actingAs($user)
+            ->json('POST', 'API/savePrescription', [
+                'complaints'      => "Fever",
+                'id'              => $patient->id,
+                'diagnosis'       => 'Fever with Pharmacy Drugs Only',
+                'prescribedDrugs' => [],
+                'pharmacyDrugs'   => [
+                    ['name' => 'Amoxicilin 250', 'remarks' => 'For 1 week'],
+                    ['name' => 'Cetricine']
+                ]
+            ])
+            ->seeJson(['status' => 1]);
+        $prescription = $patient->prescriptions()->orderBy('id', 'DESC')->first();
+        $this->assertNotNull($prescription);
+        $this->assertEquals('Fever with Pharmacy Drugs Only', $prescription->diagnosis);
+        $this->assertEquals(2, $prescription->prescriptionPharmacyDrugs()->count());
+    }
+
+    public function testSavePrescriptionWithDrugsOnly() {
+        $user = User::where('role_id', 2)->first();
+        $patient = $user->clinic->patients()->first();
+        $drugs = $user->clinic->drugs()->take(3)->get();
+        $dose = $user->clinic->dosages()->take(2)->get();
+        $frequency = $user->clinic->dosageFrequencies()->first();
+        $dosagePeriod = $user->clinic->dosagePeriods()->first();
+        $this->actingAs($user)
+            ->json('POST', 'API/savePrescription', [
+                'complaints'      => "Fever",
+                'id'              => $patient->id,
+                'diagnosis'       => 'Fever with Drugs Only',
+                'prescribedDrugs' => [[
+                    'drug'      => ['id' => $drugs[0]->id],
+                    'dose'      => ['id' => $dose[0]->id],
+                    'frequency' => ['id' => $frequency->id],
+                    'period'    => null
+                ], [
+                    'drug'      => ['id' => $drugs[1]->id],
+                    'dose'      => ['id' => $dose[1]->id],
+                    'frequency' => null,
+                    'period'    => null
+                ]],
+                'pharmacyDrugs'   => []
+            ])
+            ->seeJson(['status' => 1]);
+        $prescription = $patient->prescriptions()->orderBy('id', 'DESC')->first();
+        $this->assertNotNull($prescription);
+        $this->assertEquals('Fever with Drugs Only', $prescription->diagnosis);
+        $this->assertEquals(2, $prescription->prescriptionDrugs()->count());
+    }
+
+
+    public function testSavePrescriptionWithAllDrugs() {
+        $user = User::where('role_id', 2)->first();
+        $patient = $user->clinic->patients()->first();
+        $drugs = $user->clinic->drugs()->take(3)->get();
+        $dose = $user->clinic->dosages()->take(2)->get();
+        $frequency = $user->clinic->dosageFrequencies()->first();
+        $dosagePeriod = $user->clinic->dosagePeriods()->first();
+        $this->actingAs($user)
+            ->json('POST', 'API/savePrescription', [
+                'complaints'      => "Fever",
+                'id'              => $patient->id,
+                'diagnosis'       => 'Fever with Drugs Only',
+                'prescribedDrugs' => [[
+                    'drug'      => ['id' => $drugs[0]->id],
+                    'dose'      => ['id' => $dose[0]->id],
+                    'frequency' => ['id' => $frequency->id],
+                    'period'    => null
+                ], [
+                    'drug'      => ['id' => $drugs[1]->id],
+                    'dose'      => ['id' => $dose[1]->id],
+                    'frequency' => null,
+                    'period'    => null
+                ]],
+                'pharmacyDrugs'   => [
+                    ['name' => 'Amoxicilin 250', 'remarks' => 'For 1 week'],
+                    ['name' => 'Cetricine']
+                ]
+            ])
+            ->seeJson(['status' => 1]);
+        $prescription = $patient->prescriptions()->orderBy('id', 'DESC')->first();
+        $this->assertNotNull($prescription);
+        $this->assertEquals('Fever with Drugs Only', $prescription->diagnosis);
+        $this->assertEquals(2, $prescription->prescriptionDrugs()->count());
+        $this->assertEquals(2, $prescription->prescriptionPharmacyDrugs()->count());
+    }
+
+    public function testSavePrescriptionWithSameDrugTwice() {
+        $user = User::where('role_id', 2)->first();
+        $patient = $user->clinic->patients()->first();
+        $drugs = $user->clinic->drugs()->take(3)->get();
+        $dose = $user->clinic->dosages()->take(2)->get();
+        $frequency = $user->clinic->dosageFrequencies()->first();
+        $dosagePeriod = $user->clinic->dosagePeriods()->first();
+        $this->actingAs($user)
+            ->json('POST', 'API/savePrescription', [
+                'complaints'      => "Fever",
+                'id'              => $patient->id,
+                'diagnosis'       => 'Fever with Drugs Only',
+                'prescribedDrugs' => [[
+                    'drug'      => ['id' => $drugs[0]->id],
+                    'dose'      => ['id' => $dose[0]->id],
+                    'frequency' => ['id' => $frequency->id],
+                    'period'    => null
+                ], [
+                    'drug'      => ['id' => $drugs[0]->id],
+                    'dose'      => ['id' => $dose[1]->id],
+                    'frequency' => null,
+                    'period'    => null
+                ]],
+                'pharmacyDrugs'   => [
+                    ['name' => 'Amoxicilin 250', 'remarks' => 'For 1 week'],
+                    ['name' => 'Cetricine']
+                ]
+            ])
+            ->seeJson(['status' => 0]);
     }
 
     /**

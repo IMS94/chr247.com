@@ -106,7 +106,6 @@
                                 <label class="col-md-4 control-label">Country</label>
 
                                 <div class="col-md-6">
-
                                     <select name="country" class="form-control" ng-model="countryCode"
                                             ng-change="getTimezones()"
                                             ng-init="countryCode='{{old("country")}}';getTimezones()">
@@ -117,7 +116,6 @@
                                                 {{$country}}
                                             </option>
                                         @endforeach
-
                                     </select>
 
                                     @if ($errors->has('country'))

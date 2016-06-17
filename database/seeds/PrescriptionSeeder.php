@@ -44,7 +44,7 @@ class PrescriptionSeeder extends Seeder {
                             $drugCount = rand(0, 6);
                             for ($x = 0; $x < $drugCount; $x++) {
                                 $prescriptionDrug = new \App\PrescriptionDrug();
-                                $prescriptionDrug->drug()->associate($drugs->random(1));
+                                $prescriptionDrug->drug()->associate($drugs[$x]);
                                 $prescriptionDrug->dosage()->associate($dosages->random(1));
                                 $prescriptionDrug->frequency()->associate($frequencies->random(1));
                                 $prescriptionDrug->period()->associate($periods->random(1));

@@ -1,8 +1,7 @@
 <?php
 namespace App\Lib\Support;
 
-class Country
-{
+class Country {
     static $countries = array
     (
         'AF' => 'Afghanistan',

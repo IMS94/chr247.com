@@ -59,36 +59,37 @@ class UtilityController extends Controller {
 
     /**
      * Calculates the statistics of a clinic.
+     * In order to calculate stats, at least one patient have to be registered
      *
      * @param $clinic
      * @return array
      */
     private function calcClinicStats($clinic) {
-        $date = date('Y-m-d H:i:s', strtotime("-6 months"));
-        $patientIds = $clinic->patients()->lists('id')->toArray();
-        $patientIds = implode(",", $patientIds);
-
-        $query = "SELECT MONTH(created_at) AS m,COUNT(*) AS c FROM `prescriptions` WHERE `patient_id`
-                    IN (" . $patientIds . ") AND `created_at` > :d GROUP BY MONTH(created_at)";
-
-        $pdo = \DB::connection()->getPdo();
-        $statement = $pdo->prepare($query);
-        $statement->bindParam('d', $date, \PDO::PARAM_STR);
-        $statement->execute();
-        $visits = $statement->fetchAll();
-
         $stats = [
             'visits' => [
                 'm' => [],
                 'c' => []
             ]
         ];
-        foreach ($visits as $result) {
-            $dateObj = \DateTime::createFromFormat('!m', $result['m']);
-            $stats['visits']['m'][] = $dateObj->format('F');
-            $stats['visits']['c'][] = $result['c'];
-        }
 
+        $date = date('Y-m-d H:i:s', strtotime("-6 months"));
+        $patientIds = $clinic->patients()->lists('id')->toArray();
+        if (count($patientIds) > 0) {
+            $patientIds = implode(",", $patientIds);
+            $query = "SELECT MONTH(created_at) AS m,COUNT(*) AS c FROM `prescriptions` WHERE `patient_id`
+                    IN (" . $patientIds . ") AND `created_at` > :d GROUP BY MONTH(created_at)";
+            $pdo = \DB::connection()->getPdo();
+            $statement = $pdo->prepare($query);
+            $statement->bindParam('d', $date, \PDO::PARAM_STR);
+            $statement->execute();
+            $visits = $statement->fetchAll();
+
+            foreach ($visits as $result) {
+                $dateObj = \DateTime::createFromFormat('!m', $result['m']);
+                $stats['visits']['m'][] = $dateObj->format('F');
+                $stats['visits']['c'][] = $result['c'];
+            }
+        }
         return $stats;
     }
 }

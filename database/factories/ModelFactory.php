@@ -17,7 +17,9 @@ $factory->define(App\Clinic::class, function (Faker\Generator $faker) {
         'email'    => $faker->unique()->email,
         'address'  => $faker->address,
         'phone'    => $faker->phoneNumber,
+        'country'  => \App\Lib\Support\Country::$countries['LK'],
         'timezone' => $faker->timezone,
+        'currency' => $faker->currencyCode
     ];
 });
 

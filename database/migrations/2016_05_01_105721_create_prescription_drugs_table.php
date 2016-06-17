@@ -3,15 +3,13 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePrescriptionDrugsTable extends Migration
-{
+class CreatePrescriptionDrugsTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('prescription_drugs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('prescription_id')->unsigned();
@@ -21,6 +19,7 @@ class CreatePrescriptionDrugsTable extends Migration
             $table->integer('period_id')->unsigned()->nullable()->default(null);
             $table->float('quantity')->default(0);
             $table->timestamps();
+            $table->unique(['prescription_id', 'drug_id']);
 
             $table->foreign('prescription_id')->references('id')->on('prescriptions')->onDelete('restrict');
             $table->foreign('drug_id')->references('id')->on('drugs')->onDelete('restrict');
@@ -35,8 +34,7 @@ class CreatePrescriptionDrugsTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::drop('prescription_drugs');
     }
 }
