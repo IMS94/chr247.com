@@ -46,7 +46,7 @@
                 <span class="icon-bar"></span>
             </button> <!-- end navbar-toggle -->
             <a class="navbar-brand" href="{{url('/')}}">
-                <img src="{{asset('logo-white.png')}}" alt="CHR 24x7" style="width: 200px;height: 200px;"
+                <img src="{{asset('logo-white.png')}}" alt="CHR 24x7" style="width: 150px;height: 150px;"
                      class="light-logo img-responsive">
                 <img src="{{asset('logo.png')}}" alt="CHR 24x7" style="width: 50px;height: 50px;"
                      class="dark-logo">
@@ -165,7 +165,7 @@
 </section>
 --}}
 
-<!-- ========== STEPS ========== -->
+        <!-- ========== STEPS ========== -->
 <section class="se-section se-steps">
     <div class="container">
         <div class="row text-center">
@@ -204,7 +204,7 @@
                     </div>
                     <div class="right">
                         <h5>Work on any device</h5>
-                        <p>The system will work on any device which has a web-browser and an internet conection.</p>
+                        <p>The system will work on any device which has a web-browser and an internet connection.</p>
                     </div>
                 </div> <!-- end se-feature -->
 
@@ -214,7 +214,7 @@
                     </div>
                     <div class="right">
                         <h5>Updates for lifetime</h5>
-                        <p>All of the updates to the system will be avilable to all the users as soon as it's
+                        <p>All of the updates to the system will be available to all the users as soon as it's
                             released.</p>
                     </div>
                 </div> <!-- end se-feature -->
@@ -234,9 +234,10 @@
                         <i class="icon ion-ios-paper-outline"></i>
                     </div>
                     <div class="right">
-                        <h5>Compact documantation</h5>
-                        <p>The documatation is a cook-book for the entier system which will be useful for begginers and
-                            advanced users.</p>
+                        <h5>Compact Documentation</h5>
+                        <p>The documentation is a complete guide for the entire system which will be useful for
+                            beginners and advanced users.
+                        </p>
                     </div>
                 </div> <!-- end se-feature -->
 
@@ -246,8 +247,8 @@
                     </div>
                     <div class="right">
                         <h5>Light Weight</h5>
-                        <p>The system uses a very little amount of bandwith as it's optimised to work under low bandwith
-                            networks.</p>
+                        <p>The system is optimised to run under low-bandwidth conditions.
+                        </p>
                     </div>
                 </div> <!-- end se-feature -->
 
@@ -256,7 +257,7 @@
                         <i class="icon ion-ios-world-outline"></i>
                     </div>
                     <div class="right">
-                        <h5>Multi-lingual support</h5>
+                        <h5>Multi-lingual Support</h5>
                         <p>ආයුබෝවන් ~ 你好 ~ Привіт
                         </p>
                     </div>
