@@ -28,7 +28,7 @@ class PatientControllerTest extends TestCase {
                 'firstName'  => $patient->first_name,
                 'lastName'   => $patient->last_name,
                 'address'    => $patient->address,
-                'dob'        => $patient->dob,
+                'dob'        => date('m/d/Y', strtotime($patient->dob)),
                 'phone'      => $patient->phone,
                 'bloodGroup' => $patient->blood_group,
                 'gender'     => $patient->gender
@@ -44,6 +44,43 @@ class PatientControllerTest extends TestCase {
         $this->actingAs($user)
             ->call('GET', "patients/deletePatient/" . $patient->id);
         $this->dontSeeInDatabase('patients', ['id' => $patient->id]);
+    }
+
+    public function testAddPatientWithInvalidDateFormat() {
+        $user = User::where('role_id', 1)->first();
+        $patient = factory(Patient::class, 1)->make();
+        $this->actingAs($user)
+            ->call('POST', "patients/addPatient", [
+                'firstName'  => $patient->first_name,
+                'lastName'   => $patient->last_name,
+                'address'    => $patient->address,
+                'dob'        => date('Y-m-d', strtotime($patient->dob)),
+                'phone'      => $patient->phone,
+                'bloodGroup' => $patient->blood_group,
+                'gender'     => $patient->gender
+            ]);
+        $this->seeInSession("errors");
+        $this->dontSeeInDatabase('patients', [
+            'first_name' => $patient->first_name,
+            'created_by' => $user->id,
+            'phone'      => $patient->phone
+        ]);
+    }
+
+    public function testAddPatientWithOutOfRangeDate() {
+        $user = User::where('role_id', 1)->first();
+        $patient = factory(Patient::class, 1)->make();
+        $this->actingAs($user)
+            ->call('POST', "patients/addPatient", [
+                'firstName'  => $patient->first_name,
+                'lastName'   => $patient->last_name,
+                'address'    => $patient->address,
+                'dob'        => "03/15/1500",
+                'phone'      => $patient->phone,
+                'bloodGroup' => $patient->blood_group,
+                'gender'     => $patient->gender
+            ]);
+        $this->seeInSession("errors");
     }
 
 

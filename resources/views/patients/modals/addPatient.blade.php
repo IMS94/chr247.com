@@ -50,9 +50,17 @@
                     <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Date of Birth</label>
                         <div class="col-md-9">
-                            <input type="date" class="form-control" name="dob" value="{{ old('dob') }}"
-                                   max="{{date('Y-m-d')}}"
-                                   min="{{date('Y-m-d',strtotime(date('Y-m-d').' -150 year'))}}">
+                            <input class="form-control" type="text" id="dob" name="dob" value="{{old('dob')}}">
+                            <script>
+                                $(document).ready(function () {
+                                    $("#dob").daterangepicker({
+                                        singleDatePicker: true,
+                                        showDropdowns: true,
+                                        maxDate: '{{date('m/d/Y')}}',
+                                        minDate: '{{date('m/d/Y',strtotime(date('m/d/Y').' -150 year'))}}'
+                                    });
+                                });
+                            </script>
                             @if ($errors->has('dob'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('dob') }}</strong>

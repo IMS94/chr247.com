@@ -32,6 +32,9 @@ $user = \App\User::getCurrentUser();
  folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
 
+    {{--Date Range Picker CSS--}}
+    <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker-bs3.css')}}">
+
     <!-- jQuery 2.1.4 Moved to the top to load without an error-->
     <script src="{{asset('plugins/jQuery/jQuery-2.1.4.min.js')}}"></script>
 
@@ -193,12 +196,11 @@ $user = \App\User::getCurrentUser();
 
     <!--  ============================================== -->
 
-
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 1.0.0
         </div>
-        <strong>Copyright &copy; <a href="#">Consec Technologies</a>.</strong> All rights
+        <strong>Copyright &copy; <a href="#">chr247.com</a>.</strong> All rights
         reserved.
     </footer>
 </div><!-- ./wrapper -->
@@ -218,6 +220,9 @@ $user = \App\User::getCurrentUser();
 <!-- DataTables -->
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+{{--Date Range Picker--}}
+<script src="{{asset('plugins/daterangepicker/moment.min.js')}}"></script>
+<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
 
 {{--The script to show time on the top--}}
 <script>
@@ -230,14 +235,12 @@ $user = \App\User::getCurrentUser();
             var year = d.getFullYear();
             var month = d.getMonth() < 10 ? "0" + d.getMonth() : d.getMonth();
             var day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
+            var ampm = "AM";
             if (hours > 12) {
-                var hours = (hours - 12);
-                var ampm = "PM";
+                hours = (hours - 12);
+                ampm = "PM";
             }
-            else {
-                var ampm = "AM";
-            }
-            var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             hours = hours < 10 ? "0" + hours : hours;
             var date = year + "/" + month + "/" + day;
             var time = hours + ":" + mins + ":" + seconds + " " + ampm;

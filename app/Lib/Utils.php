@@ -11,15 +11,13 @@ namespace App\Lib;
 
 use App\Clinic;
 
-class Utils
-{
+class Utils {
     /**
      * Get the age once a birthday is given
      * @param $date
      * @return string
      */
-    public static function getAge($date)
-    {
+    public static function getAge($date) {
         return $date ? date_diff(date_create($date), date_create('today'))->y . " yrs" : "-";
     }
 
@@ -29,8 +27,7 @@ class Utils
      * @param $timestamp
      * @return bool|string
      */
-    public static function getTimestamp($timestamp)
-    {
+    public static function getTimestamp($timestamp) {
         $clinic = Clinic::getCurrentClinic();
         return date("jS M, Y h:i A", strtotime($timestamp->timezone($clinic->timezone)));
     }
@@ -40,8 +37,7 @@ class Utils
      * @param $date
      * @return bool|string
      */
-    public static function getFormattedDate($date)
-    {
+    public static function getFormattedDate($date) {
         $clinic = Clinic::getCurrentClinic();
         $date = date_create($date, timezone_open($clinic->timezone));
         return date_format($date, "jS M, Y");
@@ -53,8 +49,7 @@ class Utils
      * @param $patient
      * @return bool
      */
-    public static function isMale($patient)
-    {
+    public static function isMale($patient) {
         return $patient->gender === "Male";
     }
 
@@ -64,8 +59,7 @@ class Utils
      * @param $patient
      * @return bool
      */
-    public static function isFemale($patient)
-    {
+    public static function isFemale($patient) {
         return $patient->gender === "Female";
     }
 }

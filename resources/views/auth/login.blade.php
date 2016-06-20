@@ -129,8 +129,7 @@
                 </div>
 
                 <div class="col-md-12 col-xs-12">
-                    <a href="{{route('registerClinic')}}" class="btn btn-primary btn-flat btn-lg pull-left wow shake"
-                       data-wow-delay="1s" data-wow-iteration="infinite" data-wow-duration="6s">
+                    <a href="{{route('registerClinic')}}" class="btn btn-primary btn-flat btn-lg pull-left">
                         Regsiter Now <i class="fa fa-arrow-right fa-lg"></i>
                     </a>
                 </div>

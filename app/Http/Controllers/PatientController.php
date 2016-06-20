@@ -33,11 +33,14 @@ class PatientController extends Controller {
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function addPatient(Request $request) {
+        \Log::info($request->all());
         $validator = Validator::make($request->all(), [
             'firstName'  => 'required',
             'gender'     => 'required|in:Male,Female',
             'nic'        => 'regex:/[0-9]{9}[vV]/',
-            'bloodGroup' => 'required|in:A +,A -,B +,B -,AB +,AB -,O +,O -,N/A'
+            'bloodGroup' => 'required|in:A +,A -,B +,B -,AB +,AB -,O +,O -,N/A',
+            'dob'        => 'date|date_format:m/d/Y|before:' . date('Y-m-d') . '|after:' .
+                date('Y-m-d', strtotime(date('Y-m-d') . ' -150 year'))
         ]);
 
         if ($validator->fails()) {
@@ -59,7 +62,7 @@ class PatientController extends Controller {
         $patient = new Patient();
         $patient->first_name = $request->firstName;
         $patient->last_name = $request->lastName ?: null;
-        $patient->dob = $request->dob ?: null;
+        $patient->dob = $request->dob ? date('Y-m-d', strtotime($request->dob)) : null;
         $patient->gender = $request->gender;
         $patient->address = $request->address ?: null;
         $patient->nic = $request->nic ?: null;
