@@ -18,7 +18,7 @@ class CreateDiseasePool extends Migration {
             $table->string('synonyms')->nullable();
         });
 
-        $diseasesFile = Storage::disk('public')->get('lib/CTD_diseases.tsv');
+        $diseasesFile = Storage::disk('global_public')->get('lib/CTD_diseases.tsv');
         $lines = explode("\n", $diseasesFile);
         $diseases = array();
         $diseasesCount = count($lines);
