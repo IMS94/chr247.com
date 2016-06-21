@@ -26,7 +26,10 @@
                         <label class="col-md-3 control-label">Drug Name</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="drugName" value="{{ old('drugName') }}"
-                                   required>
+                                   required list="drugList" ng-change="predictDrug()" ng-model="drugName">
+                            <datalist id="drugList">
+                                <option ng-repeat="drug in drugPredictions">[[drug.trade_name]]</option>
+                            </datalist>
                             @if ($errors->has('drugName'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('drugName') }}</strong>
@@ -58,7 +61,12 @@
                         <label class="col-md-3 control-label">Manufacturer</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="manufacturer"
-                                   value="{{ old('manufacturer') }}" required>
+                                   value="{{ old('manufacturer') }}"
+                                   required list="manufacturerList" ng-change="predictManufacturer()"
+                                   ng-model="manufacturer">
+                            <datalist id="manufacturerList">
+                                <option ng-repeat="manufacturer in manufacturers">[[manufacturer.manufacturer]]</option>
+                            </datalist>
                             @if ($errors->has('manufacturer'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('manufacturer') }}</strong>

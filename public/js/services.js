@@ -172,8 +172,37 @@ angular.module('HIS', [], function ($interpolateProvider) {
                 });
             },
 
+            /**
+             * Get the timezones based on the country code.
+             * All the timezones in that country will be returned.
+             *
+             * @param baseUrl
+             * @param token
+             * @param countryCode
+             * @returns {*}
+             */
             getTimezones: function (baseUrl, token, countryCode) {
                 return $http.post(baseUrl + "/API/support/timezones/" + countryCode, {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return [];
+                });
+            },
+
+            getDrugPredictions: function (baseUrl, token, text) {
+                return $http.post(baseUrl + "/API/support/drugPredictions/" + text, {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return [];
+                });
+            },
+
+            getManufacturerPredictions: function (baseUrl, token, text) {
+                return $http.post(baseUrl + "/API/support/manufacturerPredictions/" + text, {
                     _token: token
                 }).then(function (response) {
                     return response.data;

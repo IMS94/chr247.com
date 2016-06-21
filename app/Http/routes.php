@@ -170,7 +170,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(['prefix' => 'API'], function () {
         //clinic registration support
         Route::post('support/timezones/{countryCode}', 'SupportController@getTimezones');
-
+        Route::post('support/drugPredictions/{text}', 'SupportController@getDrugPredictions');
+        Route::post('support/manufacturerPredictions/{text}', 'SupportController@getManufacturerPredictions');
     });
 });
 
