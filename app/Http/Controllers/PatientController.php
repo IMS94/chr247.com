@@ -33,7 +33,6 @@ class PatientController extends Controller {
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function addPatient(Request $request) {
-        \Log::info($request->all());
         $validator = Validator::make($request->all(), [
             'firstName'  => 'required',
             'gender'     => 'required|in:Male,Female',
