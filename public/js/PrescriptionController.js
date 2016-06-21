@@ -56,6 +56,14 @@ angular.module('HIS')
                 });
             };
 
+            $scope.predictDisease = function () {
+                if (!$scope.diagnosis) {
+                    return;
+                }
+                api.getDiseasePredictions($scope.baseUrl, $scope.token, $scope.diagnosis).then(function (data) {
+                    $scope.diseasePredictions = data;
+                });
+            };
 
             /**
              * Adds a drug to the prescribed drugs list. At least a drug and an dosage has to be selected.

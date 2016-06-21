@@ -7,7 +7,7 @@ angular.module('HIS')
                     return;
                 }
                 api.getDrugPredictions($scope.baseUrl, $scope.token, $scope.drugName).then(function (data) {
-                    $scope.drugPredictions = data.drugs;
+                    $scope.drugPredictions = data;
                 });
             };
 
@@ -19,7 +19,7 @@ angular.module('HIS')
                     return;
                 }
                 api.getManufacturerPredictions($scope.baseUrl, $scope.token, $scope.manufacturer).then(function (data) {
-                    $scope.manufacturers = data.manufacturers;
+                    $scope.manufacturers = data;
                 });
             }
         }

@@ -43,8 +43,12 @@
                 <div class="form-group">
                     <label class="col-md-3 col-sm-12 control-label">Diagnosis</label>
                     <div class="col-md-9 col-sm-12">
-                        <input id="prescriptionDiagnosis" placeholder="" ng-model="diagnosis" class="form-control"
-                               type="text">
+                        <input id="prescriptionDiagnosis" placeholder="Start typing to get suggestions ..."
+                               ng-model="diagnosis" class="form-control" type="text" ng-change="predictDisease()"
+                               list="diseaseList">
+                        <datalist id="diseaseList">
+                            <option ng-repeat="disease in diseasePredictions">[[disease.disease]]</option>
+                        </datalist>
                     </div>
                 </div>
 

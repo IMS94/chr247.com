@@ -21,7 +21,7 @@ class CreateDrugPool extends Migration {
         });
 
         //Add the drugs to the drug pool.
-        $drugFile = \Storage::disk('global_public')->get('lib/orangebook_products.tsv');
+        $drugFile = \Storage::disk('public')->get('lib/orangebook_products.tsv');
         $lines = explode("\n", $drugFile);
         $drugCount = count($lines);
         $drugs = array();

@@ -191,21 +191,48 @@ angular.module('HIS', [], function ($interpolateProvider) {
                 });
             },
 
+            /**
+             * Predicts drug name from a partially typed drug name.
+             * Calls the REST API.
+             *
+             * @param baseUrl
+             * @param token
+             * @param text
+             * @returns {*}
+             */
             getDrugPredictions: function (baseUrl, token, text) {
                 return $http.post(baseUrl + "/API/support/drugPredictions/" + text, {
                     _token: token
                 }).then(function (response) {
-                    return response.data;
+                    return response.data.drugs;
                 }, function (response) {
                     return [];
                 });
             },
 
+            /**
+             * Get the manufacturer name predictions based on partially typed manufaturer's name.
+             *
+             * @param baseUrl
+             * @param token
+             * @param text
+             * @returns {*}
+             */
             getManufacturerPredictions: function (baseUrl, token, text) {
                 return $http.post(baseUrl + "/API/support/manufacturerPredictions/" + text, {
                     _token: token
                 }).then(function (response) {
-                    return response.data;
+                    return response.data.manufacturers;
+                }, function (response) {
+                    return [];
+                });
+            },
+
+            getDiseasePredictions: function (baseUrl, token, text) {
+                return $http.post(baseUrl + "/API/support/diseasePredictions/" + text, {
+                    _token: token
+                }).then(function (response) {
+                    return response.data.diseases;
                 }, function (response) {
                     return [];
                 });
