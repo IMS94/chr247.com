@@ -28,12 +28,11 @@ $user = \App\User::getCurrentUser();
     {{--Data Tables CSS--}}
     <link href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}" rel="stylesheet" type="text/css">
 
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
- folder instead of downloading all of them to reduce the load. -->
+    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
 
-    {{--Date Range Picker CSS--}}
-    <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker-bs3.css')}}">
+    {{--Date Time Picker CSS--}}
+    <link rel="stylesheet" href="{{asset('plugins/datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}">
 
     <!-- jQuery 2.1.4 Moved to the top to load without an error-->
     <script src="{{asset('plugins/jQuery/jQuery-2.1.4.min.js')}}"></script>
@@ -169,6 +168,11 @@ $user = \App\User::getCurrentUser();
                     </a>
                 </li>
 
+                <li @if(strpos(Request::url(),'feedback')!=false) class="active" @endif>
+                    <a href="{{url('feedback')}}">
+                        <i class="fa fa-thumbs-o-up"></i> <span>Feedback</span>
+                    </a>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -221,8 +225,18 @@ $user = \App\User::getCurrentUser();
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 {{--Date Range Picker--}}
-<script src="{{asset('plugins/daterangepicker/moment.min.js')}}"></script>
-<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+<script src="{{asset('plugins/datetimepicker/build/js/moment.min.js')}}"></script>
+<script src="{{asset('plugins/datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        $(".birthdaypicker").datetimepicker({
+            viewMode: 'years',
+            format: 'YYYY/MM/DD',
+            maxDate: '{{date('Y-m-d')}}',
+            minDate: '{{date('Y-m-d',strtotime(date('Y-m-d').' -150 year'))}}',
+        });
+    });
+</script>
 
 {{--The script to show time on the top--}}
 <script>

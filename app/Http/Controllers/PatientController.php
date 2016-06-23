@@ -33,25 +33,25 @@ class PatientController extends Controller {
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function addPatient(Request $request) {
+        // authorizing the user for the ability to add patients
+        $this->authorize('add', 'App\Patient');
+
         $validator = Validator::make($request->all(), [
             'firstName'  => 'required',
             'gender'     => 'required|in:Male,Female',
             'nic'        => 'regex:/[0-9]{9}[vV]/',
             'bloodGroup' => 'required|in:A +,A -,B +,B -,AB +,AB -,O +,O -,N/A',
-            'dob'        => 'date|date_format:m/d/Y|before:' . date('Y-m-d') . '|after:' .
+            'dob'        => 'date|date_format:Y/m/d|before:' . date('Y-m-d') . '|after:' .
                 date('Y-m-d', strtotime(date('Y-m-d') . ' -150 year'))
         ]);
 
         if ($validator->fails()) {
-            Log::error($validator->errors());
             return back()->with('type', 'patient')->withErrors($validator)->withInput();
         }
 
         $clinic = Clinic::getCurrentClinic();
 
-        /*
-         * Checks if the same clinic has a patient in the same nic. If yes, it is notified.
-         */
+        // Checks if the same clinic has a patient in the same nic. If yes, it is notified.
         if (!empty($request->nic) && $clinic->patients()->where('nic', $request->nic)->count() > 0) {
             $validator->getMessageBag()->add('nic', 'A patient with this NIC already exists');
             Log::error($validator->errors());
@@ -89,8 +89,8 @@ class PatientController extends Controller {
 
 
     /**
+     * Edits a patient.
      *
-     * Edits a patient
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws NotFoundException
@@ -102,11 +102,13 @@ class PatientController extends Controller {
         }
         $this->authorize('edit', $patient);
 
-        $validator = Validator::make($request->all(), [
+        $validator = \Validator::make($request->all(), [
             'firstName'  => 'required',
             'gender'     => 'required|in:Male,Female',
             'nic'        => 'regex:/[0-9]{9}[vV]/',
-            'bloodGroup' => 'required|in:A +,A -,B +,B -,AB +,AB -,O +,O -,N/A'
+            'bloodGroup' => 'required|in:A +,A -,B +,B -,AB +,AB -,O +,O -,N/A',
+            'dob'        => 'date|date_format:Y/m/d|before:' . date('Y-m-d') . '|after:' .
+                date('Y-m-d', strtotime(date('Y-m-d') . ' -150 year'))
         ]);
 
         if ($validator->fails()) {
@@ -127,7 +129,7 @@ class PatientController extends Controller {
 
         $patient->first_name = $request->firstName;
         $patient->last_name = $request->lastName ?: null;
-        $patient->dob = $request->dob ?: null;
+        $patient->dob = $request->dob ? date('Y-m-d', strtotime($request->dob)) : null;
         $patient->gender = $request->gender;
         $patient->address = $request->address ?: null;
         $patient->nic = $request->nic ?: null;

@@ -74,7 +74,7 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         /*
-         * Queue    :   Routes related to the queue
+         * QUEUE    :   Routes related to the queue
          */
         Route::group(['prefix' => 'queue'], function () {
             Route::get('/', ['as' => 'queue', 'uses' => 'QueueController@viewQueue']);
@@ -86,7 +86,7 @@ Route::group(['middleware' => 'web'], function () {
 
 
         /*
-         * Routes that manage all the content of patients
+         * PATIENTS : Routes that manage all the content of patients
          */
         Route::group(['prefix' => 'patients'], function () {
             Route::get('/', ['as' => 'patients', 'uses' => 'PatientController@getPatientList']);
@@ -101,7 +101,7 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         /*
-         * Routes to manage all the content of drugs
+         * DRUGS : Routes to manage all the content of drugs
          */
         Route::group(['prefix' => 'drugs'], function () {
             Route::get('/', ['as' => 'drugs', 'uses' => 'DrugController@getDrugList']);
@@ -161,6 +161,15 @@ Route::group(['middleware' => 'web'], function () {
             //queue
             Route::post('getQueue', 'APIController@getQueue');
             Route::post('updateQueue', 'APIController@updateQueue');
+        });
+
+
+        /*
+         * FEEDBACK
+         */
+        Route::group(['prefix' => 'feedback'], function () {
+            Route::get('/', 'FeedbackController@getFeedbackForm');
+            Route::post('/', 'FeedbackController@sendFeedback');
         });
     });
 

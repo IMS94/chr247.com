@@ -22,8 +22,8 @@ class CreateDiseasePool extends Migration {
         $lines = explode("\n", $diseasesFile);
         $diseases = array();
         $diseasesCount = count($lines);
-        $recordLimit=10000; 
-	for ($x = 0; $x <= $diseasesCount; $x++) {
+        $recordLimit = 2000;
+        for ($x = 0; $x <= $diseasesCount; $x++) {
             //insert diseases to the table every 'recordLimit' times
             if (count($diseases) > $recordLimit || $x == $diseasesCount) {
                 try {

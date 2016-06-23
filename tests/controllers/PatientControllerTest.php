@@ -28,7 +28,7 @@ class PatientControllerTest extends TestCase {
                 'firstName'  => $patient->first_name,
                 'lastName'   => $patient->last_name,
                 'address'    => $patient->address,
-                'dob'        => date('m/d/Y', strtotime($patient->dob)),
+                'dob'        => date('Y/m/d', strtotime($patient->dob)),
                 'phone'      => $patient->phone,
                 'bloodGroup' => $patient->blood_group,
                 'gender'     => $patient->gender
@@ -75,7 +75,7 @@ class PatientControllerTest extends TestCase {
                 'firstName'  => $patient->first_name,
                 'lastName'   => $patient->last_name,
                 'address'    => $patient->address,
-                'dob'        => "03/15/1500",
+                'dob'        => "1500/03/15",
                 'phone'      => $patient->phone,
                 'bloodGroup' => $patient->blood_group,
                 'gender'     => $patient->gender

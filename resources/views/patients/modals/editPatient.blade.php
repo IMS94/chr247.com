@@ -51,9 +51,8 @@
                     <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Date of Birth</label>
                         <div class="col-md-9">
-                            <input type="date" class="form-control" name="dob" value="{{ old('dob')?:$patient->dob }}"
-                                   max="{{date('Y-m-d')}}"
-                                   min="{{date('Y-m-d',strtotime(date('Y-m-d').' -150 year'))}}">
+                            <input type="text" class="form-control birthdaypicker" name="dob"
+                                   value="{{ old('dob')?: date('Y/m/d',strtotime($patient->dob))}}">
                             @if ($errors->has('dob'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('dob') }}</strong>

@@ -7,8 +7,7 @@ use App\Queue;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PatientPolicy
-{
+class PatientPolicy {
     use HandlesAuthorization;
 
     /**
@@ -16,8 +15,7 @@ class PatientPolicy
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         //
     }
 
@@ -28,9 +26,19 @@ class PatientPolicy
      * @param Patient $patient
      * @return bool
      */
-    public function view(User $user, Patient $patient)
-    {
+    public function view(User $user, Patient $patient) {
         return $user->clinic->id === $patient->clinic->id;
+    }
+
+
+    /**
+     * Determine who can add patients
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function add(User $user) {
+        return !$user->deactivated();
     }
 
 
@@ -40,8 +48,7 @@ class PatientPolicy
      * @param Patient $patient
      * @return bool
      */
-    public function edit(User $user, Patient $patient)
-    {
+    public function edit(User $user, Patient $patient) {
         return $user->clinic->id === $patient->clinic->id;
     }
 
@@ -51,8 +58,7 @@ class PatientPolicy
      * @param Patient $patient
      * @return bool
      */
-    public function delete(User $user, Patient $patient)
-    {
+    public function delete(User $user, Patient $patient) {
         return $user->isAdmin() && $user->clinic->id === $patient->clinic->id;
     }
 
@@ -63,14 +69,12 @@ class PatientPolicy
      * @param Patient $patient
      * @return bool
      */
-    public function issueID(User $user, Patient $patient)
-    {
+    public function issueID(User $user, Patient $patient) {
         return $user->clinic->id === $patient->clinic->id;
     }
 
 
-    public function issueMedical(User $user, Patient $patient)
-    {
+    public function issueMedical(User $user, Patient $patient) {
         return $user->isDoctor() && $user->clinic->id === $patient->clinic->id;
     }
 
@@ -81,8 +85,7 @@ class PatientPolicy
      * @param Patient $patient
      * @return bool
      */
-    public function prescribeMedicine(User $user, Patient $patient)
-    {
+    public function prescribeMedicine(User $user, Patient $patient) {
         return !$user->isNurse() && $user->clinic->id === $patient->clinic->id;
     }
 
@@ -93,8 +96,7 @@ class PatientPolicy
      * @param User $user
      * @return bool
      */
-    public function issueMedicine(User $user)
-    {
+    public function issueMedicine(User $user) {
         return true;
     }
 
@@ -105,8 +107,7 @@ class PatientPolicy
      * @param Patient $patient
      * @return bool
      */
-    public function viewPrescriptions(User $user, Patient $patient)
-    {
+    public function viewPrescriptions(User $user, Patient $patient) {
         return $user->clinic->id === $patient->clinic->id;
     }
 
@@ -116,8 +117,7 @@ class PatientPolicy
      * @param Patient $patient
      * @return bool
      */
-    public function viewMedicalRecords(User $user, Patient $patient)
-    {
+    public function viewMedicalRecords(User $user, Patient $patient) {
         return !$user->isNurse() && $user->clinic->id === $patient->clinic->id;
     }
 
@@ -128,8 +128,7 @@ class PatientPolicy
      * @param Patient $patient
      * @return bool
      */
-    public function addToQueue(User $user, Patient $patient)
-    {
+    public function addToQueue(User $user, Patient $patient) {
         $queue = Queue::getCurrentQueue();
         if (!empty($queue) && $queue->patients()->wherePivot('completed', false)->find($patient->id) != null) {
             return false;
