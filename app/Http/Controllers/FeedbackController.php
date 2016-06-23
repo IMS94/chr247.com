@@ -24,6 +24,7 @@ class FeedbackController extends Controller {
             'feedback' => 'required|min:20,max:200'
         ]);
         if ($validator->fails()) {
+            \Log::error($validator->errors());
             return back()->withErrors($validator)->withInput();
         }
         $user = User::getCurrentUser();
