@@ -349,6 +349,10 @@
 <script src="{{asset('FrontTheme/scripts/main.js')}}"></script>
 
 <script src="{{asset('FrontTheme/scripts/init-animation.js')}}"></script>
+
+{{-- Google Analytics --}}
+@include('analytics.googleAnalytics')
+
 </body>
 
 </html>

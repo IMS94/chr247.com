@@ -263,4 +263,6 @@ $user = \App\User::getCurrentUser();
     });
 </script>
 
+{{-- Google Analytics --}}
+@include('analytics.googleAnalytics')
 </html>

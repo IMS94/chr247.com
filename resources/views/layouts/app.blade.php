@@ -117,5 +117,8 @@
     });
 </script>
 
+{{-- Google Analytics --}}
+@include('analytics.googleAnalytics')
+
 </body>
 </html>

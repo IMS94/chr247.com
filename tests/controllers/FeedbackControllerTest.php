@@ -19,14 +19,13 @@ class FeedbackControllerTest extends TestCase {
             ->visit('feedback')
             ->type("This is a random test feedback. Please ignore the content", "feedback")
             ->press("Submit")
-            ->seeInSession("success");
+            ->see("Feedback submitted successfully. Thank you for your feedback");
 
 
         $this->actingAs($user)
             ->visit('feedback')
             ->type("This is a ran.", "feedback")
-            ->press("Submit");
-        $this->seeInSession("errors");
-
+            ->press("Submit")
+            ->see("The feedback must be at least 20 characters.");
     }
 }
