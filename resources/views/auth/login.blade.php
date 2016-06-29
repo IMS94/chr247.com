@@ -39,7 +39,7 @@
                                         active
                                          <?php $first = false; ?>
                                 @endif">
-                                    <img src="{{asset($file)}}" alt="...">
+                                    <img src="{{asset($file)}}" alt="Try Our Beta">
                                     <div class="carousel-caption text-black" style="font-size: 24px;">
                                         Try Our New Beta ...
                                     </div>

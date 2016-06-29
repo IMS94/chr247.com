@@ -9,11 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <!-- ========== PAGE TITLE ========== -->
-    <title>chr247.com</title>
+    <title>chr247.com | Cloud Health Records 24x7</title>
 
     <!-- ========== META TAGS ========== -->
-    <meta name="description" content="Cloud based health records management system">
-    <meta name="keywords" content="emr, his, health informatics, health cloud, cloud health records">
+    <meta name="description"
+          content="The simplest Health Informatics System on the Cloud. For small scale clinics.
+          100% Free! ZERO-Paper Policy! Easy To Set-Up! Sign Up, Add users, Login & Enjoy">
+    <meta name="keywords"
+          content="emr, his, health informatics, health cloud, cloud health records, clinic, patient management">
     <meta name="author" content="chr247.com">
 
     <!-- ========== FAVICON & APPLE ICONS ========== -->
@@ -169,7 +172,7 @@
 <section class="se-section se-steps">
     <div class="container">
         <div class="row text-center">
-            <h3 class="underline mtn">It's as ease as 1 - 2 - 3!</h3>
+            <h3 class="underline mtn">It's as easy as 1 - 2 - 3!</h3>
         </div> <!-- end row -->
 
         <div class="row">
@@ -204,7 +207,7 @@
                     </div>
                     <div class="right">
                         <h5>Work on any device</h5>
-                        <p>The system will work on any device which has a web-browser and an internet connection.</p>
+                        <p>The system works on any device which has a web-browser and an internet connection.</p>
                     </div>
                 </div> <!-- end se-feature -->
 
@@ -214,7 +217,7 @@
                     </div>
                     <div class="right">
                         <h5>Updates for lifetime</h5>
-                        <p>All of the updates to the system will be available to all the users as soon as it's
+                        <p>All of the updates to the system are available to all the users as soon as it's
                             released.</p>
                     </div>
                 </div> <!-- end se-feature -->
@@ -225,7 +228,7 @@
                     </div>
                     <div class="right">
                         <h5>Lightning Fast</h5>
-                        <p>The system will be always lightning fast as it runs on a industrial grade cloud-server.</p>
+                        <p>The system is always lightning fast as it runs on a industrial grade cloud-server.</p>
                     </div>
                 </div> <!-- end se-feature -->
 
@@ -284,7 +287,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-sm-3 col-xs-6">
-                <img src="{{asset('FrontTheme/images/logo.png')}}" alt="" class="footer-logo img-responsive">
+                <img src="{{asset('FrontTheme/images/logo.png')}}" alt="chr247.com | Cloud Health Records 24x7"
+                     class="footer-logo img-responsive">
             </div>
 
             <div class="col-md-2 col-sm-3 col-xs-6">

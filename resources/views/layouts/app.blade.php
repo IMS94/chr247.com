@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
-        @yield('title',"CHR247")
+        @yield('title',"CHR247 | Cloud Health Records 24x7")
     </title>
 
     <link rel="shortcut" href="favicon.ico"/>
