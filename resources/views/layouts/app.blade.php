@@ -80,7 +80,7 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.0.0
             </div>
-            <strong>Copyright &copy; <a href="#">Consec Technologies</a>.</strong> All rights
+            <strong>Copyright &copy; <a href="#">chr247.com</a>.</strong> All rights
             reserved.
         </div><!-- /.container -->
     </footer>
