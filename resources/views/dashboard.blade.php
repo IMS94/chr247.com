@@ -88,7 +88,7 @@
                 <h4 class="box-title">Patient Visits - Last 6 months</h4>
             </div>
             <div class="box-body">
-                @if(count($stats['visits']['m'])==0)
+                @if(count($stats['visits']['m'])<2)
                     {{-- When no stats available to be shown --}}
                     <div class="callout callout-info">
                         <h4>Not Enough Records Found!</h4>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Clinic;
+use App\DrugType;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,18 +25,32 @@ class AdminController extends Controller {
     }
 
     /**
-     * Accepts a clinic
+     * Accepts a clinic, Adds the basic quantity types to the clinic
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function acceptClinic($id) {
         $clinic = Clinic::find($id);
-        $clinic->accepted = true;
         \DB::beginTransaction();
         try {
+            $clinic->accepted = true;
             $clinic->update();
+
+            // When accepting a clinic, basic drug types are also added along with that.
+            // They are then saved for the corresponding clinic.
+            $quantityTypes = ['Pills', 'Litres', 'Tablets', 'Milli Litres', 'Bottles'];
+            $types = array();
+            $user = $clinic->users()->first();
+            foreach ($quantityTypes as $quantityType) {
+                $type = new DrugType();
+                $type->drug_type = $quantityType;
+                $type->created_by = $user->id;
+                $types[] = $type;
+            }
+            $clinic->quantityTypes()->saveMany($types);
+
             \Mail::send('auth.emails.clinicAccepted', ['clinic' => $clinic], function ($m) use ($clinic) {
-                $m->to($clinic->email, $clinic->name)->subject('CHR247.COM - Clinic Accepted');
+                $m->to("imesha@highflyer.lk", $clinic->name)->subject('CHR247.COM - Clinic Accepted');
             });
         } catch (\Exception $e) {
             \DB::rollBack();

@@ -11,6 +11,18 @@
 
                 <div class="box-body">
 
+
+                    {{-- Warning when there's no quantity type pre entered --}}
+                    @if(\App\Clinic::getCurrentClinic()->quantityTypes()->count()==0)
+                        <div class="alert alert-warning alert-dismissable container-fluid">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4><i class="icon fa fa-warning"></i> No Quantity Types Available !</h4>
+                            In order to add drugs, quantity types are required. Quantity Types are used to manage
+                            stocks. Go to <a href="{{route('drugTypes')}}"><strong> Quantity Types</strong> </a> to add
+                            quantity types.
+                        </div>
+                    @endif
+
                     {{-- General error message --}}
                     @if ($errors->has('general'))
                         <div class="alert alert-danger alert-dismissable">
@@ -42,7 +54,7 @@
                         <label class="col-md-3 control-label">Quantity Type</label>
                         <div class="col-md-9">
                             <select name="quantityType" class="form-control">
-                                @foreach(\App\DrugType::all() as $quantityType)
+                                @foreach(\App\Clinic::getCurrentClinic()->quantityTypes as $quantityType)
                                     <option value="{{$quantityType->id}}"
                                             @if($quantityType->id === old('quantityType')) selected @endif>
                                         {{$quantityType->drug_type}}

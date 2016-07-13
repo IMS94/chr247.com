@@ -116,7 +116,6 @@ $user = \App\User::getCurrentUser();
                 </div>
                 <div class="pull-left info">
                     <p>{{$user->name}}</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> {{$user->role->role}}</a>
                 </div>
             </div>
 

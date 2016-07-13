@@ -33,12 +33,13 @@
         <table class="table table-hover table-condensed table-bordered text-center">
             <tr>
                 <th class="col-md-2">Name</th>
-                <th class="col-md-2">Email</th>
+                <th class="col-md-1">Email</th>
                 <th class="col-md-2">Address</th>
                 <th class="col-md-1">Phone</th>
                 <th class="col-md-1">Country</th>
                 <th class="col-md-1">Currency</th>
                 <th class="col-md-1">Timezone</th>
+                <th class="col-md-1">Registered At (UTC)</th>
                 <th class="col-md-2"></th>
             </tr>
 
@@ -52,6 +53,7 @@
                     <td>{{$clinic->country}}</td>
                     <td>{{$clinic->currency}}</td>
                     <td>{{$clinic->timezone}}</td>
+                    <td>{{$clinic->created_at}}</td>
                     <td>
                         <a href="{{route('acceptClinic',['id'=>$clinic->id])}}" class="btn btn-sm btn-success">
                             Accept
