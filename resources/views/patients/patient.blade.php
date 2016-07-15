@@ -40,9 +40,9 @@
             @endcan
 
             @can('issueID',$patient)
-            <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#issueIDModal">
+            <a class="btn btn-primary margin-left" href="{{route('IDPreview',['id'=>$patient->id])}}">
                 <i class="fa fa-tag fa-lg"></i> Issue ID
-            </button>
+            </a>
             @endcan
 
             @can('addToQueue',$patient)
@@ -137,10 +137,4 @@
     @can('edit',$patient)
     @include('patients.modals.editPatient')
     @endcan
-
-    {{--Add the issue ID modal, if the user can issue IDs--}}
-    @can('issueID',$patient)
-    @include('patients.modals.issueID')
-    @endcan
-
 @endsection

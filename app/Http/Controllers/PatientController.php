@@ -193,4 +193,10 @@ class PatientController extends Controller {
         DB::commit();
         return back()->with('success', $patient->first_name . " successfully removed");
     }
+
+
+    public function getPrintPreview($id) {
+        $patient = Patient::find($id);
+        return view('patients.printIDPreview', ['patient' => $patient]);
+    }
 }

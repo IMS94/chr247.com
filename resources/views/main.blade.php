@@ -331,8 +331,8 @@
             </div>
 
             <div class="col-md-6 text-right">
-                <h6><a href="#">FACEBOOK</a></h6>
-                <h6><a href="#">TWITTER</a></h6>
+                <h6><a href="https://www.facebook.com/cloudhealthrecords247">FACEBOOK</a></h6>
+                <h6><a href="https://twitter.com/chr247_">TWITTER</a></h6>
                 <h6><a href="#">LINKEDIN</a></h6>
                 <h6><a href="#">GOOGLE PLUS</a></h6>
             </div>

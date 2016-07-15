@@ -97,7 +97,6 @@
                             you start inserting prescriptions.
                         </p>
                     </div>
-
                 @else
                     <div class="chart">
                         <canvas id="patientChart" style="height: 350px;"></canvas>
@@ -108,7 +107,7 @@
         </div>
     </div>
 
-    @if(count($stats['visits']['m'])>0)
+    @if(count($stats['visits']['m'])>=2)
         <script src="{{asset('plugins/chartjs/Chart.min.js')}}"></script>
         <script>
             $(document).ready(function () {
