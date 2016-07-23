@@ -4,9 +4,8 @@
 angular.module('HIS')
     .filter('dateToISO', function () {
         return function (input) {
-            var offset = new Date().getTimezoneOffset();
-            var date = new Date(input);
-            date.setTime(date.getTime()-offset*60000);
+            var t = input.split(/[- :]/);
+            var date = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
             return date;
         };
     });

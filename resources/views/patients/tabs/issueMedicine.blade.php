@@ -30,13 +30,12 @@
 
             <a href="{{url("/patients/patient/{$patient->id}/printPrescription")}}/[[prescription.id]]"
                class="btn btn-flat btn-default btn-sm pull-right" style="margin-right: 10px;" target="_blank"
-               ng-if="prescription.prescription_pharmacy_drugs.length>0">
-                Print Pharmacy Drugs
+               ng-if="prescription.prescription_pharmacy_drugs.length>0 || prescription.prescription_drugs.length>0">
+                Print Prescription
             </a>
         </div>
 
         <div class="box-body">
-
             <div class="alert alert-danger alert-dismissable" ng-show="prescription.hasError" ng-cloak>
                 <h4><i class="icon fa fa-ban"></i> Oops!</h4>
                 [[error]]

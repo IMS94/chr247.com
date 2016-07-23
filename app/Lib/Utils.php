@@ -18,7 +18,14 @@ class Utils {
      * @return string
      */
     public static function getAge($date) {
-        return $date ? date_diff(date_create($date), date_create('today'))->y . " yrs" : "-";
+        $d = date_diff(date_create($date), date_create('today'));
+        $text = "";
+        if ($date) {
+            $text .= $d->y == 0 ? "" : $d->y . " yrs";
+            $text .= $d->y < 5 ? " " . $d->m . " months" : "";
+            $text .= $d->y < 1 ? " " . $d->d . " days" : "";
+        }
+        return $date ? $text : "-";
     }
 
 

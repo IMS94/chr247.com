@@ -18,47 +18,59 @@
 <body>
 {{--The ID to be printed--}}
 <div class="container-fluid">
-    @if($prescription->prescriptionPharmacyDrugs()->count()>0)
+    @if($prescription->prescriptionDrugs()->count()>0 || $prescription->prescriptionPharmacyDrugs()->count()>0)
         <div class="col-md-6 col-md-offset-3 col-xs-12">
-            <div class="panel panel-default" id="patientID">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><strong>{{$patient->clinic->name}}</strong></h4>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h4>
-                                {{$patient->first_name}} {{$patient->last_name}}
-                                @if($patient->gender) ({{$patient->gender}}) @endif
-                                <small class="pull-right">Age : {{Utils::getAge($patient->dob)}}</small>
-                            </h4>
-                        </div>
-                        <table class="table text-center table-responsive col-xs-12">
-                            <tbody>
-                            @foreach($prescription->prescriptionPharmacyDrugs as $index=>$pharmacyDrug)
-                                <tr>
-                                    <td class="col-xs-1">{{$index+1}}.</td>
-                                    <td class="col-xs-4">{{$pharmacyDrug->drug}}</td>
-                                    <td class="col-xs-7">{{$pharmacyDrug->remarks}}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+            <div class="row container-fluid">
 
-                        <div class="col-xs-12">
-                            <h5>
-                                Inspected By : {{$prescription->creator->name}}
-                            </h5>
-                            <h4>
-                                <small>
-                                    {{$patient->clinic->address}}<br>
-                                    {{$patient->clinic->phone}}<br>
-                                    {{$patient->clinic->email}}
-                                </small>
-                            </h4>
-                        </div>
+                <h3 class="center-block text-center">{{$patient->clinic->name}}</h3>
+                <h4 style="border-bottom: 2px solid black">
+                    <strong>Patient :</strong> {{$patient->first_name}} {{$patient->last_name}}
+                    <small>{{$patient->dob ? Utils::getAge($patient->dob) : ""}}</small>
+                    <span class="pull-right">{{Utils::getFormattedDate($prescription->created_at)}}</span>
+                </h4>
+
+                <div class="row" style="border-bottom: 2px solid black">
+                    <div class="col-xs-1">
+                        <span style="font-size: 40px">&#8478;</span>
+                    </div>
+                    <div class="col-xs-11">
+                        <ol class="col-xs-12">
+                            @foreach($prescription->prescriptionDrugs as $drug)
+                                <li>
+                                    <strong>{{$drug->drug->name}}</strong>
+                                    ({{$drug->dosage ? $drug->dosage->description:""}}
+                                    {{$drug->frequency ? ", ".$drug->frequency->description:""}}
+                                    {{$drug->period ? ", ".$drug->period->description:""}})
+                                </li>
+                            @endforeach
+                        </ol>
+
+                        @if($prescription->prescriptionPharmacyDrugs()->count()>0)
+                            <h4>Drugs to be taken from a pharmacy</h4>
+                            <ol class="col-xs-12">
+                                @foreach($prescription->prescriptionPharmacyDrugs as $index=>$pharmacyDrug)
+                                    <li>
+                                        <strong>{{$pharmacyDrug->drug}}</strong>
+                                        {{$pharmacyDrug->remarks ? "(Remarks : ".$pharmacyDrug->remarks.")" : ""}}
+                                    </li>
+                                @endforeach
+                            </ol>
+                        @endif
+
                     </div>
                 </div>
+
+                <h5 class="col-xs-6 col-xs-offset-6"
+                    style="margin-top: 50px;border-top: 3px dotted black;padding-top: 5px">
+                    Inspected By : {{$prescription->creator->name}}
+                </h5>
+                <h4 class="col-xs-6 col-xs-offset-6">
+                    <small>
+                        {{$patient->clinic->address}}<br>
+                        {{$patient->clinic->phone}}<br>
+                        {{$patient->clinic->email}}
+                    </small>
+                </h4>
             </div>
         </div>
     @else
@@ -66,7 +78,7 @@
         <div class="col-xs-6 col-xs-offset-3">
             <div class="alert alert-info" ng-if="prescriptions.length==0" ng-cloak>
                 <h4><i class="icon fa fa-info"></i> Sorry!</h4>
-                There's no pharmacy drugs in this prescription to be printed.
+                There's no drugs in this prescription to be printed.
             </div>
         </div>
     @endif

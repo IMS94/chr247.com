@@ -21,7 +21,7 @@
 
                 <a href="{{url("/patients/patient/{$patient->id}/printPrescription")}}/[[printPrescriptionId]]"
                    class="btn btn-flat btn-default text-black" target="_blank">
-                    <i class="fa fa-print" aria-hidden="true"></i> Print Pharmacy Drugs
+                    <i class="fa fa-print" aria-hidden="true"></i> Print Prescription
                 </a>
 
             </div>
