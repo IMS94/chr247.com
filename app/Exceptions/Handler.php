@@ -31,7 +31,7 @@ class Handler extends ExceptionHandler {
      * @return void
      */
     public function report(Exception $e) {
-        \Log::error($e->getTrace());
+        \Log::error($e->getMessage());
         parent::report($e);
     }
 

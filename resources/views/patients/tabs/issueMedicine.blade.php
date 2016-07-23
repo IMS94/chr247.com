@@ -23,9 +23,16 @@
             <h4 class="box-title">
                 [[prescription.created_at | dateToISO | date:"EEEE, d/M/yy h:mm a"]]
             </h4>
-            <button class="btn btn-sm btn-danger pull-right" ng-click="deletePrescription([[$index]])">
+
+            <button class="btn btn-sm btn-flat btn-danger pull-right" ng-click="deletePrescription([[$index]])">
                 Delete Prescription
             </button>
+
+            <a href="{{url("/patients/patient/{$patient->id}/printPrescription")}}/[[prescription.id]]"
+               class="btn btn-flat btn-default btn-sm pull-right" style="margin-right: 10px;" target="_blank"
+               ng-if="prescription.prescription_pharmacy_drugs.length>0">
+                Print Pharmacy Drugs
+            </a>
         </div>
 
         <div class="box-body">
@@ -66,8 +73,8 @@
                    ng-if="prescription.prescription_pharmacy_drugs.length>0">
                 <thead>
                 <tr class="success">
-                    <th>Drug Name</th>
-                    <th>Remarks</th>
+                    <th class="col-sm-4">Drug Name</th>
+                    <th class="col-sm-8">Remarks</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -100,7 +107,7 @@
         </div>
 
         <div class="box-footer">
-            <button class="btn btn-lg btn-success pull-right" ng-click="issuePrescription([[$index]])">
+            <button class="btn btn-lg btn-success btn-flat pull-right" ng-click="issuePrescription([[$index]])">
                 Mark as Issued
             </button>
         </div>

@@ -18,17 +18,17 @@
 <body>
 {{--The ID to be printed--}}
 <div class="container-fluid">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-6 col-md-offset-3 col-xs-12">
         <div class="panel panel-primary" id="patientID">
             <div class="panel-heading">
                 <h4 class="panel-title">{{$patient->clinic->name}} - Patient ID</h4>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-3">
-                        <h3>Clinic's Information</h3>
+                    <div class="col-xs-3">
+                        <h4>Clinic's Information</h4>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9">
                         <h5>
                             {{$patient->clinic->address}}<br>
                             {{$patient->clinic->phone}}<br>
@@ -38,15 +38,30 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-3">
-                        <h3>Patient's Information</h3>
+                    <div class="col-xs-3">
+                        <h4>Patient's Information</h4>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-xs-9">
                         <h4>
                             {{$patient->first_name}} {{$patient->last_name}}<br>
-                            <small>{{$patient->address}}</small>
+                            @if($patient->address)
+                                <small>{{$patient->address}}</small>
+                                <br>
+                            @endif
+                            @if($patient->phone)
+                                <small>{{$patient->phone}}</small>
+                                <br>
+                            @endif
+                            @if($patient->nic)
+                                <small>{{$patient->nic}}</small>
+                                <br>
+                            @endif
+                            @if($patient->gender)
+                                <small>{{$patient->gender}}</small>
+                                <br>
+                            @endif
                         </h4>
-                        <div class="col-md-8 col-md-offset-4" id="barcode">
+                        <div class="col-md-8 col-md-offset-4 col-xs-9 col-xs-offset-3 pull-left" id="barcode">
                         </div>
                     </div>
                 </div>
@@ -56,12 +71,12 @@
 </div>
 
 <div class="row margin-top container-fluid no-print">
-    <div class="col-md-2 col-md-offset-2">
+    <div class="col-md-2 col-md-offset-3">
         <a href="{{route("patient",['id'=>$patient->id])}}" class="btn btn-primary pull-left">
-            <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+            <i class="fa fa-chevron-left" aria-hidden="true"></i> Back to Patient
         </a>
     </div>
-    <div class="col-md-2 col-md-offset-4">
+    <div class="col-md-2 col-md-offset-2">
         <button class="btn btn-primary pull-right" onclick="window.print()">
             <i class="fa fa-print" aria-hidden="true"></i> Print
         </button>

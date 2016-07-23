@@ -81,9 +81,10 @@ class APIController extends Controller {
             return response()->json(['status' => 0], 404);
         }
 
+        $prescription = new Prescription();
+
         DB::beginTransaction();
         try {
-            $prescription = new Prescription();
             $prescription->complaints = $request->complaints;
             $prescription->investigations = $request->investigations;
             $prescription->diagnosis = $request->diagnosis;
@@ -115,7 +116,7 @@ class APIController extends Controller {
             return response()->json(['status' => 0], 500);
         }
         DB::commit();
-        return response()->json(['status' => 1], 200);
+        return response()->json(['status' => 1, 'prescriptionId' => $prescription->id], 200);
     }
 
 

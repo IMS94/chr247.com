@@ -16,7 +16,14 @@
 
             <div class="alert alert-success" ng-show="hasSuccess" ng-cloak>
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
-                Prescription saved successfully.
+                <p>Prescription saved successfully. You can print the drugs to taken from a pharmacy by clicking the
+                    button below.</p>
+
+                <a href="{{url("/patients/patient/{$patient->id}/printPrescription")}}/[[printPrescriptionId]]"
+                   class="btn btn-flat btn-default text-black" target="_blank">
+                    <i class="fa fa-print" aria-hidden="true"></i> Print Pharmacy Drugs
+                </a>
+
             </div>
 
             <div class="form-horizontal margin">

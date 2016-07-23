@@ -171,6 +171,7 @@ angular.module('HIS')
                     $scope.submitted = false;
                     if (data && data.status == 1) {
                         $scope.clearPrescription();
+                        $scope.printPrescriptionId = data.prescriptionId;
                         $scope.showSuccess();
                         $scope.$emit('prescriptionAddedEvent', []);
                     }
@@ -203,7 +204,7 @@ angular.module('HIS')
                 $window.scrollTo(0, 0);
                 $timeout(function () {
                     $scope.hasSuccess = false;
-                }, 6000);
+                }, 30000);
             };
 
 

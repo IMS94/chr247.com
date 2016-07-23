@@ -7,6 +7,6 @@ angular.module('HIS')
             var offset = new Date().getTimezoneOffset();
             var date = new Date(input);
             date.setTime(date.getTime()-offset*60000);
-            return date.toISOString();
+            return date;
         };
     });
