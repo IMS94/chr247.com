@@ -7,6 +7,13 @@
         @yield('title',"CHR247 | Cloud Health Records 24x7")
     </title>
 
+    <meta name="description"
+          content="The simplest Health Informatics System on the Cloud. For small scale clinics.
+          100% Free! ZERO-Paper Policy!">
+    <meta name="keywords"
+          content="emr, his, health informatics, health cloud, cloud health records, clinic, patient management">
+    <meta name="author" content="chr247.com">
+
     <link rel="shortcut" href="favicon.ico"/>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

@@ -11,10 +11,9 @@
     <!-- ========== PAGE TITLE ========== -->
     <title>chr247.com | Cloud Health Records 24x7</title>
 
-    <!-- ========== META TAGS ========== -->
     <meta name="description"
           content="The simplest Health Informatics System on the Cloud. For small scale clinics.
-          100% Free! ZERO-Paper Policy! Easy To Set-Up! Sign Up, Add users, Login & Enjoy">
+          100% Free! ZERO-Paper Policy!">
     <meta name="keywords"
           content="emr, his, health informatics, health cloud, cloud health records, clinic, patient management">
     <meta name="author" content="chr247.com">

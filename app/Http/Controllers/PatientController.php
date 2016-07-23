@@ -29,6 +29,7 @@ class PatientController extends Controller {
 
     /**
      * Adds a patient to the system
+     *
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */

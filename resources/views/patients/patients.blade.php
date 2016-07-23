@@ -16,7 +16,6 @@
             </button>
         </div>
 
-
         <!--    Box Body  -->
         <div class="box-body">
 
@@ -25,7 +24,9 @@
                 <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4><i class="icon fa fa-check"></i> Success!</h4>
-                    {{session('success')}}
+                    <p>
+                        {{session('success')}}
+                    </p>
                 </div>
             @endif
 

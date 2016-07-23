@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>Print Prescription | Preview</title>
+    <title>chr247.com | Prescription</title>
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}" media="print">
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
@@ -22,7 +22,14 @@
         <div class="col-md-6 col-md-offset-3 col-xs-12">
             <div class="row container-fluid">
 
-                <h3 class="center-block text-center">{{$patient->clinic->name}}</h3>
+                <h3 class="center-block text-center">
+                    {{$patient->clinic->name}}<br>
+                    <small>
+                        {{$patient->clinic->address}}<br>
+                        {{$patient->clinic->phone}}<br>
+                        {{$patient->clinic->email}}
+                    </small>
+                </h3>
                 <h4 style="border-bottom: 2px solid black">
                     <strong>Patient :</strong> {{$patient->first_name}} {{$patient->last_name}}
                     <small>{{$patient->dob ? Utils::getAge($patient->dob) : ""}}</small>
@@ -62,15 +69,7 @@
 
                 <h5 class="col-xs-6 col-xs-offset-6"
                     style="margin-top: 50px;border-top: 3px dotted black;padding-top: 5px">
-                    Inspected By : {{$prescription->creator->name}}
                 </h5>
-                <h4 class="col-xs-6 col-xs-offset-6">
-                    <small>
-                        {{$patient->clinic->address}}<br>
-                        {{$patient->clinic->phone}}<br>
-                        {{$patient->clinic->email}}
-                    </small>
-                </h4>
             </div>
         </div>
     @else
@@ -85,6 +84,14 @@
 </div>
 
 <div class="row margin-top container-fluid no-print">
+    <div class="col-xs-6 col-xs-offset-3">
+        <div class="alert alert-info" ng-if="prescriptions.length==0" ng-cloak>
+            <h4><i class="icon fa fa-info"></i> Important!</h4>
+            When printing the prescriptions, avoid printing <strong>headers and footers</strong> by changing
+            <strong>Print Settings</strong> from the print preview.
+        </div>
+    </div>
+
     <div class="col-md-2 col-md-offset-3">
         <button class="btn btn-primary pull-left" onclick="window.close()">
             <i class="fa fa-close" aria-hidden="true"></i> Close
