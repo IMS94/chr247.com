@@ -1,5 +1,4 @@
 <div class="container-fluid" ng-app="HIS">
-
     {{--Main Box--}}
     <div class="box box-default box-solid margin" ng-controller="PrescriptionController">
         <div class="box-header">

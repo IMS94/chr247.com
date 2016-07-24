@@ -66,6 +66,20 @@ angular.module('HIS')
             };
 
             /**
+             * Predicts a drug which is being entered to add as a drug to be taken from the pharmacy.
+             * A complete replicate of DrugController's predictDrug() method.
+             */
+            $scope.predictDrug = function () {
+                if ($scope.pharmacyDrug && $scope.pharmacyDrug.length != 3) {
+                    return;
+                }
+                api.getDrugPredictions($scope.baseUrl, $scope.token, $scope.pharmacyDrug).then(function (data) {
+                    $scope.drugPredictions = data;
+                });
+            };
+
+
+            /**
              * Adds a drug to the prescribed drugs list. At least a drug and an dosage has to be selected.
              */
             $scope.add = function () {

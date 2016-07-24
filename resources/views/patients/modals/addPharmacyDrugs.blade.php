@@ -13,8 +13,11 @@
                     <div class="form-group">
                         <label class="col-md-3 col-sm-12 control-label">Drug</label>
                         <div class="col-md-9 col-sm-12">
-                            <input class="form-control" type="text" ng-model="pharmacyDrug"
-                                   placeholder="Drug to be taken from a pharmacy">
+                            <input class="form-control" type="text" ng-model="pharmacyDrug" list="drugList"
+                                   ng-change="predictDrug()" placeholder="Drug to be taken from a pharmacy">
+                            <datalist id="drugList">
+                                <option ng-repeat="drug in drugPredictions">[[drug.trade_name]]</option>
+                            </datalist>
                         </div>
                     </div>
 
