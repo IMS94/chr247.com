@@ -74,7 +74,7 @@
                 <div class="icon">
                     <i class="fa fa-shopping-cart"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{route('stocksRunningLow')}}" class="small-box-footer">
                     More info <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>

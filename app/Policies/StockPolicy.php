@@ -6,8 +6,7 @@ use App\Stock;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class StockPolicy
-{
+class StockPolicy {
     use HandlesAuthorization;
 
     /**
@@ -15,8 +14,7 @@ class StockPolicy
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         //
     }
 
@@ -25,7 +23,7 @@ class StockPolicy
      * @param User $user
      * @return bool
      */
-    public function add(User $user){
+    public function add(User $user) {
         return true;
     }
 
@@ -35,7 +33,17 @@ class StockPolicy
      * @param Stock $stock
      * @return bool
      */
-    public function delete(User $user,Stock $stock){
-        return $user->isAdmin() && $user->clinic->id===$stock->drug->clinic->id;
+    public function delete(User $user, Stock $stock) {
+        return $user->isAdmin() && $user->clinic->id === $stock->drug->clinic->id;
+    }
+
+    /**
+     * Get who can view the stocks that are running low
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function seeRunningLow(User $user) {
+        return true;
     }
 }

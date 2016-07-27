@@ -121,6 +121,7 @@ Route::group(['middleware' => 'web'], function () {
              * Stocks
              */
             Route::post('addStock/{drugId}', ['as' => 'addStock', 'uses' => 'StockController@addStock']);
+            Route::get('stocks/runningLow', ['as' => 'stocksRunningLow', 'uses' => 'StockController@getStocksRunningLow']);
 
             /*
              * Drug types
