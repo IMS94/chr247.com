@@ -1,7 +1,5 @@
 @extends('layouts.master')
 
-@section('title','HIS | Settings')
-
 @section('page_header')
     Settings
 @endsection
