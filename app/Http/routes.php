@@ -11,6 +11,9 @@
 |
 */
 
+Route::group(['prefix' => 'web'], function () {
+    Route::get("aboutUs", 'WebsiteController@getAboutUsPage');
+});
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
