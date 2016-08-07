@@ -8,7 +8,7 @@
             <div class="outer">
                 <div class="inner text-center">
                     <h1 class="">Who We Are?</h1>
-                    <h5 class="">We are Consec Technologies, an Australian start-up IT company along with few
+                    <h5 class="">We are Consec Technologies, an Australian start-up IT company in collaboration with few
                         independent software engineers from Sri Lanka</h5>
                     <a href="{{route("registerClinic")}}" class="btn se-btn-black btn-rounded mt20">Register Now</a>
 
@@ -21,7 +21,6 @@
     <section class="se-section">
         <div class="container">
             <div class="row">
-
                 <div class="col-md-7">
                     <h2 class="underline mtn">More About Us ...</h2>
                     <p>Chr247 is a service provided by <a href="consectechnologies.com"> Consec Technologies</a>, an
@@ -56,6 +55,28 @@
                                  alt="Consec Technologies"/>
                         </div>
                     </div><!-- end owl-carousel -->
+                </div> <!-- end col-md-4 -->
+
+            </div> <!-- end row -->
+        </div> <!-- end container -->
+    </section>
+
+    <section class="se-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h2 class="underline mtn">Contact us</h2>
+                    <p>
+                        We value your opinion or any suggestions you may have for further improvements ! If you need any
+                        clarifications, contact us using the contact number (within Australia) given or send us an email
+                        with your contact details requesting a free call as described below. We will contact you.
+                    </p>
+                    <p> +61 390 056 788 (Australia) </p>
+                    <p>From anywhere else, request a free call!
+                        <a href="mailto: support@chr247.com">support@chr247.com</a></p>
+                </div> <!-- end col-md-8 -->
+
+                <div class="col-md-5">
                 </div> <!-- end col-md-4 -->
 
             </div> <!-- end row -->

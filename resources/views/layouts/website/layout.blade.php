@@ -99,34 +99,33 @@
             <div class="col-md-2 col-sm-3 col-xs-6">
                 <h6 class="mtn">HOME</h6>
                 <ul>
-                    <li><a href="#">Parallax Background</a></li>
+                    <li><a href="{{url("/")}}">Home</a></li>
                 </ul>
             </div>
 
             <div class="col-md-2 col-sm-3 col-xs-6">
                 <h6 class="mtn">PAGES</h6>
                 <ul>
-                    <li><a href="#">About Us</a></li>
+                    <li>
+                        <a href="{{url('/web/features')}}">Features</a>
+                    </li>
+                    <li><a href="{{url('web/aboutUs')}}">About Us</a></li>
                 </ul>
             </div>
 
             <div class="col-md-2 col-sm-3 col-xs-6">
                 <h6 class="mtn">OTHER</h6>
                 <ul>
-                    <li><a href="{{route('registerClinic')}}">Sign Up</a></li>
+                    <li><a href="{{route('registerClinic')}}">Register Now</a></li>
                     <li><a href="{{url('login')}}">Login</a></li>
                 </ul>
             </div>
 
             <div class="col-md-4 col-sm-8 col-sm-offset-2 col-md-offset-0">
-                <h6 class="mtn">SUBSCRIBE</h6>
-                <div class="input-group">
-                    <input type="email" class="form-control inp-rounded" placeholder="Enter your email id">
-                    <span class="input-group-btn">
-                                <button class="btn se-btn btn-rounded" type="button">Subscribe!</button>
-                            </span> <!-- end input-group-btn -->
-                </div><!-- end input-group -->
-                <p class="text-center text-muted">We don't spam!</p>
+                <h6 class="mtn">CONTACT US</h6>
+                <ul>
+                    <li><a href="mailto: support@chr247.com">support@chr247.com</a></li>
+                </ul>
             </div>
         </div> <!-- end row -->
 
