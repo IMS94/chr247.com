@@ -11,6 +11,11 @@
 |
 */
 
+Route::group(['prefix' => 'web'], function () {
+    Route::get("aboutUs", 'WebsiteController@getAboutUsPage');
+    Route::get("features", 'WebsiteController@getFeaturesPage');
+
+});
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
@@ -99,8 +104,8 @@ Route::group(['middleware' => 'web'], function () {
             Route::any('deletePatient/{id}', ['as' => 'deletePatient', 'uses' => 'PatientController@deletePatient']);
             Route::post('editPatient/{id}', ['as' => 'editPatient', 'uses' => 'PatientController@editPatient']);
             Route::get('patient/{id}/printID', ['as' => 'IDPreview', 'uses' => 'PatientController@getPrintPreview']);
-            Route::get('patient/{id}/printPrescription/{prescriptionId}', ['as'   => 'printPrescription',
-                                                                           'uses' => 'PrescriptionController@prescriptionPrintPreview']);
+            Route::get('patient/{id}/printPrescription/{prescriptionId}', ['as' => 'printPrescription',
+                'uses' => 'PrescriptionController@prescriptionPrintPreview']);
         });
 
         /*
