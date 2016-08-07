@@ -60,6 +60,9 @@
                 <li>
                     <a href="{{url('/')}}">Home </a>
                 </li>
+                <li>
+                    <a href="{{url('/web/features')}}">Features</a>
+                </li>
                 <li><a href="{{url('web/aboutUs')}}">About Us</a></li>
                 <li class="nav-btn-wrap">
                     <span class="nav-btn">
@@ -73,7 +76,7 @@
 </nav>
 
 @yield("content")
-        <!-- ========== CTA SECTION ========== -->
+<!-- ========== CTA SECTION ========== -->
 <section class="se-section primary-bg">
     <div class="container">
         <div class="row text-center">
@@ -119,7 +122,7 @@
                 <h6 class="mtn">SUBSCRIBE</h6>
                 <div class="input-group">
                     <input type="email" class="form-control inp-rounded" placeholder="Enter your email id">
-                            <span class="input-group-btn">
+                    <span class="input-group-btn">
                                 <button class="btn se-btn btn-rounded" type="button">Subscribe!</button>
                             </span> <!-- end input-group-btn -->
                 </div><!-- end input-group -->
