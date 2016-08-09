@@ -17,7 +17,7 @@ class BeforeLoginViewsTest extends TestCase {
      */
     public function testLoginSuccess() {
         // see the login page
-        $this->visit('/')->see('24 x 7');
+        $this->visit('/')->see('The simplest Health Informatics System on the Cloud.');
 
         //type username and press login
         $this->visit('/login')
@@ -77,18 +77,18 @@ class BeforeLoginViewsTest extends TestCase {
     public function testRegisterClinicSuccess() {
         //register a clinic and check if the clinic registers correctly
         $response = $this->call('POST', '/registerClinic', [
-            'name'                  => 'Admin\'s Clinic',
-            'email'                 => 'imesha4450@gmail.com',
-            'address'               => '24, Divulapitiya',
-            'phone'                 => '0717086160',
-            'country'               => 'LK',
-            'timezone'              => 'Asia/Colombo',
-            'currency'              => 'Rupees',
-            'adminName'             => 'Imesha Sudasingha',
-            'username'              => 'imesha94',
-            'password'              => '123456',
+            'name' => 'Admin\'s Clinic',
+            'email' => 'imesha4450@gmail.com',
+            'address' => '24, Divulapitiya',
+            'phone' => '0717086160',
+            'country' => 'LK',
+            'timezone' => 'Asia/Colombo',
+            'currency' => 'Rupees',
+            'adminName' => 'Imesha Sudasingha',
+            'username' => 'imesha94',
+            'password' => '123456',
             'password_confirmation' => '123456',
-            'terms'                 => '1'
+            'terms' => '1'
         ]);
 
         $this->seeInDatabase('clinics', ['email' => 'imesha4450@gmail.com']);
