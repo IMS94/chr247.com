@@ -1,5 +1,7 @@
 @extends("layouts.website.layout")
 
+@section("title",'chr247.com | Features')
+
 @section("content")
 
     <!-- ========== PAGE TITLE ========== -->

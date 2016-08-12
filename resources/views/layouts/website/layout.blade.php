@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <!-- ========== PAGE TITLE ========== -->
-    <title>chr247.com | Cloud Health Records 24x7</title>
+    <title>@yield("title",'chr247.com | Cloud Health Records 24x7')</title>
 
     <meta name="description"
           content="The simplest Health Informatics System on the Cloud. For small scale clinics.
@@ -48,7 +48,7 @@
                 <span class="icon-bar"></span>
             </button> <!-- end navbar-toggle -->
             <a class="navbar-brand" href="{{url('/')}}">
-                <img src="{{asset('logo-white.png')}}" alt="CHR 24x7" style="width: 150px;height: 150px;"
+                <img src="{{asset('logo-white.png')}}" alt="CHR 24x7" style="width: 100px;height: 100px;"
                      class="light-logo img-responsive">
                 <img src="{{asset('logo.png')}}" alt="CHR 24x7" style="width: 50px;height: 50px;"
                      class="dark-logo">
@@ -62,6 +62,9 @@
                 </li>
                 <li>
                     <a href="{{url('/web/features')}}">Features</a>
+                </li>
+                <li>
+                    <a href="{{url('/web/privacyPolicy')}}">Privacy Policy</a>
                 </li>
                 <li><a href="{{url('web/aboutUs')}}">About Us</a></li>
                 <li class="nav-btn-wrap">
