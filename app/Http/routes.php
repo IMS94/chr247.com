@@ -14,7 +14,7 @@
 Route::group(['prefix' => 'web'], function () {
     Route::get("aboutUs", 'WebsiteController@getAboutUsPage');
     Route::get("features", 'WebsiteController@getFeaturesPage');
-
+    Route::get("privacyPolicy", 'WebsiteController@getPrivacyPolicyPage');
 });
 
 Route::group(['middleware' => 'web'], function () {

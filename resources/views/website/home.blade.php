@@ -19,6 +19,32 @@
         </div> <!-- end primary-trans-bg -->
     </header>
 
+    <!-- ========== FEATURE INTRO ========== -->
+    <section class="se-section">
+        <div class="container">
+            <div class="row">
+                <div class="container-fluid col-md-12">
+                    <h2 class="underline mtn">Why chr247.com ?</h2>
+                    <!-- 16:9 aspect ratio -->
+                    <div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-12">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tW3E7FQD_tM"
+                                    allowfullscreen></iframe>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="{{route("registerClinic")}}" class="btn se-btn-black btn-rounded"
+                               style="margin-top: 10px">
+                                Join our Service
+                            </a>
+                        </div>
+                    </div>
+                </div> <!-- end col-md-8 -->
+            </div> <!-- end row -->
+        </div> <!-- end container -->
+    </section>
+
+
     <!-- ========== FEATURES ========== -->
     <section class="se-section features-section">
         <div class="container">

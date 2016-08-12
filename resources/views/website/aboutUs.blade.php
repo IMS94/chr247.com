@@ -1,5 +1,7 @@
 @extends("layouts.website.layout")
 
+@section("title",'chr247.com | About Us')
+
 @section("content")
     <!-- ========== PAGE TITLE ========== -->
     <header class="header page-title">
