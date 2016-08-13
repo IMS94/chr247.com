@@ -68,7 +68,7 @@
                 </div>
 
                 <h5 class="col-xs-6 col-xs-offset-6"
-                    style="margin-top: 50px;border-top: 3px dotted black;padding-top: 5px">
+                    style="margin-top: 100px;border-top: 3px dotted black;padding-top: 5px">
                 </h5>
             </div>
         </div>
@@ -97,13 +97,13 @@
             <i class="fa fa-close" aria-hidden="true"></i> Close
         </button>
     </div>
-    @if($prescription->prescriptionPharmacyDrugs()->count()>0)
-        <div class="col-md-2 col-md-offset-2">
-            <button class="btn btn-primary pull-right" onclick="window.print()">
-                <i class="fa fa-print" aria-hidden="true"></i> Print
-            </button>
-        </div>
-    @endif
+    {{--@if($prescription->prescriptionPharmacyDrugs()->count()>0)--}}
+    <div class="col-md-2 col-md-offset-2">
+        <button class="btn btn-primary pull-right" onclick="window.print()">
+            <i class="fa fa-print" aria-hidden="true"></i> Print
+        </button>
+    </div>
+    {{--@endif--}}
 </div>
 
 </body>

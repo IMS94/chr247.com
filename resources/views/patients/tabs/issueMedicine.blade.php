@@ -32,6 +32,10 @@
                class="btn btn-flat btn-default btn-sm pull-right" style="margin-right: 10px;" target="_blank"
                ng-if="prescription.prescription_pharmacy_drugs.length>0 || prescription.prescription_drugs.length>0">
                 Print Prescription
+                <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                   data-placement="bottom" title=""
+                   data-original-title="Opens a new tab in the browser to print the prescription where the prescription
+                   can be printed"></i>
             </a>
         </div>
 
@@ -45,9 +49,19 @@
                    ng-if="prescription.prescription_drugs.length>0">
                 <thead>
                 <tr class="success">
-                    <th class="col-sm-4">Drug</th>
+                    <th class="col-sm-4">Drug
+                        <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                           data-placement="bottom" title=""
+                           data-original-title="The name of the drug to be issued.
+                           (The quantity type used to measure the drug's quantity is in the brackets)"></i>
+                    </th>
                     <th class="col-sm-5">Dose</th>
-                    <th class="col-sm-3">Quantity</th>
+                    <th class="col-sm-3">Quantity
+                        <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                           data-placement="bottom" title=""
+                           data-original-title="The actual quantity of the drug issued.
+                           Type '0' in the field to neglect the quantity"></i>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -108,6 +122,10 @@
         <div class="box-footer">
             <button class="btn btn-lg btn-success btn-flat pull-right" ng-click="issuePrescription([[$index]])">
                 Mark as Issued
+                <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                   data-placement="bottom" title=""
+                   data-original-title="Mark the prescription as 'Issued'. Once a prescription is issued,
+                   it cannot be reversed."></i>
             </button>
         </div>
     </div>

@@ -24,10 +24,14 @@
         <div class="box-header with-border">
 
             @can('add','App\DrugType')
-            <button class="btn btn-primary margin-left"
-                    data-toggle="modal" data-target="#addDrugTypeModal">
-                Add Quantity Type
-            </button>
+                <button class="btn btn-primary margin-left"
+                        data-toggle="modal" data-target="#addDrugTypeModal">
+                    Add Quantity Type
+                    <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                       data-placement="bottom" title=""
+                       data-original-title="The measurements used to measure the available quantity(stock) of a drug.
+                               ex: Number of 'Pills', number of 'Bottles', 'Litres'"></i>
+                </button>
             @endcan
         </div>
 
@@ -82,15 +86,17 @@
                         </td>
                         <td>
                             @can('delete',$drugType)
-                            {{--
-                            A modal is used to confirm the delete action.
-                            One the modal popup, the url in the form changes according to the drug's id
-                            --}}
-                            <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                    data-target="#confirmDeleteDrugTypeModal"
-                                    onclick="showConfirmDelete({{$drugType->id}},'{{$drugType->drug_type}}')">
-                                <i class="fa fa-recycle fa-lg"></i>
-                            </button>
+                                {{--
+                                A modal is used to confirm the delete action.
+                                One the modal popup, the url in the form changes according to the drug's id
+                                --}}
+                                <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                        data-target="#confirmDeleteDrugTypeModal" title=""
+                                        onclick="showConfirmDelete({{$drugType->id}},'{{$drugType->drug_type}}')">
+                                    <i class="fa fa-recycle fa-lg" data-toggle="tooltip"
+                                       data-placement="bottom" title=""
+                                       data-original-title="Delete this?"></i>
+                                </button>
                             @endcan
                         </td>
                     </tr>

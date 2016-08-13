@@ -25,7 +25,7 @@ $user = \App\User::getCurrentUser();
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -132,11 +132,11 @@ $user = \App\User::getCurrentUser();
                 {{csrf_field()}}
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search..." required>
-                      <span class="input-group-btn">
+                    <span class="input-group-btn">
                         <button type="submit" id="search-btn" class="btn btn-flat">
                             <i class="fa fa-search"></i>
                         </button>
-                      </span>
+                    </span>
                 </div>
             </form>
             <!-- /.search form -->
@@ -146,38 +146,62 @@ $user = \App\User::getCurrentUser();
                 <li @if(url('/')===Request::url()) class="active" @endif>
                     <a href="{{url('/')}}">
                         <i class="fa fa-h-square"></i> <span>Home</span>
+                        <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                           data-placement="bottom" title="" data-original-title="Get an overview of your
+                           clinic including number of patients and patient visits"></i>
                     </a>
                 </li>
 
                 <li @if(strpos(Request::url(),'patients')!=false) class="active" @endif>
                     <a href="{{url('patients')}}">
                         <i class="fa fa-wheelchair"></i> <span>Patients</span>
+                        <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                           data-placement="bottom" title="" data-original-title="View all the patients and
+                           patient profiles, prescribe medicine and view medical records of each patient"></i>
                     </a>
                 </li>
 
                 <li @if(strpos(Request::url(),'drugs')!=false) class="active" @endif>
                     <a href="{{url('drugs')}}">
                         <i class="fa fa-stethoscope"></i> <span>Drugs</span>
+                        <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                           data-placement="bottom" title="" data-original-title="Manage your drug inventory.
+                           The drugs in your drug inventory will be available under drugs
+                       when 'prescribing medicine'. Also, you can manage each drug's stocks in this section."></i>
                     </a>
                 </li>
 
                 @can('issueMedicine','App\Patient')
-                <li @if(strpos(Request::url(),'issueMedicine')!=false) class="active" @endif>
-                    <a href="{{url('issueMedicine')}}">
-                        <i class="fa fa-medkit"></i> <span>Issue Medicine</span>
-                    </a>
-                </li>
+                    <li @if(strpos(Request::url(),'issueMedicine')!=false) class="active" @endif>
+                        <a href="{{url('issueMedicine')}}">
+                            <i class="fa fa-medkit"></i> <span>Issue Medicine</span>
+                            <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                               data-placement="bottom" title=""
+                               data-original-title="An interface focused on the 'Nurse' type users.
+                               All the prescriptions to be issued once the doctor has prescribed medicine to a patient
+                               are visible here"></i>
+                        </a>
+                    </li>
                 @endcan
 
                 <li @if(strpos(Request::url(),'queue')!=false) class="active" @endif>
                     <a href="{{url('queue')}}">
                         <i class="fa fa-ambulance"></i> <span>Queue</span>
+                        <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                           data-placement="bottom" title=""
+                           data-original-title="Interface to manage the session's patient queue.
+                           You can add patients to the queue from each patient's profile.
+                           Then use this interface to update the queue as patients visit the doctor"></i>
                     </a>
                 </li>
 
                 <li @if(strpos(Request::url(),'feedback')!=false) class="active" @endif>
                     <a href="{{url('feedback')}}">
                         <i class="fa fa-thumbs-o-up"></i> <span>Feedback</span>
+                        <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                           data-placement="bottom" title=""
+                           data-original-title="We need your feedback (complaints, suggestions) to improve this system.
+                           Please be kind enough to provide us with your feedback"></i>
                     </a>
                 </li>
             </ul>

@@ -6,23 +6,41 @@
 @endsection
 
 
+@section('breadcrumb')
+    <ol class="breadcrumb">
+        <li><a href="{{route('root')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('drugs')}}">Drugs</a></li>
+        <li class="active" href="#">Dosages</li>
+    </ol>
+@endsection
+
 @section('content')
 
     <div class="box box-primary">
         <!--    Box Header  -->
         <div class="box-header with-border">
             @can('add','App\Dosage')
-            <button class="btn btn-primary margin" data-toggle="modal" data-target="#addDosageModal">
-                Add Dosage
-            </button>
+                <button class="btn btn-primary margin" data-toggle="modal" data-target="#addDosageModal">
+                    Add Dosage
+                    <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                       data-placement="bottom" title=""
+                       data-original-title="The quantities of drugs to be taken at a time.
+                       ex: 1 pill at a time, 1 table spoon at a time"></i>
+                </button>
 
-            <button class="btn btn-primary margin" data-toggle="modal" data-target="#addFrequencyModal">
-                Add Dosage Frequency
-            </button>
+                <button class="btn btn-primary margin" data-toggle="modal" data-target="#addFrequencyModal">
+                    Add Dosage Frequency
+                    <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                       data-placement="bottom" title=""
+                       data-original-title="How often a drug is to be taken. ex: 3 times per day, per every 8 hours"></i>
+                </button>
 
-            <button class="btn btn-primary margin" data-toggle="modal" data-target="#addPeriodModal">
-                Add Dosage Period
-            </button>
+                <button class="btn btn-primary margin" data-toggle="modal" data-target="#addPeriodModal">
+                    Add Dosage Period
+                    <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                       data-placement="bottom" title=""
+                       data-original-title="For how long a drug is to be taken. ex: For 3 weeks, For 6 months"></i>
+                </button>
             @endcan
         </div>
 
@@ -53,7 +71,12 @@
     {{-- Dosages --}}
     <div class="box box-success">
         <div class="box-header with-border">
-            <h4 class="box-title">Dosages</h4>
+            <h4 class="box-title">Dosages
+                <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                   data-placement="bottom" title=""
+                   data-original-title="The quantities of drugs to be taken at a time.
+                       ex: 1 pill at a time, 1 table spoon at a time"></i>
+            </h4>
         </div>
         <div class="box-body">
             <table class="table table-responsive table-condensed table-hover text-center" id="dosagesTable">
@@ -71,10 +94,10 @@
                         </td>
                         <td>
                             @can('delete',$dosage)
-                            <a class="btn btn-sm btn-danger"
-                               href="{{route('deleteDosage',['id'=>$dosage->id])}}">
-                                <i class="fa fa-recycle"></i>
-                            </a>
+                                <a class="btn btn-sm btn-danger"
+                                   href="{{route('deleteDosage',['id'=>$dosage->id])}}">
+                                    <i class="fa fa-recycle"></i>
+                                </a>
                             @endcan
                         </td>
                     </tr>
@@ -89,7 +112,11 @@
     {{-- Frequencies --}}
     <div class="box box-success">
         <div class="box-header with-border">
-            <h4 class="box-title">Dosage Frequencies</h4>
+            <h4 class="box-title">Dosage Frequencies
+                <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                   data-placement="bottom" title=""
+                   data-original-title="How often a drug is to be taken. ex: 3 times per day, per every 8 hours"></i>
+            </h4>
         </div>
         <div class="box-body">
             <table class="table table-responsive table-condensed table-hover text-center"
@@ -108,10 +135,10 @@
                         </td>
                         <td>
                             @can('delete',$frequency)
-                            <a class="btn btn-sm btn-danger"
-                               href="{{route('deleteFrequency',['id'=>$frequency->id])}}">
-                                <i class="fa fa-recycle"></i>
-                            </a>
+                                <a class="btn btn-sm btn-danger"
+                                   href="{{route('deleteFrequency',['id'=>$frequency->id])}}">
+                                    <i class="fa fa-recycle"></i>
+                                </a>
                             @endcan
                         </td>
                     </tr>
@@ -126,7 +153,11 @@
     {{-- Periods --}}
     <div class="box box-success">
         <div class="box-header with-border">
-            <h4 class="box-title">Dosage Periods</h4>
+            <h4 class="box-title">Dosage Periods
+                <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                   data-placement="bottom" title=""
+                   data-original-title="For how long a drug is to be taken. ex: For 3 weeks, For 6 months"></i>
+            </h4>
         </div>
         <div class="box-body">
             <table class="table table-responsive table-condensed table-hover text-center" id="periodsTable">
@@ -144,10 +175,10 @@
                         </td>
                         <td>
                             @can('delete',$period)
-                            <a class="btn btn-sm btn-danger"
-                               href="{{route('deletePeriod',['id'=>$period->id])}}">
-                                <i class="fa fa-recycle"></i>
-                            </a>
+                                <a class="btn btn-sm btn-danger"
+                                   href="{{route('deletePeriod',['id'=>$period->id])}}">
+                                    <i class="fa fa-recycle"></i>
+                                </a>
                             @endcan
                         </td>
                     </tr>

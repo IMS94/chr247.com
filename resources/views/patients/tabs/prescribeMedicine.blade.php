@@ -8,6 +8,16 @@
         {{--Main Box Body--}}
         <div class="box-body">
 
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4>
+                    <i class="icon fa fa-info"></i> Print Prescriptions
+                </h4>
+                <p>You can print the prescription as soon as you save this prescription after adding the required
+                    medicine and inspections. You can print the previous presctriptions from the
+                    <strong>Issue Medicine</strong> tab above</p>
+            </div>
+
             <div class="alert alert-danger" ng-show="hasError" ng-cloak>
                 <h4><i class="icon fa fa-ban"></i> Oops!</h4>
                 [[error]]
@@ -47,7 +57,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-12 control-label">Diagnosis</label>
+                    <label class="col-md-3 col-sm-12 control-label">
+                        Diagnosis
+                        <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                           data-placement="bottom" title=""
+                           data-original-title="Start typing to get suggestions for the diagnosis"></i>
+                    </label>
                     <div class="col-md-9 col-sm-12">
                         <input id="prescriptionDiagnosis" placeholder="Start typing to get suggestions ..."
                                ng-model="diagnosis" class="form-control" type="text" ng-change="predictDisease()"
@@ -81,7 +96,14 @@
 
                         <div class="col-md-12">
                             <div class="col-md-8 col-md-offset-2">
-                                <label class="col-sm-12 text-center">Drug</label>
+                                <label class="col-sm-12 text-center">
+                                    Drug
+                                    <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                                       data-placement="bottom" title=""
+                                       data-original-title="Select the drug to be added to the prescription.
+                                       Available stock is shown in front of each drug as a number.
+                                       Only the drugs added under 'Drugs' in the system are shown here"></i>
+                                </label>
                                 <div class="col-sm-12">
                                     <select id="prescriptionDrug" class="form-control" size="6" ng-model="drug">
                                         <option value="">None</option>
@@ -95,7 +117,12 @@
 
                         <div class="col-md-12 margin">
                             <div class="col-md-4">
-                                <label class="col-sm-12 text-center">Dose</label>
+                                <label class="col-sm-12 text-center">
+                                    Dose
+                                    <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                                       data-placement="bottom" title=""
+                                       data-original-title="The quantity of the drug to be taken at a time."></i>
+                                </label>
                                 <div class="col-sm-12">
                                     <select id="prescriptionDose" class="form-control" size="6" ng-model="dosage">
                                         <option value="">None</option>
@@ -137,6 +164,9 @@
                     <div class="box-footer">
                         <button class="btn bg-gray btn-lg btn-flat pull-left" data-toggle="modal"
                                 data-target="#addPharmacyDrugsModal"> Pharmacy Drugs
+                            <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                               data-placement="bottom" title=""
+                               data-original-title="Add the drugs to be taken from a pharmacy"></i>
                         </button>
                         <button class="btn btn-success btn-lg btn-flat pull-right" ng-click="add()">
                             Add

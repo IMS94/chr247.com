@@ -35,7 +35,13 @@
                     {{csrf_field()}}
 
                     <div class="form-group{{ $errors->has('drugName') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Drug Name</label>
+                        <label class="col-md-3 control-label">
+                            Drug Name
+                            <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                               data-placement="bottom" title=""
+                               data-original-title="Scientific name or commercial name of the drug.
+                               Type at least 3 characters to get suggestions"></i>
+                        </label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="drugName" value="{{ old('drugName') }}"
                                    required list="drugList" ng-change="predictDrug()" ng-model="drugName">
@@ -51,7 +57,13 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('quantityType') ? ' has-error' : '' }}">
-                        <label class="col-md-3 control-label">Quantity Type</label>
+                        <label class="col-md-3 control-label">
+                            Quantity Type
+                            <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                               data-placement="bottom" title=""
+                               data-original-title="The measurement used to measure the available quantity of a drug.
+                               ex: Number of 'Pills', number of 'Bottles', 'Litres'"></i>
+                        </label>
                         <div class="col-md-9">
                             <select name="quantityType" class="form-control">
                                 @foreach(\App\Clinic::getCurrentClinic()->quantityTypes as $quantityType)
@@ -89,74 +101,74 @@
 
                     {{-- ================= Adding the initial Stock ================== --}}
                     @can('add','App\Stock')
-                    <div class="box-header">
-                        <h4 class="box-title">Add Initial Stock (Optional)</h4>
-                    </div>
-                    <div class="container-fluid">
-                        <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label">Quantity</label>
-                            <div class="col-md-9">
-                                <input type="number" min="0" step="0.01" class="form-control" name="quantity"
-                                       value="{{ old('quantity') }}">
-                                @if ($errors->has('quantity'))
-                                    <span class="help-block">
+                        <div class="box-header">
+                            <h4 class="box-title">Add Initial Stock (Optional)</h4>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label">Quantity</label>
+                                <div class="col-md-9">
+                                    <input type="number" min="0" step="0.01" class="form-control" name="quantity"
+                                           value="{{ old('quantity') }}">
+                                    @if ($errors->has('quantity'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('quantity') }}</strong>
                                 </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group{{ $errors->has('manufacturedDate') ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label">Manufactured Date</label>
-                            <div class="col-md-9">
-                                <input type="date" class="form-control" name="manufacturedDate"
-                                       value="{{ old('manufacturedDate') }}">
-                                @if ($errors->has('manufacturedDate'))
-                                    <span class="help-block">
+                            <div class="form-group{{ $errors->has('manufacturedDate') ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label">Manufactured Date</label>
+                                <div class="col-md-9">
+                                    <input type="date" class="form-control" name="manufacturedDate"
+                                           value="{{ old('manufacturedDate') }}">
+                                    @if ($errors->has('manufacturedDate'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('manufacturedDate') }}</strong>
                                 </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group{{ $errors->has('receivedDate') ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label">Received Date</label>
-                            <div class="col-md-9">
-                                <input type="date" class="form-control" name="receivedDate"
-                                       value="{{ old('receivedDate') }}">
-                                @if ($errors->has('receivedDate'))
-                                    <span class="help-block">
+                            <div class="form-group{{ $errors->has('receivedDate') ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label">Received Date</label>
+                                <div class="col-md-9">
+                                    <input type="date" class="form-control" name="receivedDate"
+                                           value="{{ old('receivedDate') }}">
+                                    @if ($errors->has('receivedDate'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('receivedDate') }}</strong>
                                 </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group{{ $errors->has('expiryDate') ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label">Expiry Date</label>
-                            <div class="col-md-9">
-                                <input type="date" class="form-control" name="expiryDate"
-                                       value="{{ old('expiryDate') }}">
-                                @if ($errors->has('expiryDate'))
-                                    <span class="help-block">
+                            <div class="form-group{{ $errors->has('expiryDate') ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label">Expiry Date</label>
+                                <div class="col-md-9">
+                                    <input type="date" class="form-control" name="expiryDate"
+                                           value="{{ old('expiryDate') }}">
+                                    @if ($errors->has('expiryDate'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('expiryDate') }}</strong>
                                 </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group{{ $errors->has('remarks') ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label">Remarks</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" name="remarks" rows="2">{{old('remarks')}}</textarea>
-                                @if ($errors->has('remarks'))
-                                    <span class="help-block">
+                            <div class="form-group{{ $errors->has('remarks') ? ' has-error' : '' }}">
+                                <label class="col-md-3 control-label">Remarks</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" name="remarks" rows="2">{{old('remarks')}}</textarea>
+                                    @if ($errors->has('remarks'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('remarks') }}</strong>
                                     </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endcan
 
 
