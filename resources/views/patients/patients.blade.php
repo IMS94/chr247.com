@@ -12,7 +12,9 @@
         <!--    Box Header  -->
         <div class="box-header with-border">
             <button class="btn btn-primary pull-left" data-toggle="modal" data-target="#addPatientModal">
-                Add Patient
+                <span data-toggle="tooltip"
+                      data-placement="bottom" title="" style="margin-left: 10px"
+                      data-original-title="Fill the basic information of a patient and add to the system.">Add Patient</span>
             </button>
         </div>
 
@@ -76,15 +78,19 @@
                         </td>
                         <td>
                             @can('delete',$patient)
-                            {{--
-                            A modal is used to confirm the delete action.
-                            One the modal popup, the url in the form changes according to the patient's id
-                            --}}
-                            <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                    data-target="#confirmDeletePatientModal"
-                                    onclick="showConfirmDelete({{$patient->id}},'{{$patient->first_name}} {{$patient->last_name?:''}}')">
-                                <i class="fa fa-recycle fa-lg"></i>
-                            </button>
+                                {{--
+                                A modal is used to confirm the delete action.
+                                One the modal popup, the url in the form changes according to the patient's id
+                                --}}
+                                <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                        data-target="#confirmDeletePatientModal"
+                                        onclick="showConfirmDelete({{$patient->id}},'{{$patient->first_name}} {{$patient->last_name?:''}}')">
+                                    <i class="fa fa-recycle fa-lg" data-toggle="tooltip"
+                                       data-placement="bottom" title=""
+                                       data-original-title="Delete this patient?
+                                       You won't be able to delete this patient if the patient has any records
+                                       associated to him/her in the system."></i>
+                                </button>
                             @endcan
                         </td>
                     </tr>

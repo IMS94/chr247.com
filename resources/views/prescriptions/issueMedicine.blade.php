@@ -61,11 +61,19 @@
 
                         <table class="table table-hover table-condensed table-bordered text-center">
                             <thead>
-                            <tr class="success">
-                                <th class="col-sm-4">Drug</th>
-                                <th class="col-sm-5">Dose</th>
-                                <th class="col-sm-3">Quantity</th>
-                            </tr>
+                            <th class="col-sm-4">Drug
+                                <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                                   data-placement="bottom" title=""
+                                   data-original-title="The name of the drug to be issued.
+                           (The quantity type used to measure the drug's quantity is in the brackets)"></i>
+                            </th>
+                            <th class="col-sm-5">Dose</th>
+                            <th class="col-sm-3">Quantity
+                                <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                                   data-placement="bottom" title=""
+                                   data-original-title="The actual quantity of the drug issued.
+                           Type '0' in the field to neglect the quantity"></i>
+                            </th>
                             </thead>
                             <tbody>
                             <tr class="success" ng-repeat="prescribedDrug in prescription.prescription_drugs">
@@ -94,7 +102,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="drug in prescription.prescription_pharmacy_drugs track by $index" class="success"
+                            <tr ng-repeat="drug in prescription.prescription_pharmacy_drugs track by $index"
+                                class="success"
                                 ng-cloak>
                                 <td>[[drug.drug]]</td>
                                 <td>
@@ -125,6 +134,10 @@
                     <div class="box-footer">
                         <button class="btn btn-lg btn-success pull-right" ng-click="issuePrescription([[$index]])">
                             Mark as Issued
+                            <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                               data-placement="bottom" title=""
+                               data-original-title="Mark the prescription as 'Issued'. Once a prescription is issued,
+                   it cannot be reversed."></i>
                         </button>
                     </div>
                 </div>

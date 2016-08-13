@@ -116,7 +116,7 @@
 
                 <div class="col-md-4 col-sm-4 one-step">
                     <h4>Add Users</h4>
-                    <p>Once you your account is set-up, you can login and add doctors and nurses to grant them access to
+                    <p>Once your account is set-up, you can login and add doctors and nurses to grant them access to
                         the system. </p>
                 </div>
 
