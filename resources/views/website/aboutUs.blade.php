@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-7">
                     <h2 class="underline mtn">More About Us ...</h2>
-                    <p>Chr247 is a service provided by <a href="consectechnologies.com"> Consec Technologies</a>, an
+                    <p>Chr247 is a service provided by <a href="http://consectechnologies.com"> Consec Technologies</a>, an
                         Australian start-up IT company and a few
                         independent software engineers from Sri Lanka. Chr247 was initially developed as a stand-alone
                         commercial software in order to be used in public and private hospitals in Sri Lanka. As the
