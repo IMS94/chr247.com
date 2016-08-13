@@ -278,7 +278,8 @@ $user = \App\User::getCurrentUser();
             var mins = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
             var seconds = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
             var year = d.getFullYear();
-            var month = d.getMonth() < 10 ? "0" + d.getMonth() : d.getMonth();
+            var tempMonths = d.getMonth() + 1;
+            var month = tempMonths < 10 ? "0" + tempMonths : tempMonths;
             var day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
             var ampm = "AM";
             if (hours > 12) {
