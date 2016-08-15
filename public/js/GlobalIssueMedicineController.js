@@ -16,7 +16,7 @@ angular.module('HIS')
             $scope.successMessage = "";
 
             //alert
-            $scope.hasAlert=false;
+            $scope.hasAlert = false;
 
             /**
              * Check for the new prescriptions to be issued periodically.
@@ -25,10 +25,10 @@ angular.module('HIS')
             $interval(function () {
                 api.getAllPrescriptions($scope.baseUrl, $scope.token).then(function (data) {
                     if (data && data.status == 1) {
-                        if($scope.prescriptions.length!=data.prescriptions.length){
+                        if ($scope.prescriptions.length != data.prescriptions.length) {
                             $scope.hasAlert = true;
                         }
-                        else{
+                        else {
                             $scope.hasAlert = false;
                         }
                     }
@@ -44,6 +44,46 @@ angular.module('HIS')
                         $scope.prescriptions = data.prescriptions;
                     }
                 });
+            };
+
+
+            /**
+             * Get the available stock count of a drug when the user is inputting issuedQuantity value
+             *
+             * Data Format  -   {prescriptionId: xx, drugs: []}
+             * drugs are sent as an array of indexes.
+             * @param index the index at which the prescription is placed in the UI.
+             */
+            $scope.checkStockAvailability = function (index) {
+                var data = {prescriptionId: $scope.prescriptions[index].id, drugs: []};
+                if ($scope.prescriptions[index].hasOwnProperty("prescription_drugs")) {
+                    for (x in $scope.prescriptions[index].prescription_drugs) {
+                        var p = $scope.prescriptions[index].prescription_drugs[x];
+                        data.drugs.push(p.drug.id);
+                    }
+                }
+
+                //call the API to get the available amounts of stocks.
+                api.checkStockAvailability($scope.baseUrl, $scope.token, data)
+                    .then(function (data) {
+                        if (data.status == 1) {
+                            for (x in $scope.prescriptions[index].prescription_drugs) {
+                                for (y in data.stocks) {
+                                    if ($scope.prescriptions[index].prescription_drugs[x].drug.id == data.stocks[y].id) {
+
+                                        $scope.prescriptions[index].prescription_drugs[x].outOfStocks =
+                                            $scope.prescriptions[index].prescription_drugs[x].issuedQuantity
+                                            > data.stocks[y].quantity;
+
+                                        $scope.prescriptions[index].prescription_drugs[x]
+                                            .drug.quantity = data.stocks[y].quantity;
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }
+                    });
             };
 
             /**

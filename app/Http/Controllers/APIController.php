@@ -58,16 +58,16 @@ class APIController extends Controller {
      */
     public function savePrescription(Request $request) {
         $validator = \Validator::make($request->all(), [
-            'id'                      => 'required|exists:patients,id',
-            'complaints'              => 'required_without:diagnosis|max:150',
-            'diagnosis'               => 'required_without:complaints|max:150',
-            'investigations'          => 'max:150',
-            'remarks'                 => 'max:150',
-            'prescribedDrugs'         => 'array',
-            'prescribedDrugs.*.drug'  => 'required_with:prescribedDrugs',
-            'prescribedDrugs.*.dose'  => 'required_with:prescribedDrugs',
-            'pharmacyDrugs'           => 'array',
-            'pharmacyDrugs.*.name'    => 'required_with:pharmacyDrugs',
+            'id' => 'required|exists:patients,id',
+            'complaints' => 'required_without:diagnosis|max:150',
+            'diagnosis' => 'required_without:complaints|max:150',
+            'investigations' => 'max:150',
+            'remarks' => 'max:150',
+            'prescribedDrugs' => 'array',
+            'prescribedDrugs.*.drug' => 'required_with:prescribedDrugs',
+            'prescribedDrugs.*.dose' => 'required_with:prescribedDrugs',
+            'pharmacyDrugs' => 'array',
+            'pharmacyDrugs.*.name' => 'required_with:pharmacyDrugs',
             'pharmacyDrugs.*.remarks' => 'max:200'
         ]);
 
@@ -158,6 +158,17 @@ class APIController extends Controller {
     }
 
 
+    public function checkStocksAvailability(Request $request) {
+        $clinic = Clinic::getCurrentClinic();
+        $stocks = $clinic->drugs()->whereIn('id', $request->data['drugs'])->select(['id', 'quantity'])->get();
+        return response()->json([
+            'prescriptionId' => $request->data['prescriptionId'],
+            'stocks' => $stocks,
+            'status' => 1
+        ]);
+    }
+
+
     /**
      * Issue a prescription.
      * Mark prescription as issued. Then register the payment.
@@ -172,10 +183,10 @@ class APIController extends Controller {
         }
 
         $validator = Validator::make($request->all(), [
-            'prescription'                                     => 'required',
-            'prescription.id'                                  => 'required',
-            'prescription.payment'                             => 'required|numeric',
-            'prescription.prescription_drugs'                  => 'array',
+            'prescription' => 'required',
+            'prescription.id' => 'required',
+            'prescription.payment' => 'required|numeric',
+            'prescription.prescription_drugs' => 'array',
             'prescription.prescription_drugs.*.issuedQuantity' => 'numeric'
         ]);
 
@@ -214,7 +225,8 @@ class APIController extends Controller {
 
                 //decreasing stocks
                 $drug = $prescriptionDrug->drug;
-                $drug->quantity = $drug->quantity - $prescription_drug['issuedQuantity'];
+                $quantityLeft = $drug->quantity - $prescription_drug['issuedQuantity'];
+                $drug->quantity = $quantityLeft >= 0 ? $quantityLeft : 0;
                 $drug->update();
             }
         } catch (\Exception $e) {
@@ -239,8 +251,8 @@ class APIController extends Controller {
             return response()->json(['status' => 0, 'message' => 'You are not authorized to delete prescriptions'], 404);
         }
         if ($prescription->issued) {
-            return response()->json(['status'  => 0,
-                                     'message' => "The prescription is already issued. Therefore cannot be deleted"], 500);
+            return response()->json(['status' => 0,
+                'message' => "The prescription is already issued. Therefore cannot be deleted"], 500);
         }
         DB::beginTransaction();
         try {

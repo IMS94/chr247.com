@@ -1,7 +1,7 @@
 angular.module('HIS', [], function ($interpolateProvider) {
-        $interpolateProvider.startSymbol('[[');
-        $interpolateProvider.endSymbol(']]');
-    })
+    $interpolateProvider.startSymbol('[[');
+    $interpolateProvider.endSymbol(']]');
+})
     .service('api', ['$http', function ($http) {
         return {
             /**
@@ -89,6 +89,17 @@ angular.module('HIS', [], function ($interpolateProvider) {
                     return response.data;
                 }, function (response) {
                     return response.data ? response.data : [];
+                });
+            },
+
+            checkStockAvailability: function (baseUrl, token, data) {
+                return $http.post(baseUrl + "/API/checkStocksAvailability", {
+                    _token: token,
+                    data: data
+                }).then(function (response) {
+                    return response.data;
+                }, function (response) {
+                    return response.data ? response.data : {status: 0};
                 });
             },
 

@@ -32,6 +32,45 @@ angular.module('HIS')
                 });
             };
 
+
+            /**
+             * Get the available stock count of a drug when the user is inputting issuedQuantity value
+             *
+             * Data Format  -   {prescriptionId: xx, drugs: []}
+             * drugs are sent as an array of indexes.
+             * @param index the index at which the prescription is placed in the UI.
+             */
+            $scope.checkStockAvailability = function (index) {
+                var data = {prescriptionId: $scope.prescriptions[index].id, drugs: []};
+                if ($scope.prescriptions[index].hasOwnProperty("prescription_drugs")) {
+                    for (x in $scope.prescriptions[index].prescription_drugs) {
+                        var p = $scope.prescriptions[index].prescription_drugs[x];
+                        data.drugs.push(p.drug.id);
+                    }
+                }
+
+                api.checkStockAvailability($scope.baseUrl, $scope.token, data)
+                    .then(function (data) {
+                        if (data.status == 1) {
+                            for (x in $scope.prescriptions[index].prescription_drugs) {
+                                for (y in data.stocks) {
+                                    if ($scope.prescriptions[index].prescription_drugs[x].drug.id == data.stocks[y].id) {
+
+                                        $scope.prescriptions[index].prescription_drugs[x].outOfStocks =
+                                            $scope.prescriptions[index].prescription_drugs[x].issuedQuantity
+                                            > data.stocks[y].quantity;
+
+                                        $scope.prescriptions[index].prescription_drugs[x]
+                                            .drug.quantity = data.stocks[y].quantity;
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }
+                    });
+            };
+
             /**
              * This function is called when issue prescription is clicked.
              * Each drug should have the quantity set.
