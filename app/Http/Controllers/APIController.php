@@ -158,6 +158,17 @@ class APIController extends Controller {
     }
 
 
+    public function checkStocksAvailability(Request $request) {
+        $clinic = Clinic::getCurrentClinic();
+        $stocks = $clinic->drugs()->whereIn('id', $request->data['drugs'])->select(['id', 'quantity'])->get();
+        return response()->json([
+            'prescriptionId' => $request->data['prescriptionId'],
+            'stocks' => $stocks,
+            'status' => 1
+        ]);
+    }
+
+
     /**
      * Issue a prescription.
      * Mark prescription as issued. Then register the payment.

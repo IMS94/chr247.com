@@ -65,7 +65,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="success" ng-repeat="prescribedDrug in prescription.prescription_drugs">
+                <tr class="success" ng-class="{'danger':prescribedDrug.outOfStocks}"
+                    ng-repeat="prescribedDrug in prescription.prescription_drugs">
                     <td>[[prescribedDrug.drug.name]] ([[prescribedDrug.drug.quantity_type.drug_type]])</td>
                     <td>
                         [[prescribedDrug.dosage.description]]<br>
@@ -73,8 +74,17 @@
                         [[prescribedDrug.period.description]]
                     </td>
                     <td>
-                        <input class="form-control" type="number" step="0.01"
-                               ng-model="prescribedDrug.issuedQuantity" min="0">
+                        <div ng-class="{'has-error':prescribedDrug.outOfStocks}">
+                            <span class="help-block" ng-show="prescribedDrug.outOfStocks">
+                                <strong>
+                                You have only [[prescribedDrug.drug.quantity]] units of stocks available.
+                                Continue at your own risk!
+                                </strong>
+                            </span>
+                            <input class="form-control" type="number" step="0.01"
+                                   ng-model="prescribedDrug.issuedQuantity" min="0"
+                                   ng-change="checkStockAvailability([$parent.$index])">
+                        </div>
                     </td>
                 </tr>
                 </tbody>

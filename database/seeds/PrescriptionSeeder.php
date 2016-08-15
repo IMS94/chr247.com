@@ -21,7 +21,7 @@ class PrescriptionSeeder extends Seeder {
                     $periods = $clinic->dosagePeriods;
                     $dosages = $clinic->dosages;
 
-                    foreach (\App\Patient::all() as $patient) {
+                    foreach ($clinic->patients as $patient) {
                         /*
                          * Adding 3 prescriptions per each patient per each user.
                          */
