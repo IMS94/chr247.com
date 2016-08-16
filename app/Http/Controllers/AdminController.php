@@ -19,7 +19,8 @@ class AdminController extends Controller {
     public function index() {
         if (\Auth::guard($this->guard)->check()) {
             $clinics = Clinic::where('accepted', false)->get();
-            return view("admin.acceptClinics", ['clinics' => $clinics]);
+            $acceptedClinics = Clinic::where('accepted', true)->get();
+            return view("admin.acceptClinics", compact("clinics", "acceptedClinics"));
         }
         return view("admin.adminLogin");
     }
