@@ -68,4 +68,38 @@
         </table>
     </div>
 
+    <div class="container-fluid">
+        <h4>Accepted Clinics</h4>
+
+        <table class="table table-hover table-condensed table-bordered text-center">
+            <tr>
+                <th class="col-md-2">Name</th>
+                <th class="col-md-1">Email</th>
+                <th class="col-md-2">Address</th>
+                <th class="col-md-1">Phone</th>
+                <th class="col-md-1">Country</th>
+                <th class="col-md-1">Currency</th>
+                <th class="col-md-1">Timezone</th>
+                <th class="col-md-1">Registered At (UTC)</th>
+                <th class="col-md-2">Patients Added</th>
+            </tr>
+
+            <tbody>
+            @foreach($acceptedClinics as $clinic)
+                <tr>
+                    <td>{{$clinic->name}}</td>
+                    <td>{{$clinic->email}}</td>
+                    <td>{{$clinic->address}}</td>
+                    <td>{{$clinic->phone}}</td>
+                    <td>{{$clinic->country}}</td>
+                    <td>{{$clinic->currency}}</td>
+                    <td>{{$clinic->timezone}}</td>
+                    <td>{{$clinic->created_at}}</td>
+                    <td>{{$clinic->patients()->count()}}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+
 @endsection
