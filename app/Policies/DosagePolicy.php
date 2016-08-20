@@ -42,7 +42,7 @@ class DosagePolicy
 
 
     /**
-     * Define who can edit the drug details.
+     * Define who can edit the dosage details.
      * @param User $user
      * @param $dosage
      * @return bool
@@ -54,7 +54,7 @@ class DosagePolicy
 
 
     /**
-     * only the admin can delete a drug
+     * only the admin can delete a dosage
      * @param User $user
      * @param $dosage
      * @return bool

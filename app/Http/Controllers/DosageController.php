@@ -8,20 +8,16 @@ use App\DosageFrequency;
 use App\DosagePeriod;
 use App\User;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class DosageController extends Controller
-{
+class DosageController extends Controller {
 
     /**
      * Get dosages as a list
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getDosageList()
-    {
+    public function getDosageList() {
         $clinic = Clinic::getCurrentClinic();
         $dosages = $clinic->dosages;
         $frequencies = $clinic->dosageFrequencies;
@@ -38,8 +34,7 @@ class DosageController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function addDosage(Request $request)
-    {
+    public function addDosage(Request $request) {
         $this->authorize('add', 'App\Dosage');
 
         $validator = Validator::make($request->all(), [
@@ -76,8 +71,7 @@ class DosageController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function addFrequency(Request $request)
-    {
+    public function addFrequency(Request $request) {
         $this->authorize('add', 'App\Dosage');
 
         $validator = Validator::make($request->all(), [
@@ -114,8 +108,7 @@ class DosageController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function addPeriod(Request $request)
-    {
+    public function addPeriod(Request $request) {
         $this->authorize('add', 'App\Dosage');
 
         $validator = Validator::make($request->all(), [
@@ -148,12 +141,65 @@ class DosageController extends Controller
 
 
     /**
+     * Edits a dosage
+     *
+     * @param $id dosage id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editDosage($id, Request $request) {
+        $dosage = Dosage::find($id);
+        $this->authorize('edit', $dosage);
+        if ($request->dosage == null || strlen($request->dosage) == 0) {
+            return back()->with('error', "Please enter a valid description for the dosage description");
+        }
+        $dosage->description = $request->dosage;
+        $dosage->update();
+        return back()->with('success', "Dosage description updated !");
+    }
+
+    /**
+     * edits a frequency
+     *
+     * @param $id DosageFrequency id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editFrequency($id, Request $request) {
+        $dosageFrequency = DosageFrequency::find($id);
+        $this->authorize('edit', $dosageFrequency);
+        if ($request->frequency == null || strlen($request->frequency) == 0) {
+            return back()->with('error', "Please enter a valid description for the dosage frequency description");
+        }
+        $dosageFrequency->description = $request->frequency;
+        $dosageFrequency->update();
+        return back()->with('success', "Dosage frequency description updated !");
+    }
+
+    /**
+     * Edits a period
+     *
+     * @param $id DosagePeriod id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editPeriod($id, Request $request) {
+        $period = DosagePeriod::find($id);
+        $this->authorize('edit', $period);
+        if ($request->period == null || strlen($request->period) == 0) {
+            return back()->with('error', "Please enter a valid description for the period description");
+        }
+        $period->description = $request->period;
+        $period->update();
+        return back()->with('success', "Period description updated !");
+    }
+
+    /**
      * Delete a dosage entry from the database
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteDosage($id)
-    {
+    public function deleteDosage($id) {
         $dosage = Dosage::find($id);
         $this->authorize('delete', $dosage);
         DB::beginTransaction();
@@ -173,8 +219,7 @@ class DosageController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteFrequency($id)
-    {
+    public function deleteFrequency($id) {
         $dosage = DosageFrequency::find($id);
         $this->authorize('delete', $dosage);
         DB::beginTransaction();
@@ -194,8 +239,7 @@ class DosageController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deletePeriod($id)
-    {
+    public function deletePeriod($id) {
         $dosage = DosagePeriod::find($id);
         $this->authorize('delete', $dosage);
         DB::beginTransaction();
