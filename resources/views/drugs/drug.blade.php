@@ -22,15 +22,15 @@
         <div class="box-header with-border">
             {{--Check whether the user has permissions to access these tasks--}}
             @can('edit',$drug)
-            <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#editDrugModal">
-                <i class="fa fa-edit fa-lg"></i> Edit Info
-            </button>
+                <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#editDrugModal">
+                    <i class="fa fa-edit fa-lg"></i> Edit Info
+                </button>
             @endcan
 
             @can('add','App\Stock')
-            <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#addStockModal">
-                <i class="fa fa-plus fa-lg"></i> Add Stock
-            </button>
+                <button class="btn btn-primary margin-left" data-toggle="modal" data-target="#addStockModal">
+                    <i class="fa fa-plus fa-lg"></i> Add Stock
+                </button>
             @endcan
 
 
@@ -58,7 +58,7 @@
                         </div>
                         <div class="row">
                             <label class="col-md-4">Quantity</label>
-                            <div class="col-md-8">{{$drug->quantity}} {{$drug->quantityType->drug_type}}</div>
+                            <div class="col-md-8">{{Utils::getFormattedNumber($drug->quantity)}} {{$drug->quantityType->drug_type}}</div>
                         </div>
 
                     </div>
@@ -99,7 +99,7 @@
                 <tbody>
                 @foreach($drug->getStocks() as $stock)
                     <tr>
-                        <td>{{$stock->quantity}}</td>
+                        <td>{{Utils::getFormattedNumber($stock->quantity)}}</td>
                         <td>{{Utils::getFormattedDate($stock->expiry_date)}}</td>
                         <td>{{Utils::getFormattedDate($stock->received_date)}}</td>
                         <td>{{Utils::getFormattedDate($stock->manufactured_date)}}</td>

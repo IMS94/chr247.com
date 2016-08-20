@@ -69,4 +69,8 @@ class Utils {
     public static function isFemale($patient) {
         return $patient->gender === "Female";
     }
+
+    public static function getFormattedNumber($num) {
+        return floatval($num);
+    }
 }

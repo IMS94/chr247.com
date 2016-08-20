@@ -99,7 +99,7 @@
                                 {{$drug->manufacturer}}
                             </td>
                             <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
-                                {{$drug->quantity}}
+                                {{Utils::getFormattedNumber($drug->quantity)}}
                             </td>
                             <td>
                                 @can('delete',$drug)
