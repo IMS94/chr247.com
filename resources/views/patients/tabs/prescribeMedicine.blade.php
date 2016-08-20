@@ -108,7 +108,7 @@
                                     <select id="prescriptionDrug" class="form-control" size="6" ng-model="drug">
                                         <option value="">None</option>
                                         <option ng-repeat="drug in drugs" value="[[drug.id]]" ng-cloak>
-                                            [[drug.name]] [[drug.quantity | number:0]]
+                                            [[drug.name]] [[drug.quantity.toString()]]
                                         </option>
                                     </select>
                                 </div>

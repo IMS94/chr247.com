@@ -88,8 +88,8 @@
                                     <div ng-class="{'has-error':prescribedDrug.outOfStocks}">
                                         <span class="help-block" ng-show="prescribedDrug.outOfStocks">
                                             <strong>
-                                            You have only [[prescribedDrug.drug.quantity]] units of stocks available.
-                                            Continue at your own risk!
+                                            You have only [[prescribedDrug.drug.quantity.toString()]] units of
+                                                stocks available. Continue at your own risk!
                                             </strong>
                                         </span>
                                         <input class="form-control" type="number" step="0.01"
