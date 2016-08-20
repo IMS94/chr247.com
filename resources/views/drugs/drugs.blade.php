@@ -20,7 +20,7 @@
                     <button class="btn btn-primary margin"
                             data-toggle="modal" data-target="#addDrugModal">
                         Add Drug
-                        <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                        <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
                            data-placement="bottom" title=""
                            data-original-title="Add a new drug to the inventory. Added drugs will be available to
                            be prescribed as soon as you add them"></i>
@@ -29,7 +29,7 @@
 
                 <a class="btn btn-primary margin pull-right" href="{{route('drugTypes')}}">
                     Quantity Types
-                    <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                    <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
                        data-placement="bottom" title=""
                        data-original-title="The measurements used to measure the available quantity(stock) of a drug.
                                ex: Number of 'Pills', number of 'Bottles', 'Litres'"></i>
@@ -37,7 +37,7 @@
 
                 <a class="btn btn-primary margin pull-right" href="{{route('dosages')}}">
                     Dosages
-                    <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                    <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
                        data-placement="bottom" title=""
                        data-original-title="A pool of dosages which is to be used when prescribing medicine to patients."></i>
                 </a>
