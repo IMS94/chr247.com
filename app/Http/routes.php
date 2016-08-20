@@ -143,6 +143,10 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('addFrequency', ['as' => 'addFrequency', 'uses' => 'DosageController@addFrequency']);
             Route::post('addPeriod', ['as' => 'addPeriod', 'uses' => 'DosageController@addPeriod']);
 
+            Route::post('editDosage/{id}', ['as' => 'editDosage', 'uses' => 'DosageController@editDosage']);
+            Route::post('editFrequency/{id}', ['as' => 'editFrequency', 'uses' => 'DosageController@editFrequency']);
+            Route::post('editPeriod/{id}', ['as' => 'editPeriod', 'uses' => 'DosageController@editPeriod']);
+
             Route::get('deleteDosage/{id}', ['as' => 'deleteDosage', 'uses' => 'DosageController@deleteDosage']);
             Route::get('deleteFrequency/{id}', ['as' => 'deleteFrequency', 'uses' => 'DosageController@deleteFrequency']);
             Route::get('deletePeriod/{id}', ['as' => 'deletePeriod', 'uses' => 'DosageController@deletePeriod']);
