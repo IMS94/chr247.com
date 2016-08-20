@@ -88,7 +88,7 @@
                                     <div ng-class="{'has-error':prescribedDrug.outOfStocks}">
                                         <span class="help-block" ng-show="prescribedDrug.outOfStocks">
                                             <strong>
-                                            You have only [[prescribedDrug.drug.quantity.toString()]] units of
+                                            You have only [[prescribedDrug.drug.quantity | exactNumber]] units of
                                                 stocks available. Continue at your own risk!
                                             </strong>
                                         </span>

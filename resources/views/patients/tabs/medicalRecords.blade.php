@@ -78,7 +78,7 @@
                         [[prescribedDrug.period.description]]
                     </td>
                     <td>
-                        [[prescribedDrug.quantity]]
+                        [[prescribedDrug.quantity | exactNumber]]
                     </td>
                 </tr>
                 </tbody>
@@ -104,7 +104,7 @@
                 </tr>
                 </tbody>
             </table>
-            
+
             <br>
 
             <div class="row">
