@@ -249,4 +249,55 @@ angular.module('HIS', [], function ($interpolateProvider) {
                 });
             }
         };
+    }])
+    .service('DrugAPI', ['$http', function ($http) {
+        return {
+            getDosages: function (baseUrl, token) {
+                return $http.post(baseUrl + "/API/getDosages", {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function () {
+                    return {
+                        status: 0
+                    };
+                });
+            },
+
+            getFrequencies: function (baseUrl, token) {
+                return $http.post(baseUrl + "/API/getFrequencies", {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function () {
+                    return {
+                        status: 0
+                    };
+                });
+            },
+
+            getPeriods: function (baseUrl, token) {
+                return $http.post(baseUrl + "/API/getPeriods", {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function () {
+                    return {
+                        status: 0
+                    };
+                });
+            },
+
+            getQuantityTypes: function (baseUrl, token) {
+                return $http.post(baseUrl + "/API/getQuantityTypes", {
+                    _token: token
+                }).then(function (response) {
+                    return response.data;
+                }, function () {
+                    return {
+                        status: 0
+                    };
+                });
+            }
+        };
     }]);

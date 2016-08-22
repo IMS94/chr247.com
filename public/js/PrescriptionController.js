@@ -70,7 +70,10 @@ angular.module('HIS')
              * A complete replicate of DrugController's predictDrug() method.
              */
             $scope.predictDrug = function () {
-                if ($scope.pharmacyDrug && $scope.pharmacyDrug.length != 3) {
+                if (!$scope.pharmacyDrug) {
+                    return;
+                }
+                if ($scope.pharmacyDrug.length != 3) {
                     return;
                 }
                 api.getDrugPredictions($scope.baseUrl, $scope.token, $scope.pharmacyDrug).then(function (data) {

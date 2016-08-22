@@ -176,6 +176,14 @@ Route::group(['middleware' => 'web'], function () {
             //queue
             Route::post('getQueue', 'APIController@getQueue');
             Route::post('updateQueue', 'APIController@updateQueue');
+
+            //Drug API
+            Route::post("getDosages", 'DrugAPIController@getDosages');
+            Route::post("getFrequencies", 'DrugAPIController@getFrequencies');
+            Route::post("getPeriods", 'DrugAPIController@getPeriods');
+
+            Route::post("getQuantityTypes", 'DrugAPIController@getQuantityTypes');
+
         });
 
 
