@@ -184,6 +184,7 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::post("getQuantityTypes", 'DrugAPIController@getQuantityTypes');
 
+            Route::post("saveDrugWithDosages", 'DrugAPIController@saveDrugWithDosages');
         });
 
 

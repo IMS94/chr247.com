@@ -298,6 +298,18 @@ angular.module('HIS', [], function ($interpolateProvider) {
                         status: 0
                     };
                 });
+            },
+
+            saveDrugWithDosages: function (baseUrl, token, data) {
+                data._token = token;
+                return $http.post(baseUrl + "/API/saveDrugWithDosages", data)
+                    .then(function (response) {
+                        return response.data;
+                    }, function () {
+                        return {
+                            status: 0
+                        };
+                    });
             }
         };
     }]);

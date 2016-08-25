@@ -67,7 +67,22 @@ angular.module('HIS')
 
                 if ($scope.error.hasError) {
                     $window.scrollTo(0, 0);
+                    return;
                 }
+                var data = {
+                    drugName: $scope.drugName,
+                    drug: $scope.drug,
+                    quantityType: $scope.quantityType,
+                    dosageText: $scope.dosageText,
+                    dosage: $scope.dosage,
+                    frequencyText: $scope.frequencyText,
+                    frequency: $scope.frequency,
+                    periodText: $scope.periodText,
+                    period: $scope.period
+                };
+                DrugAPI.saveDrugWithDosages($scope.baseUrl, $scope.token, data).then(function (response) {
+                    console.log(response);
+                });
             };
 
             $scope.resetError = function () {
