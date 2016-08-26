@@ -1,12 +1,10 @@
 angular.module('HIS')
-    .controller('DrugController', ['$scope', '$window', 'api', 'DrugAPI',
-        function ($scope, $window, api, DrugAPI) {
+    .controller('DrugController', ['$scope', '$window', 'api', 'DrugAPI', '$timeout', '$filter',
+        function ($scope, $window, api, DrugAPI, $timeout, $filter) {
 
             $scope.predictDrug = function () {
                 if (!$scope.drugName) {
-                    return;
-                }
-                if ($scope.drugName.length != 3) {
+                    $scope.drugPredictions = [];
                     return;
                 }
                 api.getDrugPredictions($scope.baseUrl, $scope.token, $scope.drugName).then(function (data) {
@@ -35,7 +33,7 @@ angular.module('HIS')
             };
 
             $scope.save = function () {
-                $scope.resetError();
+                resetError();
                 if ((!$scope.drugName || !$scope.drugName.trim()) && !$scope.drug) {
                     $scope.error.drug.has = true;
                     $scope.error.drug.msg = "Please select a drug to be added or enter a new drug";
@@ -82,18 +80,97 @@ angular.module('HIS')
                 };
                 DrugAPI.saveDrugWithDosages($scope.baseUrl, $scope.token, data).then(function (response) {
                     console.log(response);
+                    if (response.status == 1) {
+                        console.log($scope.prescribedDrugs);
+                        var arr = $filter('filter')($scope.prescribedDrugs, {drug: {id: response.drug.drug.id}}, false);
+                        console.log(arr);
+                        if (arr.length > 0) {
+                            setError({msg: "The selected drug is already added to the prescription"});
+                        } else {
+                            resetData();
+                            setSuccess();
+                            $scope.$emit("PrescriptionDrugAddedEvent", response.drug);
+                        }
+                    } else {
+                        setError(response);
+                    }
                 });
             };
 
-            $scope.resetError = function () {
+            function resetError() {
                 $scope.error = {
                     hasError: false,
+                    msg: "Unable to add the drug. Please check entered values",
                     frequency: {has: false},
                     dosage: {has: false},
                     period: {has: false},
                     drug: {has: false},
                     quantityType: {has: false}
                 };
+            }
+
+            function resetData() {
+                $scope.drugName = null;
+                $scope.drug = null;
+                $scope.quantityType = null;
+                $scope.dosageText = null;
+                $scope.dosage = null;
+                $scope.frequencyText = null;
+                $scope.frequency = null;
+                $scope.periodText = null;
+                $scope.period = null;
+            }
+
+            function setError(response) {
+                resetError();
+                var error = $scope.error;
+                error.hasError = true;
+                if (response.drug || response.drugName) {
+                    error.drug = {
+                        has: true,
+                        msg: response.drug ? response.drug[0] : response.drugName[0]
+                    }
+                }
+                if (response.quantityType) {
+                    error.quantityType = {
+                        has: true,
+                        msg: response.quantityType[0]
+                    }
+                }
+                if (response.dosage || response.dosageText) {
+                    error.dosage = {
+                        has: true,
+                        msg: response.dosage ? response.dosage[0] : response.dosageText[0]
+                    }
+                }
+                if (response.frequency || response.frequencyText) {
+                    error.frequency = {
+                        has: true,
+                        msg: response.frequency ? response.frequency[0] : response.frequencyText[0]
+                    }
+                }
+                if (response.period || response.periodText) {
+                    error.period = {
+                        has: true,
+                        msg: response.period ? response.period[0] : response.periodText[0]
+                    }
+                }
+                if (response.msg) {
+                    error.msg = response.msg;
+                }
+                $scope.error = error;
+            }
+
+            var timer;
+
+            function setSuccess() {
+                $scope.success = {
+                    hasSuccess: true,
+                    msg: "Drug added to the prescription"
+                };
+                timer = $timeout(function () {
+                    $scope.success.hasSuccess = false;
+                }, 10000);
             }
         }
     ]);

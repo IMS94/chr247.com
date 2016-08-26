@@ -114,14 +114,16 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-xs-12">Can't find the drug?</label>
+                                <label class="col-xs-12">
+                                    Can't find the drug?
+                                    <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                                       data-placement="bottom" title=""
+                                       data-original-title="Add a new drug, dosage, frequency and period which
+                                           is not present in the lists."> </i>
+                                </label>
                                 <div class="col-xs-12">
-                                    <button class="btn bg-gray btn-lg btn-flat pull-left" data-toggle="modal"
+                                    <button class="btn bg-gray btn-lg btn-flat" data-toggle="modal"
                                             data-target="#addDosageModal"> Add
-                                        <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
-                                           data-placement="bottom" title=""
-                                           data-original-title="Add a new drug, dosage, frequency and period which
-                                           is not present in the lists."></i>
                                     </button>
                                 </div>
                             </div>
@@ -176,7 +178,7 @@
                     <div class="box-footer">
                         <button class="btn bg-gray btn-lg btn-flat pull-left" data-toggle="modal"
                                 data-target="#addPharmacyDrugsModal"> Pharmacy Drugs
-                            <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                            <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
                                data-placement="bottom" title=""
                                data-original-title="Add the drugs to be taken from a pharmacy"></i>
                         </button>

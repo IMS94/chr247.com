@@ -131,7 +131,19 @@
                     <div class="form-group">
                         <div class="col-md-12 col-xs-12">
                             <div class="row">
-                                <button class="btn btn-success pull-right" ng-click="save()">Save</button>
+                                <div class="alert alert-danger" ng-show="error.hasError" ng-cloak>
+                                    <h4><i class="icon fa fa-ban"></i> Sorry !</h4>
+                                    [[error.msg]]
+                                </div>
+                                <div class="alert alert-success" ng-show="success.hasSuccess" ng-cloak>
+                                    <h4><i class="icon fa fa-check"></i> Success !</h4>
+                                    [[success.msg]]
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-success pull-right" ng-click="save()">
+                                    Add to Prescription
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -300,6 +300,15 @@ angular.module('HIS', [], function ($interpolateProvider) {
                 });
             },
 
+            /**
+             * Save a drug with it's quantity type and add corresponding dosages and frequencies.
+             * The result will be a drug to be added to the prescription.
+             *
+             * @param baseUrl Base URL
+             * @param token CSRF Token
+             * @param data  Drug and dosage details to be sent
+             * @returns {*} response
+             */
             saveDrugWithDosages: function (baseUrl, token, data) {
                 data._token = token;
                 return $http.post(baseUrl + "/API/saveDrugWithDosages", data)

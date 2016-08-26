@@ -37,6 +37,10 @@ angular.module('HIS')
             $scope.drugErrorTimeout = null;
             $scope.errorTimeout = null;
 
+            $scope.$on('PrescriptionDrugAddedEvent', function (event, data) {
+                $scope.prescribedDrugs.push(data);
+                $scope.init();
+            });
 
             /**
              * Init function. loads relevant data from the API.
@@ -58,6 +62,7 @@ angular.module('HIS')
 
             $scope.predictDisease = function () {
                 if (!$scope.diagnosis) {
+                    $scope.diseasePredictions = [];
                     return;
                 }
                 api.getDiseasePredictions($scope.baseUrl, $scope.token, $scope.diagnosis).then(function (data) {
@@ -71,9 +76,7 @@ angular.module('HIS')
              */
             $scope.predictDrug = function () {
                 if (!$scope.pharmacyDrug) {
-                    return;
-                }
-                if ($scope.pharmacyDrug.length != 3) {
+                    $scope.drugPredictions = [];
                     return;
                 }
                 api.getDrugPredictions($scope.baseUrl, $scope.token, $scope.pharmacyDrug).then(function (data) {

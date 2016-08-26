@@ -24,7 +24,8 @@ class SupportController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDrugPredictions($text) {
-        $drugs = \DB::table('drug_pool')->where('trade_name', 'LIKE', $text . "%")->select('trade_name')->distinct()->get();
+        $drugs = \DB::table('drug_pool')->where('trade_name', 'LIKE', $text . "%")->select('trade_name')
+            ->distinct()->take(10)->get();
         return response()->json(['status' => 1, 'drugs' => $drugs]);
     }
 
@@ -36,7 +37,7 @@ class SupportController extends Controller {
      */
     public function getManufacturerPredictions($text) {
         $manufacturers = \DB::table('drug_pool')->where('manufacturer', 'LIKE', $text . "%")
-            ->select('manufacturer')->distinct()->get();
+            ->select('manufacturer')->distinct()->take(10)->get();
         return response()->json(['status' => 1, 'manufacturers' => $manufacturers]);
     }
 
@@ -48,7 +49,7 @@ class SupportController extends Controller {
      */
     public function getDiseasePredictions($text) {
         $diseases = \DB::table('disease_pool')->where('disease', 'LIKE', $text . "%")->select('disease')
-            ->take(20)->get();
+            ->take(10)->get();
         return response()->json(['status' => 1, 'diseases' => $diseases]);
     }
 }
