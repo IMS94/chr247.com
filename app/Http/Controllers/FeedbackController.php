@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Log;
+use Mail;
+use Validator;
 
 class FeedbackController extends Controller {
 
@@ -20,15 +21,15 @@ class FeedbackController extends Controller {
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function sendFeedback(Request $request) {
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'feedback' => 'required|min:20,max:200'
         ]);
         if ($validator->fails()) {
-            \Log::error($validator->errors());
+            Log::error($validator->errors());
             return back()->withErrors($validator)->withInput();
         }
         $user = User::getCurrentUser();
-        \Mail::send('emails.feedback', ['feedback' => $request->feedback, 'user' => $user], function ($m) {
+        Mail::send('emails.feedback', ['feedback' => $request->feedback, 'user' => $user], function ($m) {
             $m->to("imesha@highflyer.lk", "CHR 24x7 Dev")->subject('CHR247.COM - User Feedback');
         });
 

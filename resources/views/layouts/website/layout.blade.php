@@ -67,6 +67,7 @@
                     <a href="{{url('/web/privacyPolicy')}}">Privacy Policy</a>
                 </li>
                 <li><a href="{{url('web/aboutUs')}}">About Us</a></li>
+                <li><a href="{{url('web/contactUs')}}">Contact Us</a></li>
                 <li class="nav-btn-wrap">
                     <span class="nav-btn">
                         <a href="{{url('login')}}" class="btn se-btn-black btn-rounded">Sign In</a>

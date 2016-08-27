@@ -11,14 +11,21 @@
 |
 */
 
-Route::group(['prefix' => 'web'], function () {
-    Route::get("aboutUs", 'WebsiteController@getAboutUsPage');
-    Route::get("features", 'WebsiteController@getFeaturesPage');
-    Route::get("privacyPolicy", 'WebsiteController@getPrivacyPolicyPage');
-});
-
+// TODO Create a logger class
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
+
+    /*
+     *  Website
+     */
+    Route::group(['prefix' => 'web'], function () {
+        Route::get("aboutUs", 'WebsiteController@getAboutUsPage');
+        Route::get("features", 'WebsiteController@getFeaturesPage');
+        Route::get("privacyPolicy", 'WebsiteController@getPrivacyPolicyPage');
+        Route::get("contactUs", 'WebsiteController@getContactUs');
+        Route::post("contactUs", ['as' => 'contactUs', 'uses' => 'WebsiteController@postContactUs']);
+    });
+
 
     /*
      * Register Clinic and show privacy policy if required.
