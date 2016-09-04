@@ -1,16 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: imesha
- * Date: 4/12/16
- * Time: 6:11 PM
- */
 
 namespace App\Lib;
 
 
 use App\Clinic;
 
+/**
+ * Class Utils
+ * Utility class for chr247.com
+ * @package App\Lib
+ */
 class Utils {
     /**
      * Get the age once a birthday is given
@@ -70,7 +69,21 @@ class Utils {
         return $patient->gender === "Female";
     }
 
+    /**
+     * Formats numbers by removing trailing zeros in after the decimal place
+     * @param $num
+     * @return float
+     */
     public static function getFormattedNumber($num) {
         return floatval($num);
+    }
+
+    /**
+     * The post fix appended to URLs in order to prevent browser caching
+     * @param $length |5 the length of the post fix
+     * @return string the post fix to prevent caching
+     */
+    public static function getCachePreventPostfix($length = 5) {
+        return "rev=" . str_random($length);
     }
 }

@@ -1,4 +1,4 @@
-<script src="{{asset("js/DrugController.js")}}"></script>
+<script src="{{asset("js/DrugController.js")}}?{{Utils::getCachePreventPostfix()}}"></script>
 
 <div class="modal fade" id="addDosageModal" ng-controller="DrugController">
     <div class="modal-dialog">

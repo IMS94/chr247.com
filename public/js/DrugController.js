@@ -78,12 +78,11 @@ angular.module('HIS')
                     periodText: $scope.periodText,
                     period: $scope.period
                 };
+
                 DrugAPI.saveDrugWithDosages($scope.baseUrl, $scope.token, data).then(function (response) {
                     console.log(response);
                     if (response.status == 1) {
-                        console.log($scope.prescribedDrugs);
                         var arr = $filter('filter')($scope.prescribedDrugs, {drug: {id: response.drug.drug.id}}, false);
-                        console.log(arr);
                         if (arr.length > 0) {
                             setError({msg: "The selected drug is already added to the prescription"});
                         } else {

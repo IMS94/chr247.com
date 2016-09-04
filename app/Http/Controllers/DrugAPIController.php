@@ -15,6 +15,12 @@ use Illuminate\Http\Request;
 use Log;
 use Validator;
 
+/**
+ * Class DrugAPIController
+ *
+ * @package App\Http\Controllers
+ * @author Imesha Sudasingha
+ */
 class DrugAPIController extends Controller {
     public function getDosages() {
         $clinic = Clinic::getCurrentClinic();
@@ -148,19 +154,33 @@ class DrugAPIController extends Controller {
         return $quantityType;
     }
 
+    /**
+     * Helper method when adding an immediate drug to the prescription. If the user has selected a drug, it will
+     * be selected. Else, checked whether the corresponding drug name is available with given quantity type.
+     * If it is not available, a new drug is created.
+     *
+     * @param Request $request Request containing all the data
+     * @param Clinic $clinic User's clinic
+     * @param User $user Current user
+     * @param DrugType|null $quantityType Drug's quantity type
+     * @return Drug|null The drug which was added or existed
+     */
     private function addDrug(Request $request, Clinic $clinic, User $user, DrugType $quantityType = null) {
         $drug = null;
         if (isset($request->drug))
             $drug = $clinic->drugs()->find($request->drug);
         else {
-            $drug = new Drug();
-            $drug->name = $request->drugName;
-            $drug->manufacturer = "N/A";
-            $drug->quantityType()->associate($quantityType);
-            $drug->creator()->associate($user);
-            $clinic->drugs()->save($drug);
+            $drug = $clinic->drugs()->where('name', $request->drugName)
+                ->where('drug_type_id', $quantityType->id)->first();
+            if (is_null($drug)) {
+                $drug = new Drug();
+                $drug->name = $request->drugName;
+                $drug->manufacturer = "N/A";
+                $drug->quantityType()->associate($quantityType);
+                $drug->creator()->associate($user);
+                $clinic->drugs()->save($drug);
+            }
         }
         return $drug;
     }
-
 }

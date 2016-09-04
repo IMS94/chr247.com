@@ -11,7 +11,6 @@
 |
 */
 
-// TODO Create a logger class
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
