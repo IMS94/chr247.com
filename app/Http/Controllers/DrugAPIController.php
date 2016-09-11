@@ -8,6 +8,7 @@ use App\DosageFrequency;
 use App\DosagePeriod;
 use App\Drug;
 use App\DrugType;
+use App\Lib\Logger;
 use App\User;
 use DB;
 use Exception;
@@ -63,7 +64,7 @@ class DrugAPIController extends Controller {
             'periodText' => 'min:2|max:100',
         ]);
         if ($validator->fails()) {
-            Log::error($validator->errors());
+            Logger::error("Validation error", $validator->errors()->toArray());
             $errors = $validator->errors()->toArray();
             $errors['status'] = 0;
             return response()->json($errors);
@@ -84,7 +85,7 @@ class DrugAPIController extends Controller {
                 'period' => $period
             ];
         } catch (Exception $e) {
-            Log::error($e->getMessage());
+            Logger::error($e->getMessage(), $request->all());
             DB::rollBack();
             return response()->json([
                 'status' => 0
@@ -101,7 +102,7 @@ class DrugAPIController extends Controller {
         else
             $dosage = $clinic->dosages()->where("description", 'LIKE', $request->dosageText)->first();
 
-        if ($dosage == null) {
+        if (is_null($dosage)) {
             $dosage = new Dosage();
             $dosage->description = $request->dosageText;
             $dosage->creator()->associate($user);

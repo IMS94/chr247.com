@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Clinic;
 use App\DrugType;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use DB;
+use Log;
+use Mail;
 
 class AdminController extends Controller {
     private $guard = "admin";
@@ -32,7 +32,7 @@ class AdminController extends Controller {
      */
     public function acceptClinic($id) {
         $clinic = Clinic::find($id);
-        \DB::beginTransaction();
+        DB::beginTransaction();
         try {
             $clinic->accepted = true;
             $clinic->update();
@@ -50,15 +50,15 @@ class AdminController extends Controller {
             }
             $clinic->quantityTypes()->saveMany($types);
 
-            \Mail::send('auth.emails.clinicAccepted', ['clinic' => $clinic], function ($m) use ($clinic) {
+            Mail::send('auth.emails.clinicAccepted', ['clinic' => $clinic], function ($m) use ($clinic) {
                 $m->to($clinic->email, $clinic->name)->subject('CHR247.COM - Clinic Accepted');
             });
         } catch (\Exception $e) {
-            \DB::rollBack();
-            \Log::error($e->getMessage());
+            DB::rollBack();
+            Log::error($e->getMessage());
             return back()->with("error", "Unable to accept the clinic");
         }
-        \DB::commit();
+        DB::commit();
         return back()->with("success", $clinic->name . " clinic Accepted");
     }
 

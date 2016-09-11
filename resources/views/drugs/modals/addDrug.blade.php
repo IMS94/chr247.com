@@ -43,8 +43,9 @@
                                Type at least 3 characters to get suggestions"></i>
                         </label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" name="drugName" value="{{ old('drugName') }}"
-                                   required list="drugList" ng-change="predictDrug()" ng-model="drugName">
+                            <input type="text" class="form-control" name="drugName" required list="drugList"
+                                   ng-change="predictDrug()" ng-model="drugName"
+                                   ng-init="drugName='{{ old('drugName') }}'">
                             <datalist id="drugList">
                                 <option ng-repeat="drug in drugPredictions">[[drug.trade_name]]</option>
                             </datalist>
@@ -85,7 +86,7 @@
                         <label class="col-md-3 control-label">Manufacturer</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" name="manufacturer"
-                                   value="{{ old('manufacturer') }}"
+                                   ng-init="manufacturer='{{ old('manufacturer') }}'"
                                    required list="manufacturerList" ng-change="predictManufacturer()"
                                    ng-model="manufacturer">
                             <datalist id="manufacturerList">
@@ -121,7 +122,7 @@
                             <div class="form-group{{ $errors->has('manufacturedDate') ? ' has-error' : '' }}">
                                 <label class="col-md-3 control-label">Manufactured Date</label>
                                 <div class="col-md-9">
-                                    <input type="date" class="form-control" name="manufacturedDate"
+                                    <input type="text" class="form-control datepicker" name="manufacturedDate"
                                            value="{{ old('manufacturedDate') }}">
                                     @if ($errors->has('manufacturedDate'))
                                         <span class="help-block">
@@ -134,7 +135,7 @@
                             <div class="form-group{{ $errors->has('receivedDate') ? ' has-error' : '' }}">
                                 <label class="col-md-3 control-label">Received Date</label>
                                 <div class="col-md-9">
-                                    <input type="date" class="form-control" name="receivedDate"
+                                    <input type="text" class="form-control datepicker" name="receivedDate"
                                            value="{{ old('receivedDate') }}">
                                     @if ($errors->has('receivedDate'))
                                         <span class="help-block">
@@ -147,7 +148,7 @@
                             <div class="form-group{{ $errors->has('expiryDate') ? ' has-error' : '' }}">
                                 <label class="col-md-3 control-label">Expiry Date</label>
                                 <div class="col-md-9">
-                                    <input type="date" class="form-control" name="expiryDate"
+                                    <input type="text" class="form-control datepicker" name="expiryDate"
                                            value="{{ old('expiryDate') }}">
                                     @if ($errors->has('expiryDate'))
                                         <span class="help-block">

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Lib\Logger;
 use Exception;
 use Illuminate\Http\Request;
-use Log;
 use Mail;
 use Validator;
 
@@ -55,8 +55,7 @@ class WebsiteController extends Controller {
                 $m->to($emails)->subject('chr247.com - New Contact Us Message');
             });
         } catch (Exception $e) {
-            Log::error("Error when sending contact us message : " . $e->getMessage());
-            Log::error(Mail::failures());
+            Logger::error("Error when sending contact us message : " . $e->getMessage(), Mail::failures());
         }
         return back()->with('success', "Your message submitted successfully. We will contact you soon.");
     }

@@ -29,7 +29,7 @@ angular.module('HIS')
                     if (data.status == 1) {
                         $scope.quantityTypes = data.quantityTypes;
                     }
-                })
+                });
             };
 
             $scope.save = function () {

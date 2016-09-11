@@ -149,7 +149,6 @@ class APIController extends Controller {
         }
 
         $clinic = Clinic::getCurrentClinic();
-        Log::info($clinic->patients()->count());
         $prescriptions = Prescription::whereIn('patient_id', $clinic->patients()->lists('id'))
             ->where('issued', false)->orderBy('id')
             ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency', 'prescriptionPharmacyDrugs',

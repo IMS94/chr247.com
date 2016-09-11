@@ -1,7 +1,9 @@
 <?php
 
+use DB;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Log;
 
 class CreateDrugPool extends Migration {
     /**
@@ -31,12 +33,10 @@ class CreateDrugPool extends Migration {
             // And the drugs array is cleared
             if (count($drugs) > $recordLimit || $x == $drugCount) {
                 try {
-                    \DB::table('drug_pool')->insert($drugs);
+                    DB::table('drug_pool')->insert($drugs);
                     $drugs = array();
-                    \Log::info($x);
                 } catch (Exception $e) {
-                    \Log::info($x);
-                    \Log::error($e->getMessage());
+                    Log::error($e->getMessage());
                 }
 
                 if ($x == $drugCount) {
@@ -48,9 +48,9 @@ class CreateDrugPool extends Migration {
             if (!isset($drugDetails[3]) || !isset($drugDetails[4])) {
                 continue;
             }
-            $drug = ['ingredient'   => ucwords(strtolower($drugDetails[0])),
-                     'trade_name'   => ucwords(strtolower($drugDetails[3])),
-                     'manufacturer' => ucwords(strtolower($drugDetails[4]))];
+            $drug = ['ingredient' => ucwords(strtolower($drugDetails[0])),
+                'trade_name' => ucwords(strtolower($drugDetails[3])),
+                'manufacturer' => ucwords(strtolower($drugDetails[4]))];
             if (!in_array($drug, $drugs)) {
                 $drugs[] = $drug;
             }
