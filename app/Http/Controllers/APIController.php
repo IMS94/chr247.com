@@ -14,6 +14,8 @@ use App\PrescriptionDrug;
 use App\PrescriptionPharmacyDrug;
 use App\Queue;
 use App\User;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -30,7 +32,8 @@ class APIController extends Controller {
      */
     public function getDrugs() {
         $clinic = Clinic::getCurrentClinic();
-        $data = $clinic->drugs()->orderBy('name')->select('id', 'name', 'quantity')->get()->toArray();
+        $data   = $clinic->drugs()->orderBy('name')->select('id', 'name', 'quantity')->get()->toArray();
+
         return response()->json($data);
     }
 
@@ -41,10 +44,10 @@ class APIController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDosages() {
-        $clinic = Clinic::getCurrentClinic();
-        $dosages = $clinic->dosages()->orderBy('description')->select('id', 'description')->get()->toArray();
+        $clinic      = Clinic::getCurrentClinic();
+        $dosages     = $clinic->dosages()->orderBy('description')->select('id', 'description')->get()->toArray();
         $frequencies = $clinic->dosageFrequencies()->orderBy('description')->select('id', 'description')->get()->toArray();
-        $periods = $clinic->dosagePeriods()->orderBy('description')->select('id', 'description')->get()->toArray();
+        $periods     = $clinic->dosagePeriods()->orderBy('description')->select('id', 'description')->get()->toArray();
 
         return response()->json(['dosages' => $dosages, 'frequencies' => $frequencies, 'periods' => $periods]);
     }
@@ -58,16 +61,16 @@ class APIController extends Controller {
      */
     public function savePrescription(Request $request) {
         $validator = \Validator::make($request->all(), [
-            'id' => 'required|exists:patients,id',
-            'complaints' => 'required_without:diagnosis|max:150',
-            'diagnosis' => 'required_without:complaints|max:150',
-            'investigations' => 'max:150',
-            'remarks' => 'max:150',
-            'prescribedDrugs' => 'array',
-            'prescribedDrugs.*.drug' => 'required_with:prescribedDrugs',
-            'prescribedDrugs.*.dose' => 'required_with:prescribedDrugs',
-            'pharmacyDrugs' => 'array',
-            'pharmacyDrugs.*.name' => 'required_with:pharmacyDrugs',
+            'id'                      => 'required|exists:patients,id',
+            'complaints'              => 'required_without:diagnosis|max:150',
+            'diagnosis'               => 'required_without:complaints|max:150',
+            'investigations'          => 'max:150',
+            'remarks'                 => 'max:150',
+            'prescribedDrugs'         => 'array',
+            'prescribedDrugs.*.drug'  => 'required_with:prescribedDrugs',
+            'prescribedDrugs.*.dose'  => 'required_with:prescribedDrugs',
+            'pharmacyDrugs'           => 'array',
+            'pharmacyDrugs.*.name'    => 'required_with:pharmacyDrugs',
             'pharmacyDrugs.*.remarks' => 'max:200'
         ]);
 
@@ -85,10 +88,10 @@ class APIController extends Controller {
 
         DB::beginTransaction();
         try {
-            $prescription->complaints = $request->complaints;
+            $prescription->complaints     = $request->complaints;
             $prescription->investigations = $request->investigations;
-            $prescription->diagnosis = $request->diagnosis;
-            $prescription->remarks = $request->remarks ?: "";
+            $prescription->diagnosis      = $request->diagnosis;
+            $prescription->remarks        = $request->remarks ?: "";
             $prescription->creator()->associate(User::getCurrentUser());
             $prescription->patient()->associate($patient);
             $prescription->save();
@@ -105,17 +108,19 @@ class APIController extends Controller {
 
             //save the pharmacy drugs
             foreach ($request->pharmacyDrugs as $pharmacyDrug) {
-                $drug = new PrescriptionPharmacyDrug();
-                $drug->drug = $pharmacyDrug['name'];
+                $drug          = new PrescriptionPharmacyDrug();
+                $drug->drug    = $pharmacyDrug['name'];
                 $drug->remarks = isset($pharmacyDrug['remarks']) ? $pharmacyDrug['remarks'] : "";
                 $prescription->prescriptionPharmacyDrugs()->save($drug);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
+
             return response()->json(['status' => 0], 500);
         }
         DB::commit();
+
         return response()->json(['status' => 1, 'prescriptionId' => $prescription->id], 200);
     }
 
@@ -135,6 +140,7 @@ class APIController extends Controller {
         $prescriptions = $patient->prescriptions()->where('issued', false)
             ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency', 'prescriptionPharmacyDrugs',
                 'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType')->get();
+
         return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
     }
 
@@ -148,11 +154,12 @@ class APIController extends Controller {
             return response()->json(['status' => 0], 404);
         }
 
-        $clinic = Clinic::getCurrentClinic();
+        $clinic        = Clinic::getCurrentClinic();
         $prescriptions = Prescription::whereIn('patient_id', $clinic->patients()->lists('id'))
             ->where('issued', false)->orderBy('id')
             ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency', 'prescriptionPharmacyDrugs',
                 'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType', 'patient')->get();
+
         return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
     }
 
@@ -160,10 +167,11 @@ class APIController extends Controller {
     public function checkStocksAvailability(Request $request) {
         $clinic = Clinic::getCurrentClinic();
         $stocks = $clinic->drugs()->whereIn('id', $request->data['drugs'])->select(['id', 'quantity'])->get();
+
         return response()->json([
             'prescriptionId' => $request->data['prescriptionId'],
-            'stocks' => $stocks,
-            'status' => 1
+            'stocks'         => $stocks,
+            'status'         => 1
         ]);
     }
 
@@ -182,15 +190,16 @@ class APIController extends Controller {
         }
 
         $validator = Validator::make($request->all(), [
-            'prescription' => 'required',
-            'prescription.id' => 'required',
-            'prescription.payment' => 'required|numeric',
-            'prescription.prescription_drugs' => 'array',
+            'prescription'                                     => 'required',
+            'prescription.id'                                  => 'required',
+            'prescription.payment'                             => 'required|numeric',
+            'prescription.prescription_drugs'                  => 'array',
             'prescription.prescription_drugs.*.issuedQuantity' => 'numeric'
         ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
+
             return response()->json(['status' => 0, 'message' => $errors[0]], 404);
         }
         if ($prescription->issued) {
@@ -203,36 +212,38 @@ class APIController extends Controller {
         DB::beginTransaction();
         try {
             //mark prescription as updated
-            $prescription->issued = true;
-            $prescription->issued_at = date('Y-m-d H:i:s');
+            $prescription->issued    = true;
+            $prescription->issued_at = new Carbon();
             $prescription->update();
 
             //save payment details
             $payment = new Payment();
             $payment->prescription()->associate($prescription);
-            $payment->amount = $request->prescription['payment'];
+            $payment->amount  = $request->prescription['payment'];
             $payment->remarks = $request->prescription['paymentRemarks'];
             $payment->save();
 
             //save prescription drug quantities and decrease stocks
             foreach ($request->prescription['prescription_drugs'] as $prescription_drug) {
                 //setting issued quantity of each drug in the prescription
-                $prescriptionDrug = $prescription->prescriptionDrugs()
+                $prescriptionDrug           = $prescription->prescriptionDrugs()
                     ->where('id', $prescription_drug['id'])->first();
                 $prescriptionDrug->quantity = $prescription_drug['issuedQuantity'];
                 $prescriptionDrug->update();
 
                 //decreasing stocks
-                $drug = $prescriptionDrug->drug;
-                $quantityLeft = $drug->quantity - $prescription_drug['issuedQuantity'];
+                $drug           = $prescriptionDrug->drug;
+                $quantityLeft   = $drug->quantity - $prescription_drug['issuedQuantity'];
                 $drug->quantity = $quantityLeft >= 0 ? $quantityLeft : 0;
                 $drug->update();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
+
             return response()->json(['status' => 0, 'message' => $e->getMessage()], 500);
         }
         DB::commit();
+
         return response()->json(['status' => 1]);
     }
 
@@ -247,25 +258,30 @@ class APIController extends Controller {
     public function deletePrescription($id) {
         $prescription = Prescription::find($id);
         if (empty($prescription) || Gate::denies('deletePrescription', $prescription)) {
-            return response()->json(['status' => 0, 'message' => 'You are not authorized to delete prescriptions'], 404);
+            return response()->json(['status'  => 0, 'message' => 'You are not authorized to delete prescriptions'
+            ], 404);
         }
         if ($prescription->issued) {
-            return response()->json(['status' => 0,
-                'message' => "The prescription is already issued. Therefore cannot be deleted"], 500);
+            return response()->json([
+                'status'  => 0,
+                'message' => "The prescription is already issued. Therefore cannot be deleted"
+            ], 500);
         }
         DB::beginTransaction();
         try {
-//            if($prescription->prescriptionDrugs()->count()>0) {
+            //            if($prescription->prescriptionDrugs()->count()>0) {
             $prescription->prescriptionDrugs()->delete();
             $prescription->prescriptionPharmacyDrugs()->delete();
-//            }
+            //            }
             $prescription->delete();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
+
             return response()->json(['status' => 0, 'message' => $e->getMessage()], 500);
         }
         DB::commit();
+
         return response()->json(['status' => 1]);
     }
 
@@ -286,6 +302,7 @@ class APIController extends Controller {
             ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency', 'prescriptionPharmacyDrugs',
                 'prescriptionDrugs.period', 'prescriptionDrugs.drug.quantityType',
                 'payment')->get();
+
         return response()->json(['prescriptions' => $prescriptions, 'status' => 1]);
     }
 
@@ -306,6 +323,7 @@ class APIController extends Controller {
         }
         $patients = $queue->patients()->withPivot(['id', 'inProgress'])
             ->wherePivot('completed', false)->orderBy('pivot_inProgress', 'desc')->orderBy('pivot_id')->get();
+
         return response()->json(['status' => 1, 'patients' => $patients]);
     }
 
@@ -317,7 +335,7 @@ class APIController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function updateQueue(Request $request) {
-        $queue = Queue::getCurrentQueue();
+        $queue   = Queue::getCurrentQueue();
         $patient = Patient::find($request->patient['id']);
         $this->authorize('update', [$queue, $patient]);
 
@@ -327,8 +345,9 @@ class APIController extends Controller {
         }
         $patient->pivot->inProgress =
             $request->patient['pivot']['inProgress'] == 1 ? true : false;
-        $patient->pivot->completed = $request->patient['pivot']['inProgress'] == 2 ? true : false;
+        $patient->pivot->completed  = $request->patient['pivot']['inProgress'] == 2 ? true : false;
         $patient->pivot->update();
+
         return response()->json(['status' => 1]);
     }
 }

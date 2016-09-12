@@ -6,6 +6,8 @@ use App\Clinic;
 use App\Patient;
 use App\Payment;
 use App\Prescription;
+use Auth;
+use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,7 +19,7 @@ class UtilityController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function search(Request $request) {
-        $query = $request->q;
+        $query  = $request->q;
         $clinic = Clinic::getCurrentClinic();
 
         $patients = $clinic->patients()
@@ -30,6 +32,7 @@ class UtilityController extends Controller {
             ->take(10)->get();
 
         $drugs = $clinic->drugs()->where('name', 'LIKE', $query . '%')->take(10)->get();
+
         return view('utils.search', ['patients' => $patients, 'drugs' => $drugs, 'query' => $query]);
     }
 
@@ -41,20 +44,23 @@ class UtilityController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getDashboard() {
-        if (\Auth::guest()) {
+        if (Auth::guest()) {
             return view('website.home');
         }
 
-        $clinic = Clinic::getCurrentClinic();
+        $clinic        = Clinic::getCurrentClinic();
         $prescriptions = Prescription::whereIn('patient_id', $clinic->patients()->lists('id'));
 
         $prescriptionCount = $prescriptions->where('issued', 1)->count();
-        $payments = Payment::whereIn('prescription_id',
+        $payments          = Payment::whereIn('prescription_id',
             $prescriptions->where('issued', 1)->lists('id'))->sum('amount');
 
         $stats = $this->calcClinicStats($clinic);
-        return view('dashboard', ['clinic'   => $clinic, 'prescriptionCount' => $prescriptionCount,
-                                  'payments' => $payments, 'stats' => $stats]);
+
+        return view('dashboard', [
+            'clinic'   => $clinic, 'prescriptionCount' => $prescriptionCount,
+            'payments' => $payments, 'stats' => $stats
+        ]);
     }
 
     /**
@@ -72,24 +78,25 @@ class UtilityController extends Controller {
             ]
         ];
 
-        $date = date('Y-m-d H:i:s', strtotime("-6 months"));
+        $date       = date('Y-m-d H:i:s', strtotime("-6 months"));
         $patientIds = $clinic->patients()->lists('id')->toArray();
         if (count($patientIds) > 0) {
             $patientIds = implode(",", $patientIds);
-            $query = "SELECT MONTH(created_at) AS m,COUNT(*) AS c FROM `prescriptions` WHERE `patient_id`
+            $query      = "SELECT MONTH(created_at) AS m,COUNT(*) AS c FROM `prescriptions` WHERE `patient_id`
                     IN (" . $patientIds . ") AND `created_at` > :d GROUP BY MONTH(created_at)";
-            $pdo = \DB::connection()->getPdo();
-            $statement = $pdo->prepare($query);
+            $pdo        = DB::connection()->getPdo();
+            $statement  = $pdo->prepare($query);
             $statement->bindParam('d', $date, \PDO::PARAM_STR);
             $statement->execute();
             $visits = $statement->fetchAll();
 
             foreach ($visits as $result) {
-                $dateObj = \DateTime::createFromFormat('!m', $result['m']);
+                $dateObj                = \DateTime::createFromFormat('!m', $result['m']);
                 $stats['visits']['m'][] = $dateObj->format('F');
                 $stats['visits']['c'][] = $result['c'];
             }
         }
+
         return $stats;
     }
 }

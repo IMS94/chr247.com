@@ -110,8 +110,12 @@ Route::group(['middleware' => 'web'], function () {
             Route::any('deletePatient/{id}', ['as' => 'deletePatient', 'uses' => 'PatientController@deletePatient']);
             Route::post('editPatient/{id}', ['as' => 'editPatient', 'uses' => 'PatientController@editPatient']);
             Route::get('patient/{id}/printID', ['as' => 'IDPreview', 'uses' => 'PatientController@getPrintPreview']);
-            Route::get('patient/{id}/printPrescription/{prescriptionId}', ['as' => 'printPrescription',
-                'uses' => 'PrescriptionController@prescriptionPrintPreview']);
+            Route::get('patient/{id}/printPrescription/{prescriptionId}', [
+                'as'   => 'printPrescription',
+                'uses' => 'PrescriptionController@prescriptionPrintPreview'
+            ]);
+
+            Route::get("payments", ['as' => 'payments', 'uses' => 'PrescriptionController@getPayments']);
         });
 
         /*
@@ -132,14 +136,20 @@ Route::group(['middleware' => 'web'], function () {
              * Stocks
              */
             Route::post('addStock/{drugId}', ['as' => 'addStock', 'uses' => 'StockController@addStock']);
-            Route::get('stocks/runningLow', ['as' => 'stocksRunningLow', 'uses' => 'StockController@getStocksRunningLow']);
+            Route::get('stocks/runningLow', [
+                'as'   => 'stocksRunningLow',
+                'uses' => 'StockController@getStocksRunningLow'
+            ]);
 
             /*
              * Drug types
              */
             Route::get('drugTypes', ['as' => 'drugTypes', 'uses' => 'DrugTypeController@getDrugTypeList']);
             Route::post('addDrugType', ['as' => 'addDrugType', 'uses' => 'DrugTypeController@addDrugType']);
-            Route::post('deleteDrugType/{id}', ['as' => 'deleteDrugType', 'uses' => 'DrugTypeController@deleteDrugType']);
+            Route::post('deleteDrugType/{id}', [
+                'as'   => 'deleteDrugType',
+                'uses' => 'DrugTypeController@deleteDrugType'
+            ]);
 
             /*
              * Dosages
@@ -154,10 +164,12 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('editPeriod/{id}', ['as' => 'editPeriod', 'uses' => 'DosageController@editPeriod']);
 
             Route::get('deleteDosage/{id}', ['as' => 'deleteDosage', 'uses' => 'DosageController@deleteDosage']);
-            Route::get('deleteFrequency/{id}', ['as' => 'deleteFrequency', 'uses' => 'DosageController@deleteFrequency']);
+            Route::get('deleteFrequency/{id}', [
+                'as'   => 'deleteFrequency',
+                'uses' => 'DosageController@deleteFrequency'
+            ]);
             Route::get('deletePeriod/{id}', ['as' => 'deletePeriod', 'uses' => 'DosageController@deletePeriod']);
         });
-
 
         /*
          * API

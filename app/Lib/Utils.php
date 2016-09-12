@@ -4,6 +4,9 @@ namespace App\Lib;
 
 
 use App\Clinic;
+use Carbon\Carbon;
+use DateTimeZone;
+use Exception;
 
 /**
  * Class Utils
@@ -17,13 +20,14 @@ class Utils {
      * @return string
      */
     public static function getAge($date) {
-        $d = date_diff(date_create($date), date_create('today'));
+        $d    = date_diff(date_create($date), date_create('today'));
         $text = "";
         if ($date) {
             $text .= $d->y == 0 ? "" : $d->y . " yrs";
             $text .= $d->y < 5 ? " " . $d->m . " months" : "";
             $text .= $d->y < 1 ? " " . $d->d . " days" : "";
         }
+
         return $date ? $text : "-";
     }
 
@@ -35,6 +39,10 @@ class Utils {
      */
     public static function getTimestamp($timestamp) {
         $clinic = Clinic::getCurrentClinic();
+        if (!$timestamp instanceof Carbon) {
+            $timestamp = Carbon::parse($timestamp);
+        }
+
         return date("jS M, Y h:i A", strtotime($timestamp->timezone($clinic->timezone)));
     }
 
@@ -45,7 +53,8 @@ class Utils {
      */
     public static function getFormattedDate($date) {
         $clinic = Clinic::getCurrentClinic();
-        $date = date_create($date, timezone_open($clinic->timezone));
+        $date   = date_create($date, timezone_open($clinic->timezone));
+
         return date_format($date, "jS M, Y");
     }
 

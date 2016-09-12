@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Clinic;
 use App\Patient;
 use App\Prescription;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Log;
 
 class PrescriptionController extends Controller {
     /**
@@ -15,6 +17,7 @@ class PrescriptionController extends Controller {
      */
     public function viewIssueMedicine() {
         $this->authorize('issueMedicine', 'App\Patient');
+
         return view('prescriptions.issueMedicine');
     }
 
@@ -26,9 +29,19 @@ class PrescriptionController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function prescriptionPrintPreview($id, $prescriptionId) {
-        $patient = Patient::find($id);
+        $patient      = Patient::find($id);
         $prescription = Prescription::find($prescriptionId);
         $this->authorize('printPrescription', [$prescription, $patient]);
+
         return view('prescriptions.printPreview', ['patient' => $patient, 'prescription' => $prescription]);
     }
+
+    public function getPayments() {
+        $this->authorize('view', 'App\Payment');
+        $clinic        = Clinic::getCurrentClinic();
+        $prescriptions = $clinic->prescriptions()->with('patient')->get();
+
+        return view('prescriptions.payments', compact("prescriptions"));
+    }
+
 }
