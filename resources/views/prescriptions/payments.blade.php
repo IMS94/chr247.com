@@ -5,6 +5,12 @@
     Payments
 @endsection
 
+@section('breadcrumb')
+    <ol class="breadcrumb">
+        <li><a href="{{route('root')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active" href="#">Payments</li>
+    </ol>
+@endsection
 
 @section('content')
 
@@ -35,10 +41,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{-- // TODO Fix the sorting problem in this table --}}
                 @forelse($prescriptions as $prescription)
                     @if($prescription->hasIssued())
-                        <tr class="tableRow">
+                        <tr class="tableRow"
+                            onclick="window.location='{{route("patient",['id'=>$prescription->patient->id])}}'">
                             <td>{{$prescription->patient->first_name}} {{$prescription->patient->last_name}}</td>
                             <td>{{$prescription->payment->amount}}</td>
                             <td>{{$prescription->payment->remarks}}</td>
@@ -56,7 +62,8 @@
     <script>
         $(document).ready(function () {
             var tableFixed = $('#paymentsTable').dataTable({
-                'pageLength': 10
+                'pageLength': 10,
+                'bSort': false
             });
         });
     </script>

@@ -39,7 +39,7 @@ class PrescriptionController extends Controller {
     public function getPayments() {
         $this->authorize('view', 'App\Payment');
         $clinic        = Clinic::getCurrentClinic();
-        $prescriptions = $clinic->prescriptions()->with('patient')->get();
+        $prescriptions = $clinic->prescriptions()->with('patient')->orderBy('issued_at', 'desc')->get();
 
         return view('prescriptions.payments', compact("prescriptions"));
     }
