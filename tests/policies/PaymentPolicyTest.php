@@ -27,7 +27,7 @@ class PaymentPolicyTest extends TestCase {
         $this->actingAs($this->adminUser)->visit("/")
             ->see("Patients Registered")
             ->see("Prescriptions Issued")
-            ->see("Worth of Payments")
+            ->see("Total Payments")
             ->see("Stocks Running Low");
 
         $this->actingAs($this->doctorUser)->visit("/")

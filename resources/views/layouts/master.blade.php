@@ -260,11 +260,16 @@ $user = \App\User::getCurrentUser();
 <script src="{{asset('plugins/datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
 <script>
     $(document).ready(function () {
-        $(".birthdaypicker").datetimepicker({
+        $('.birthdaypicker').datetimepicker({
             viewMode: 'years',
             format: 'YYYY/MM/DD',
             maxDate: '{{date('Y-m-d')}}',
-            minDate: '{{date('Y-m-d',strtotime(date('Y-m-d').' -150 year'))}}',
+            minDate: '{{date('Y-m-d',strtotime(date('Y-m-d').' -150 year'))}}'
+        });
+
+        $('.datepicker').datetimepicker({
+            viewMode: 'years',
+            format: 'YYYY/MM/DD'
         });
     });
 </script>

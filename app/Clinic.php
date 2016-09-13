@@ -15,7 +15,7 @@ class Clinic extends Model {
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'address', 'phone', 'timezone', 'country','currency'
+        'name', 'email', 'address', 'phone', 'timezone', 'country', 'currency'
     ];
 
 
@@ -33,6 +33,14 @@ class Clinic extends Model {
      */
     public function patients() {
         return $this->hasMany('App\Patient');
+    }
+
+    /**
+     * Get the prescriptions belonging to the patients of this company
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function prescriptions() {
+        return $this->hasManyThrough('App\Prescription', 'App\Patient', 'clinic_id', 'patient_id', 'id');
     }
 
     /**
@@ -85,6 +93,7 @@ class Clinic extends Model {
      */
     public static function getCurrentClinic() {
         $user = Auth::user();
+
         return $user->clinic;
     }
 }

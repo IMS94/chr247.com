@@ -11,12 +11,12 @@
         </div>
         <div class="box-body">
             <div class="callout callout-warning">
-                <h4>We are improving !</h4>
-                <p>It our objective to provide continue this service for free. In order to do that,
-                    your <strong>complaints, suggestions and ideas</strong> are important. Please spend few minutes and
-                    give us submit us
-                    your feedback.
-                    Then, we can offer you a better service. <strong>Thanks in Advance !</strong>
+                <h4>We will always be free !</h4>
+                <p>
+                    Our objective is to <strong>continue to provide this service for free</strong>. Your
+                    <strong>complaints, suggestions and ideas are important to us</strong>. Please spend few minutes to
+                    give us your feedback, so that we can provide you with a better service in the future.
+                    <strong>Thank you in advance !</strong>
                 </p>
             </div>
 

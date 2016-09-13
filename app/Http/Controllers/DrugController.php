@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Clinic;
 use App\Drug;
 use App\DrugType;
+use App\Lib\Logger;
 use App\Stock;
 use App\User;
+use DB;
+use Exception;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
+use Validator;
 
 class DrugController extends Controller {
     /**
@@ -51,22 +49,24 @@ class DrugController extends Controller {
         if (!empty($request->quantity)) {
             $this->authorize('add', 'App\Stock');
             $validator = Validator::make($request->all(), [
-                'quantity'         => 'required|numeric',
-                'manufacturedDate' => 'required|date|before:' . date('Y-m-d') . '|after:' . date('Y-m-d', strtotime('1900-01-01')),
-                'receivedDate'     => 'required|date|before:' . date('Y-m-d', time() + 3600 * 24) . '|after:' . $request->manufacturedDate,
-                'expiryDate'       => 'required|date|after:' . date('Y-m-d'),
+                'quantity' => 'required|numeric',
+                'manufacturedDate' => 'required|date|date_format:Y/m/d|before:' . date('Y-m-d') . '|after:' . date('Y-m-d', strtotime('1900-01-01')),
+                'receivedDate' => 'required|date|date_format:Y/m/d|before:' . date('Y-m-d', time() + 3600 * 24) . '|after:' . $request->manufacturedDate,
+                'expiryDate' => 'required|date|date_format:Y/m/d|after:' . date('Y-m-d'),
             ]);
             if ($validator->fails()) {
+                Logger::error("Validation failed when adding initial drug quantity.", $validator->errors()->toArray());
                 return back()->with('type', 'drug')->withErrors($validator)->withInput();
             }
         }
 
         $validator = Validator::make($request->all(), [
-            'drugName'     => 'required',
+            'drugName' => 'required',
             'manufacturer' => 'required',
             'quantityType' => 'required|exists:drug_types,id',
         ]);
         if ($validator->fails()) {
+            Logger::error("Validation failed when adding a drug", $validator->errors()->toArray());
             return back()->with('type', 'drug')->withErrors($validator)->withInput();
         }
 
@@ -90,9 +90,9 @@ class DrugController extends Controller {
             if (!empty($request->quantity)) {
                 $stock = new Stock();
                 $stock->drug()->associate($drug);
-                $stock->manufactured_date = $request->manufacturedDate;
-                $stock->received_date = $request->receivedDate;
-                $stock->expiry_date = $request->expiryDate;
+                $stock->manufactured_date = date('Y-m-d', strtotime($request->manufacturedDate));
+                $stock->received_date = date('Y-m-d', strtotime($request->receivedDate));
+                $stock->expiry_date = date('Y-m-d', strtotime($request->expiryDate));
                 $stock->quantity = $request->quantity;
                 $stock->remarks = $request->remarks;
                 $stock->creator()->associate(User::getCurrentUser());
@@ -101,7 +101,7 @@ class DrugController extends Controller {
                 $drug->quantity = $drug->quantity + $request->quantity;
                 $drug->update();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             $validator->getMessageBag()->add('general', 'Drug already exists or Stock data is incorrect');
             return back()->with('type', 'drug')->withInput()->withErrors($validator);
@@ -123,7 +123,7 @@ class DrugController extends Controller {
         DB::beginTransaction();
         try {
             $drug->delete();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             return back()->with('error', "The drug cannot be deleted!");;
         }
@@ -143,7 +143,7 @@ class DrugController extends Controller {
         $this->authorize('edit', $drug);
 
         $validator = Validator::make($request->all(), [
-            'drugName'     => 'required',
+            'drugName' => 'required',
             'manufacturer' => 'required',
             'quantityType' => 'required|exists:drug_types,id',
         ]);
@@ -164,7 +164,7 @@ class DrugController extends Controller {
             $drug->manufacturer = $request->manufacturer;
             $drug->update();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
             $validator->getMessageBag()->add('drugName', 'Drug name already exists');
             return back()->withInput()->withErrors($validator);

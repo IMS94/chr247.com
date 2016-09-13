@@ -2,10 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Lib\Logger;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Log;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -31,7 +33,7 @@ class Handler extends ExceptionHandler {
      * @return void
      */
     public function report(Exception $e) {
-        \Log::error($e->getMessage());
+        Logger::error($e->getMessage(), $e->getTrace());
         parent::report($e);
     }
 

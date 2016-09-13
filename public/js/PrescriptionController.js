@@ -37,6 +37,10 @@ angular.module('HIS')
             $scope.drugErrorTimeout = null;
             $scope.errorTimeout = null;
 
+            $scope.$on('PrescriptionDrugAddedEvent', function (event, data) {
+                $scope.prescribedDrugs.push(data);
+                $scope.init();
+            });
 
             /**
              * Init function. loads relevant data from the API.
@@ -58,6 +62,7 @@ angular.module('HIS')
 
             $scope.predictDisease = function () {
                 if (!$scope.diagnosis) {
+                    $scope.diseasePredictions = [];
                     return;
                 }
                 api.getDiseasePredictions($scope.baseUrl, $scope.token, $scope.diagnosis).then(function (data) {
@@ -70,7 +75,8 @@ angular.module('HIS')
              * A complete replicate of DrugController's predictDrug() method.
              */
             $scope.predictDrug = function () {
-                if ($scope.pharmacyDrug && $scope.pharmacyDrug.length != 3) {
+                if (!$scope.pharmacyDrug) {
+                    $scope.drugPredictions = [];
                     return;
                 }
                 api.getDrugPredictions($scope.baseUrl, $scope.token, $scope.pharmacyDrug).then(function (data) {

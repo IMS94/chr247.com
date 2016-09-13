@@ -5,15 +5,12 @@ namespace App\Http\Controllers;
 use App\Clinic;
 use App\Exceptions\NotFoundException;
 use App\Patient;
+use Exception;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Exception;
 
 class PatientController extends Controller {
     /**

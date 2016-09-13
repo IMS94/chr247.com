@@ -3,7 +3,7 @@
 /public/storage
 Homestead.yaml
 Homestead.json
-composer.lock
+/composer.lock
 .env
 /.idea
 /_ide_helper.php

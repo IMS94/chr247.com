@@ -37,14 +37,14 @@ class DrugControllerTest extends TestCase {
         $quantityType = $user->clinic->quantityTypes()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/addDrug', [
-                'drugName'     => $drug->name,
+                'drugName' => $drug->name,
                 'manufacturer' => $drug->manufacturer,
                 'quantityType' => $quantityType->id
             ]);
         $this->assertSessionHas('success', "Drug added successfully !");
         $this->seeInDatabase('drugs', [
-            'name'         => $drug->name,
-            'clinic_id'    => $user->clinic->id,
+            'name' => $drug->name,
+            'clinic_id' => $user->clinic->id,
             'drug_type_id' => $quantityType->id
         ]);
 
@@ -54,28 +54,28 @@ class DrugControllerTest extends TestCase {
         $quantityType = $user->clinic->quantityTypes()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/addDrug', [
-                'drugName'         => $drug->name,
-                'manufacturer'     => $drug->manufacturer,
-                'quantityType'     => $quantityType->id,
-                'quantity'         => $stock->quantity,
-                'manufacturedDate' => $stock->manufactured_date,
-                'receivedDate'     => $stock->received_date,
-                'expiryDate'       => $stock->expiry_date,
-                'remarks'          => $stock->remarks
+                'drugName' => $drug->name,
+                'manufacturer' => $drug->manufacturer,
+                'quantityType' => $quantityType->id,
+                'quantity' => $stock->quantity,
+                'manufacturedDate' => date('Y/m/d', strtotime($stock->manufactured_date)),
+                'receivedDate' => date('Y/m/d', strtotime($stock->received_date)),
+                'expiryDate' => date('Y/m/d', strtotime($stock->expiry_date)),
+                'remarks' => $stock->remarks
             ]);
         $this->assertSessionHas('success', "Drug added successfully !");
         $this->seeInDatabase('drugs', [
-            'name'         => $drug->name,
-            'clinic_id'    => $user->clinic->id,
+            'name' => $drug->name,
+            'clinic_id' => $user->clinic->id,
             'drug_type_id' => $quantityType->id
         ]);
         // Check entry in the database
         $drug = Drug::where('name', $drug->name)->where('clinic_id', $user->clinic->id)
             ->where('drug_type_id', $quantityType->id)->first();
         $this->seeInDatabase('stocks', [
-            'drug_id'           => $drug->id,
+            'drug_id' => $drug->id,
             'manufactured_date' => $stock->manufactured_date,
-            'received_date'     => $stock->received_date
+            'received_date' => $stock->received_date
         ]);
     }
 
@@ -99,7 +99,7 @@ class DrugControllerTest extends TestCase {
         $drug = $user->clinic->drugs()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/editDrug/' . $drug->id, [
-                'drugName'     => "Test Drug",
+                'drugName' => "Test Drug",
                 'manufacturer' => $drug->manufacturer,
                 'quantityType' => $drug->drug_type_id
             ]);

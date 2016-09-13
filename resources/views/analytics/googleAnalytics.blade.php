@@ -12,4 +12,7 @@
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
     ga('create', 'UA-80064619-1', 'auto');
     ga('send', 'pageview');
+    @if(Auth::check())
+        ga('set', 'userId', {{\App\User::getCurrentUser()->id}});
+    @endif
 </script>

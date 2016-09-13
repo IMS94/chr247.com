@@ -41,29 +41,29 @@
                        ng-init="baseUrl='{{url("/")}}';id={{$patient->id}};token='{{csrf_token()}}';init()">
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-12 control-label">Presenting Complaints</label>
-                    <div class="col-md-9 col-sm-12">
+                    <label class="col-md-3 col-xs-12 control-label">Presenting Complaints</label>
+                    <div class="col-md-9 col-xs-12">
                         <textarea id="presentingComplaints" placeholder="Presenting Complaints" ng-model="complaints"
                                   class="form-control"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-12 control-label">Investigations</label>
-                    <div class="col-md-9 col-sm-12">
+                    <label class="col-md-3 col-xs-12 control-label">Investigations</label>
+                    <div class="col-md-9 col-xs-12">
                 <textarea id="prescriptionInvestigations" placeholder="Investigations" ng-model="investigations"
                           class="form-control"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-12 control-label">
+                    <label class="col-md-3 col-xs-12 control-label">
                         Diagnosis
                         <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
                            data-placement="bottom" title=""
                            data-original-title="Start typing to get suggestions for the diagnosis"></i>
                     </label>
-                    <div class="col-md-9 col-sm-12">
+                    <div class="col-md-9 col-xs-12">
                         <input id="prescriptionDiagnosis" placeholder="Start typing to get suggestions ..."
                                ng-model="diagnosis" class="form-control" type="text" ng-change="predictDisease()"
                                list="diseaseList">
@@ -74,8 +74,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-12 control-label">Other Remarks</label>
-                    <div class="col-md-9 col-sm-12">
+                    <label class="col-md-3 col-xs-12 control-label">Other Remarks</label>
+                    <div class="col-md-9 col-xs-12">
                 <textarea id="prescriptionRemarks" ng-model="remarks" placeholder="Remarks"
                           class="form-control"></textarea>
                     </div>
@@ -94,8 +94,8 @@
                             [[error]]
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="col-md-8 col-md-offset-2">
+                        <div class="col-md-12 col-xs-12">
+                            <div class="col-md-8 col-xs-12">
                                 <label class="col-sm-12 text-center">
                                     Drug
                                     <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
@@ -108,15 +108,29 @@
                                     <select id="prescriptionDrug" class="form-control" size="6" ng-model="drug">
                                         <option value="">None</option>
                                         <option ng-repeat="drug in drugs" value="[[drug.id]]" ng-cloak>
-                                            [[drug.name]] [[drug.quantity | exactNumber]]
+                                            [[drug.name]] ([[drug.quantity | exactNumber]] Available)
                                         </option>
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <label class="col-xs-12">
+                                    Can't find the drug?
+                                    <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
+                                       data-placement="bottom" title=""
+                                       data-original-title="Add a new drug, dosage, frequency and period which
+                                           is not present in the lists."> </i>
+                                </label>
+                                <div class="col-xs-12">
+                                    <button class="btn bg-gray btn-lg btn-flat" data-toggle="modal"
+                                            data-target="#addDosageModal"> Add
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-md-12 margin">
-                            <div class="col-md-4">
+                        <div class="col-md-12 col-xs-12" style="margin-top: 10px">
+                            <div class="col-md-4 col-xs-12">
                                 <label class="col-sm-12 text-center">
                                     Dose
                                     <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
@@ -134,7 +148,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-xs-12">
                                 <label class="col-sm-12 text-center">Frequency (Optional)</label>
                                 <div class="col-sm-12">
                                     <select id="prescriptionFrequency" class="form-control" size="6"
@@ -147,7 +161,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-xs-12">
                                 <label class="col-sm-12 text-center">Period (Optional)</label>
                                 <div class="col-sm-12">
                                     <select id="prescriptionPeriod" class="form-control" size="6" ng-model="period">
@@ -164,7 +178,7 @@
                     <div class="box-footer">
                         <button class="btn bg-gray btn-lg btn-flat pull-left" data-toggle="modal"
                                 data-target="#addPharmacyDrugsModal"> Pharmacy Drugs
-                            <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                            <i class="fa fa-question-circle-o fa-lg" data-toggle="tooltip"
                                data-placement="bottom" title=""
                                data-original-title="Add the drugs to be taken from a pharmacy"></i>
                         </button>
@@ -260,6 +274,7 @@
 
         {{--Modal to add pharmacy Drugs--}}
         @include('patients.modals.addPharmacyDrugs')
+        @include('patients.modals.addDosage')
 
     </div>
     {{--/Main Box--}}

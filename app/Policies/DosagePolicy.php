@@ -5,8 +5,7 @@ namespace App\Policies;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DosagePolicy
-{
+class DosagePolicy {
     use HandlesAuthorization;
 
     /**
@@ -14,8 +13,7 @@ class DosagePolicy
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         //
     }
 
@@ -24,8 +22,7 @@ class DosagePolicy
      * @param User $user
      * @return bool
      */
-    public function add(User $user)
-    {
+    public function add(User $user) {
         return true;
     }
 
@@ -35,8 +32,7 @@ class DosagePolicy
      * @param $dosage
      * @return bool
      */
-    public function view(User $user, $dosage)
-    {
+    public function view(User $user, $dosage) {
         return $user->clinic->id === $dosage->clinic->id;
     }
 
@@ -47,9 +43,8 @@ class DosagePolicy
      * @param $dosage
      * @return bool
      */
-    public function edit(User $user, $dosage)
-    {
-        return $user->clinic->id === $dosage->clinic->id && !$user->isNurse();
+    public function edit(User $user, $dosage) {
+        return $user->clinic->id === $dosage->clinic->id;
     }
 
 
@@ -59,8 +54,7 @@ class DosagePolicy
      * @param $dosage
      * @return bool
      */
-    public function delete(User $user, $dosage)
-    {
+    public function delete(User $user, $dosage) {
         return $user->isAdmin() && $user->clinic->id === $dosage->clinic->id;
     }
 }
