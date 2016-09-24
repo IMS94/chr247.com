@@ -11,7 +11,7 @@
                         <h1 class="white-color">The simplest Health Informatics System on the Cloud.</h1>
                         <h5 class="">Secure | Simple | Practical</h5>
                         <a href="{{route('registerClinic')}}" class="btn se-btn-white btn-rounded">
-                            Get started now, it's FREE!
+                            Register now, it's FREE!
                         </a>
                     </div> <!-- end inner -->
                 </div> <!-- end outer -->
@@ -47,10 +47,10 @@
 
     <!-- ========== FEATURES ========== -->
     <section class="se-section features-section">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
 
-                <div class="col-md-3 col-sm-6 se-feature">
+                <div class="col-md-3 col-sm-3 col-xs-12 se-feature">
                     <i class="icon ion-earth"></i>
                     <h5>100% Free!</h5>
                     <p>
@@ -70,7 +70,7 @@
                     </ul>
                 </div> <!-- end se-feature -->
 
-                <div class="col-md-3 col-sm-6 se-feature">
+                <div class="col-md-3 col-sm-3 col-xs-12 se-feature">
                     <i class="icon ion-android-checkmark-circle"></i>
                     <h5>Security</h5>
                     <p>
@@ -79,14 +79,14 @@
                     </p>
                 </div> <!-- end se-feature -->
 
-                <div class="col-md-3 col-sm-6 se-feature">
+                <div class="col-md-3 col-sm-3 col-xs-12 se-feature">
                     <i class="icon ion-settings"></i>
                     <h5>Easy To Set-Up</h5>
                     <p>No installing, updating or maintaining is required by the user. We will do all that for you.
                         Once your account is approved you can immediately start using the system. </p>
                 </div> <!-- end se-feature -->
 
-                <div class="col-md-3 col-sm-6 se-feature">
+                <div class="col-md-3 col-sm-3 col-xs-12 se-feature">
                     <i class="icon ion-cloud"></i>
                     <h5>Easy Access</h5>
                     <p>
