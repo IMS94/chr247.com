@@ -19,7 +19,6 @@ class SecurityHandler {
         $response->header("X-Frame-Options", "SAMEORIGIN");
         $response->header("X-Content-Type-Options", "nosniff");
         $response->header("Strict-Transport-Security", "max-age=31536000");
-        $response->header("Content-Security-Policy", "*");
 
         return $response;
     }
