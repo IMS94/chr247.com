@@ -99,7 +99,7 @@ class BeforeLoginViewsTest extends TestCase {
      */
     public function testForgotPasswordView() {
         $this->visit('/login')
-            ->click('Forgot Your Password?')
+            ->click('Forgot Password?')
             ->seePageIs('/password/reset')
             ->see('Reset Password');
 
