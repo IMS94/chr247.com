@@ -46,7 +46,7 @@
 
 
             <!--    Box Body  -->
-            <div class="box-body">
+            <div class="box-body container-fluid">
 
                 {{--Success Message--}}
                 @if(session()->has('success'))
@@ -80,6 +80,7 @@
                     <thead>
                     <tr>
                         <th>Drug Name</th>
+                        <th>Ingredient</th>
                         <th>Quantity Type</th>
                         <th>Manufacturer</th>
                         <th>Quantity</th>
@@ -91,6 +92,9 @@
                         <tr class="tableRow">
                             <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
                                 {{$drug->name}}
+                            </td>
+                            <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
+                                {{$drug->ingredient? : "N/A"}}
                             </td>
                             <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
                                 {{$drug->quantityType->drug_type}}

@@ -30,6 +30,18 @@ class SupportController extends Controller {
     }
 
     /**
+     * Get the matching drugs based on a keyword
+     *
+     * @param $text
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getIngredientPredictions($text) {
+        $drugs = \DB::table('drug_pool')->where('ingredient', 'LIKE', $text . "%")->select('ingredient')
+            ->distinct()->take(30)->get();
+        return response()->json(['status' => 1, 'ingredients' => $drugs]);
+    }
+
+    /**
      * Get a list of manufacturers based on a keyword
      *
      * @param $text

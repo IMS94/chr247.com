@@ -46,6 +46,19 @@
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('ingredient') ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">Ingredient</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="ingredient"
+                                   value="{{ old('ingredient')?:$drug->ingredient }}" required>
+                            @if ($errors->has('ingredient'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('ingredient') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('quantityType') ? ' has-error' : '' }}">
                         <label class="col-md-3 control-label">Quantity Type</label>
                         <div class="col-md-9">

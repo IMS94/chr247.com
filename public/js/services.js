@@ -222,6 +222,25 @@ angular.module('HIS', [], function ($interpolateProvider) {
             },
 
             /**
+             * Predicts drug ingredient from a partially typed drug name.
+             * Calls the REST API.
+             *
+             * @param baseUrl
+             * @param token
+             * @param text
+             * @returns {*}
+             */
+            getIngredientPredictions: function (baseUrl, token, text) {
+                return $http.post(baseUrl + "/API/support/ingredientPredictions/" + text, {
+                    _token: token
+                }).then(function (response) {
+                    return response.data.ingredients;
+                }, function (response) {
+                    return [];
+                });
+            },
+
+            /**
              * Get the manufacturer name predictions based on partially typed manufaturer's name.
              *
              * @param baseUrl

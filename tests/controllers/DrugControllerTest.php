@@ -32,50 +32,54 @@ class DrugControllerTest extends TestCase {
 
     public function testAddDrug() {
         // Add a drug without initial stock
-        $user = User::first();
-        $drug = factory(Drug::class, 1)->make();
+        $user         = User::first();
+        $drug         = factory(Drug::class, 1)->make();
         $quantityType = $user->clinic->quantityTypes()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/addDrug', [
-                'drugName' => $drug->name,
+                'drugName'     => $drug->name,
+                'ingredient'   => $drug->ingredient,
                 'manufacturer' => $drug->manufacturer,
                 'quantityType' => $quantityType->id
             ]);
         $this->assertSessionHas('success', "Drug added successfully !");
         $this->seeInDatabase('drugs', [
-            'name' => $drug->name,
-            'clinic_id' => $user->clinic->id,
+            'name'         => $drug->name,
+            'ingredient'   => $drug->ingredient,
+            'clinic_id'    => $user->clinic->id,
             'drug_type_id' => $quantityType->id
         ]);
 
         // Add a drug with initial stock
-        $drug = factory(Drug::class, 1)->make();
-        $stock = factory(Stock::class, 1)->make();
+        $drug         = factory(Drug::class, 1)->make();
+        $stock        = factory(Stock::class, 1)->make();
         $quantityType = $user->clinic->quantityTypes()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/addDrug', [
-                'drugName' => $drug->name,
-                'manufacturer' => $drug->manufacturer,
-                'quantityType' => $quantityType->id,
-                'quantity' => $stock->quantity,
+                'drugName'         => $drug->name,
+                'ingredient'       => $drug->ingredient,
+                'manufacturer'     => $drug->manufacturer,
+                'quantityType'     => $quantityType->id,
+                'quantity'         => $stock->quantity,
                 'manufacturedDate' => date('Y/m/d', strtotime($stock->manufactured_date)),
-                'receivedDate' => date('Y/m/d', strtotime($stock->received_date)),
-                'expiryDate' => date('Y/m/d', strtotime($stock->expiry_date)),
-                'remarks' => $stock->remarks
+                'receivedDate'     => date('Y/m/d', strtotime($stock->received_date)),
+                'expiryDate'       => date('Y/m/d', strtotime($stock->expiry_date)),
+                'remarks'          => $stock->remarks
             ]);
         $this->assertSessionHas('success', "Drug added successfully !");
         $this->seeInDatabase('drugs', [
-            'name' => $drug->name,
-            'clinic_id' => $user->clinic->id,
+            'name'         => $drug->name,
+            'ingredient'   => $drug->ingredient,
+            'clinic_id'    => $user->clinic->id,
             'drug_type_id' => $quantityType->id
         ]);
         // Check entry in the database
         $drug = Drug::where('name', $drug->name)->where('clinic_id', $user->clinic->id)
             ->where('drug_type_id', $quantityType->id)->first();
         $this->seeInDatabase('stocks', [
-            'drug_id' => $drug->id,
+            'drug_id'           => $drug->id,
             'manufactured_date' => $stock->manufactured_date,
-            'received_date' => $stock->received_date
+            'received_date'     => $stock->received_date
         ]);
     }
 
@@ -99,7 +103,8 @@ class DrugControllerTest extends TestCase {
         $drug = $user->clinic->drugs()->first();
         $this->actingAs($user)
             ->call('POST', 'drugs/editDrug/' . $drug->id, [
-                'drugName' => "Test Drug",
+                'drugName'     => "Test Drug",
+                'ingredient'   => "Test Ingredient",
                 'manufacturer' => $drug->manufacturer,
                 'quantityType' => $drug->drug_type_id
             ]);

@@ -39,7 +39,7 @@
                             Drug Name
                             <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
                                data-placement="bottom" title=""
-                               data-original-title="Scientific name or commercial name of the drug.
+                               data-original-title="Commercial/Brand name of the drug.
                                Type at least 3 characters to get suggestions"></i>
                         </label>
                         <div class="col-md-9">
@@ -52,6 +52,29 @@
                             @if ($errors->has('drugName'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('drugName') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('ingredient') ? ' has-error' : '' }}">
+                        <label class="col-md-3 control-label">
+                            Ingredient
+                            <i class="fa fa-question-circle-o fa-lg pull-right" data-toggle="tooltip"
+                               data-placement="bottom" title=""
+                               data-original-title="Scientific name or the generic name of the drug.
+                               Type at least 3 characters to get suggestions"></i>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="ingredient" required list="ingredientList"
+                                   ng-change="predictIngredient()" ng-model="ingredient"
+                                   ng-init="ingredient='{{ old('ingredient') }}'">
+                            <datalist id="ingredientList">
+                                <option ng-repeat="drug in ingredientPredictions">[[drug.ingredient]]</option>
+                            </datalist>
+                            @if ($errors->has('ingredient'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('ingredient') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -133,7 +156,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('receivedDate') ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label">Received Date</label>
+                                <label class="col-md-3 control-label">Purchased Date</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control datepicker" name="receivedDate"
                                            value="{{ old('receivedDate') }}">

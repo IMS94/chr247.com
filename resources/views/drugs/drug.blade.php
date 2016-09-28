@@ -53,6 +53,10 @@
                             <div class="col-md-8">{{$drug->name}}</div>
                         </div>
                         <div class="row">
+                            <label class="col-md-4">Drug Name</label>
+                            <div class="col-md-8">{{$drug->ingredient? : "N/A"}}</div>
+                        </div>
+                        <div class="row">
                             <label class="col-md-4">Manufacturer</label>
                             <div class="col-md-8">{{$drug->manufacturer}}</div>
                         </div>
@@ -83,7 +87,7 @@
     <div class="box box-success box-solid">
         <!--    Box Header  -->
         <div class="box-header with-border">
-            <h4 class="box-title">Recent Stocks (up to last 5 stocks)</h4>
+            <h4 class="box-title">Recent Stocks</h4>
         </div>
 
         <div class="box-body">
@@ -92,12 +96,12 @@
                 <tr>
                     <th>Quantity</th>
                     <th>Expiry Date</th>
-                    <th>Received Date</th>
+                    <th>Purchased Date</th>
                     <th>Manufactured Date</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($drug->getStocks() as $stock)
+                @foreach($drug->getStocks(10) as $stock)
                     <tr>
                         <td>{{Utils::getFormattedNumber($stock->quantity)}}</td>
                         <td>{{Utils::getFormattedDate($stock->expiry_date)}}</td>

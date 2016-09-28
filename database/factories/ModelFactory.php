@@ -35,6 +35,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\DrugType::class, function (Faker\Generator $faker) {
     $types = ['Pills', 'Litres', 'Tablets', 'Milli Litres', 'Units', 'Bottles'];
+
     return [
         'drug_type' => $types[rand(0, count($types) - 1)]
     ];
@@ -44,6 +45,7 @@ $factory->define(App\DrugType::class, function (Faker\Generator $faker) {
 $factory->define(App\Drug::class, function (Faker\Generator $faker) {
     return [
         'name'         => $faker->word,
+        'ingredient'   => $faker->word,
         'manufacturer' => $faker->company,
         'quantity'     => 0
     ];
@@ -51,6 +53,7 @@ $factory->define(App\Drug::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Patient::class, function (Faker\Generator $faker) {
     $bloodGroups = ['A +', 'A -', 'B +', 'B -', 'AB +', 'AB -', 'O +', 'O -', 'N/A'];
+
     return [
         'first_name'  => $faker->firstName,
         'last_name'   => $faker->lastName,
@@ -73,7 +76,7 @@ $factory->define(App\Stock::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Prescription::class, function (Faker\Generator $faker) {
-    $issued = rand(0, 1) == 1;
+    $issued   = rand(0, 1) == 1;
     $issuedAt = $issued ? $faker->dateTimeThisMonth()->format('Y-m-d H:i:s') : null;
 
     return [
