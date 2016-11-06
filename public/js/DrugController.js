@@ -12,6 +12,16 @@ angular.module('HIS')
                 });
             };
 
+            $scope.predictIngredient = function () {
+                if (!$scope.ingredient) {
+                    $scope.ingredientPredictions = [];
+                    return;
+                }
+                api.getIngredientPredictions($scope.baseUrl, $scope.token, $scope.ingredient).then(function (data) {
+                    $scope.ingredientPredictions = data;
+                });
+            };
+
             /**
              * Predict the manufacturer when there are 2 letters in the input
              */

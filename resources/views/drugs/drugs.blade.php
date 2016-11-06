@@ -46,7 +46,7 @@
 
 
             <!--    Box Body  -->
-            <div class="box-body">
+            <div class="box-body container-fluid table-responsive">
 
                 {{--Success Message--}}
                 @if(session()->has('success'))
@@ -76,10 +76,11 @@
                     }
                 </style>
 
-                <table class="table table-responsive table-condensed table-hover text-center" id="drugsTable">
+                <table class="table table-condensed table-hover text-center" id="drugsTable">
                     <thead>
                     <tr>
                         <th>Drug Name</th>
+                        <th>Ingredient</th>
                         <th>Quantity Type</th>
                         <th>Manufacturer</th>
                         <th>Quantity</th>
@@ -91,6 +92,9 @@
                         <tr class="tableRow">
                             <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
                                 {{$drug->name}}
+                            </td>
+                            <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
+                                {{$drug->ingredient? : "N/A"}}
                             </td>
                             <td onclick="window.location='{{route("drug",['id'=>$drug->id])}}'">
                                 {{$drug->quantityType->drug_type}}

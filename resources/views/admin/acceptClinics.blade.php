@@ -4,7 +4,7 @@
 @section('title',"Admin | HIS")
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid table-responsive">
         <div class="container-fluid">
             <a href="{{route('adminLogout')}}" class="btn btn-primary">Logout</a>
         </div>
@@ -68,7 +68,7 @@
         </table>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid table-responsive">
         <h4>Accepted Clinics</h4>
 
         <table class="table table-hover table-condensed table-bordered text-center">

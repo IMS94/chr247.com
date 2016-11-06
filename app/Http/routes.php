@@ -222,6 +222,7 @@ Route::group(['middleware' => 'web'], function () {
         //clinic registration support
         Route::post('support/timezones/{countryCode}', 'SupportController@getTimezones');
         Route::post('support/drugPredictions/{text}', 'SupportController@getDrugPredictions');
+        Route::post('support/ingredientPredictions/{text}', 'SupportController@getIngredientPredictions');
         Route::post('support/manufacturerPredictions/{text}', 'SupportController@getManufacturerPredictions');
         Route::post('support/diseasePredictions/{text}', 'SupportController@getDiseasePredictions');
     });
