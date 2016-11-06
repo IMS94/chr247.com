@@ -53,7 +53,7 @@
                             <div class="col-md-8">{{$drug->name}}</div>
                         </div>
                         <div class="row">
-                            <label class="col-md-4">Drug Name</label>
+                            <label class="col-md-4">Ingredient</label>
                             <div class="col-md-8">{{$drug->ingredient? : "N/A"}}</div>
                         </div>
                         <div class="row">

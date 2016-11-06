@@ -76,7 +76,7 @@
                     }
                 </style>
 
-                <table class="table table-responsive table-condensed table-hover text-center" id="drugsTable">
+                <table class="table table-condensed table-hover text-center" id="drugsTable">
                     <thead>
                     <tr>
                         <th>Drug Name</th>
