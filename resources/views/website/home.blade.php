@@ -24,11 +24,11 @@
         <div class="container">
             <div class="row">
                 <div class="container-fluid col-md-12">
-                    <h2 class="underline mtn">Why chr247.com ?</h2>
+                    <h2 class="underline mtn">All about chr247.com in 5 minutes ...</h2>
                     <!-- 16:9 aspect ratio -->
                     <div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-12">
                         <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tW3E7FQD_tM"
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/02_pjKzW0cY"
                                     allowfullscreen></iframe>
                         </div>
 

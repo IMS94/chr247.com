@@ -19,7 +19,7 @@
         </div>
 
         <!--    Box Body  -->
-        <div class="box-body">
+        <div class="box-body container-fluid table-responsive">
 
             {{--Success Message--}}
             @if(session()->has('success'))
@@ -51,7 +51,7 @@
                 }
             </style>
 
-            <table class="table table-responsive table-condensed table-hover text-center" id="patientsTable">
+            <table class="table table-condensed table-hover text-center" id="patientsTable">
                 <thead>
                 <tr>
                     <th>Name</th>

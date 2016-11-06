@@ -20,6 +20,30 @@
         </div> <!-- end container -->
     </header>
 
+    <!-- ========== FEATURE INTRO ========== -->
+    <section class="se-section">
+        <div class="container">
+            <div class="row">
+                <div class="container-fluid col-md-12">
+                    <h2 class="underline mtn">All about chr247.com in 5 minutes ...</h2>
+                    <!-- 16:9 aspect ratio -->
+                    <div class="col-md-8 col-md-offset-2 col-xs-12 col-sm-12">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/02_pjKzW0cY"
+                                    allowfullscreen></iframe>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="{{route("registerClinic")}}" class="btn se-btn-black btn-rounded"
+                               style="margin-top: 10px">
+                                Join our Service
+                            </a>
+                        </div>
+                    </div>
+                </div> <!-- end col-md-8 -->
+            </div> <!-- end row -->
+        </div> <!-- end container -->
+    </section>
 
     <!-- ========== LIST OF FEATURES ========== -->
     <section class="se-section" id="detailedFeatures">

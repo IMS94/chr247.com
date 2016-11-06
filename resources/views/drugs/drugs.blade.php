@@ -46,7 +46,7 @@
 
 
             <!--    Box Body  -->
-            <div class="box-body container-fluid">
+            <div class="box-body container-fluid table-responsive">
 
                 {{--Success Message--}}
                 @if(session()->has('success'))
