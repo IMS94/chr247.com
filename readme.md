@@ -19,7 +19,7 @@ Following youtube video explains what are the capabilities of chr247.com in deta
   - No trial periods
   - No hidden charges
   - No contracts
-  - Universla access 
+  - Universal access 
 - **Security**
   - All the records are protected by SSL end-to-end encryption so they are only accessed by only you and the people who you grant access to.
   - Easy To Set-Up
