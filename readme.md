@@ -2,6 +2,8 @@
 
 ![CHR247.com Logo](https://chr247.com/logo.png "CHR247.com Logo")
 
+[请点击这里阅读中文](https://github.com/consectechnologies/chr247.com/blob/master/README.zh-cn.md)
+
 This is the official repository of chr247.com cloud platform for small scale clinics. This is a project written in PHP using Laravel framework.
 
 chr247.com won the **Commonwealth Digital Health Award for promoting eHealth among general practitioners** at the [**Commonwealth Medical Association Conference 2016**](https://www.facebook.com/commonwealthdoctors/) and is listed [here](https://scontent.fcmb3-1.fna.fbcdn.net/v/t31.0-8/s720x720/14615584_10154295604103612_6255794136538531020_o.jpg?oh=a50482633c25f6ce313b54312a4eaf57&oe=59956173).
