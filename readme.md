@@ -19,12 +19,13 @@ Following youtube video explains what are the capabilities of chr247.com in deta
   - No trial periods
   - No hidden charges
   - No contracts
+  - Universla access 
 - **Security**
   - All the records are protected by SSL end-to-end encryption so they are only accessed by only you and the people who you grant access to.
   - Easy To Set-Up
   - No installing, updating or maintaining is required by the user. We will do all that for you. Once your account is approved you can immediately start using the system.
 - **Easy Access**
-  - The entire system is running on cloud technology, so you can securely access your records from anywhere, anytime. All you need is a computer, tablet or a smartphone and an internet connection.
+  - The entire system is running on cloud technology, so you can securely access your records from anywhere, anytime. All you need is a computer, tablet or a smartphone and an internet connection. 
   
 ## Features
   
