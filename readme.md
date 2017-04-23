@@ -6,6 +6,8 @@ This is the official repository of chr247.com cloud platform for small scale cli
 
 chr247.com won the **Commonwealth Digital Health Award for promoting eHealth among general practitioners** at the [**Commonwealth Medical Association Conference 2016**](https://www.facebook.com/commonwealthdoctors/) and is listed [here](https://scontent.fcmb3-1.fna.fbcdn.net/v/t31.0-8/s720x720/14615584_10154295604103612_6255794136538531020_o.jpg?oh=a50482633c25f6ce313b54312a4eaf57&oe=59956173).
 
+Our mission is to build a global platform for Health Informatics, which is easy to use by clinical staff (Doctors, Nurses, etc..) 
+
 ## Introduction to chr247.com
 
 Following youtube video explains what are the capabilities of chr247.com in detail.
@@ -49,7 +51,7 @@ Following youtube video explains what are the capabilities of chr247.com in deta
 - **Issue & Print Prescriptions**
   - Issue prescriptions to patients and also print them straight from the system with one click of a button.
   
-## TODO
+## TO DO
 
 - [ ] Improvements to prescribe medicine section (Bug fixes and UX improvements)
 - [ ] Implement channelling for clinics (When configured, public users can search for a specific clinic and channel the doctor)
