@@ -1,24 +1,26 @@
-# CHR 24x7 -云健康记录平台
+# CHR 24x7 -云医疗信息记录平台
 
 ![CHR247.com Logo](https://chr247.com/logo.png "CHR247.com Logo")
 
-这是小规模的诊所chr247.com云平台官方库。这是一个用PHP框架使用laravel项目。
+这是chr247.com云医疗信息记录平台的官方库。
 
-chr247.com赢得了联邦数字健康奖在英联邦医学协会会议2016间普通科医生医疗保健和促进是列在这里。
+我们使用PHP在laravel框架下完成了这款软件。
 
-我们的使命是建立一个全球性的健康信息平台，这是很容易使用的临床工作人员（医生，护士等）。
+在2016年英联邦医疗协会会议上，chr247.com赢得了Commonwealth Digital Health Award for promoting eHealth among general practitioners奖项。
 
-## 介绍chr247.com 
+我们的目标是建立一个易于使用的全球性医疗健康信息平台。
 
-下面的视频chr247.com详细解释什么是能力。
+## 简介
+
+下面的视频详细介绍了chr247.com的功能
 
 [![CHR247.com Step by Step Introduction](http://img.youtube.com/vi/02_pjKzW0cY/0.jpg)](http://www.youtube.com/watch?v=02_pjKzW0cY "CHR247.com Step by Step Introduction")
 
-## 为什么chr247.com？
+## 为什么选择chr247.com？
 
-- **100%免费开源**
-  - 享受所有标准的功能，任何医生要求全天免费全天！
-  - 没有试用期
+- **100%免费且开源**
+  - 每天都可以享用
+  - 没有试用期
   - 没有隐藏的费用
   - 没有合同
   - 通用的访问
