@@ -1,4 +1,4 @@
-# CHR 24x7 -云健康记录
+# CHR 24x7 -云健康记录平台
 
 ![CHR247.com Logo](https://chr247.com/logo.png "CHR247.com Logo")
 
@@ -57,10 +57,10 @@ chr247.com赢得了联邦数字健康奖在英联邦医学协会会议2016间普
   
 ## 将要改进的部分
 
-- [ ] 处方药部分的改进（bug修复和UX改进）
-- [ ] 实施窜的诊所（当配置，公共用户可以搜索特定的临床和通道的医生
+- [ ] 处方药部分的改进（bug的修复和UX改进）
+- [ ] 加入诊所和医生预约功能（实现后，公共用户可以搜索特定的诊所并预约指定的医生）
 
 **欢迎您的捐款！**
   
 ## 联系方式
-  更多信息访问 [chr247.com](https://chr247.com/) 或电子邮件 [imesha.sudasingha@gmail.com](mailto:imesha.sudasingha@gmail.com)
+  更多信息请访问 [chr247.com](https://chr247.com/) 或电子邮件至 [imesha.sudasingha@gmail.com](mailto:imesha.sudasingha@gmail.com)
