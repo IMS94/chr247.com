@@ -39,7 +39,7 @@ class PasswordController extends Controller {
      * Send a reset link to the given user.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function sendResetLinkEmail(Request $request) {
         $this->validate($request, ['email' => 'required|email|exists:clinics']);
@@ -69,7 +69,7 @@ class PasswordController extends Controller {
      * Reset the given user's password.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function reset(Request $request) {
         $this->validate(

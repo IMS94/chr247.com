@@ -1,9 +1,7 @@
 <?php
 
-use DB;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Log;
 
 class CreateDrugPool extends Migration {
     /**

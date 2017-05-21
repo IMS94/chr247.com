@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Clinic;
 use App\DrugType;
 use DB;
+use Exception;
 use Log;
 use Mail;
 
@@ -51,11 +52,11 @@ class AdminController extends Controller {
             $clinic->quantityTypes()->saveMany($types);
 
             Mail::send('auth.emails.clinicAccepted', ['clinic' => $clinic], function ($m) use ($clinic) {
-                $m->to($clinic->email, $clinic->name)->subject('CHR247.COM - Clinic Accepted');
+                $m->to($clinic->email, $clinic->name)->subject('chr247.com - Clinic Accepted');
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
-            Log::error($e->getMessage());
+            Log::error("Unable to accept clinic due to :" . $e->getMessage());
             return back()->with("error", "Unable to accept the clinic");
         }
         DB::commit();

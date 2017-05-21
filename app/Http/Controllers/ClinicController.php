@@ -6,11 +6,11 @@ use App\Clinic;
 use App\Lib\Support\Country;
 use App\Role;
 use App\User;
+use DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ClinicController extends Controller {
@@ -32,7 +32,7 @@ class ClinicController extends Controller {
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postRegister(Request $request) {
         return $this->register($request);
@@ -42,7 +42,7 @@ class ClinicController extends Controller {
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function register(Request $request) {
         $validator = $this->validator($request->all());
@@ -55,8 +55,7 @@ class ClinicController extends Controller {
 
         if ($this->create($request->all())) {
             return redirect()->to("login")
-                ->with('success', 'Your clinic registered successfully. ' .
-                    'You will receive a confirmation email once the account is reviewed');
+                ->with('success', 'Your clinic registered successfully. You will receive a confirmation email once the account is reviewed');
         } else {
             return back()
                 ->with('error', 'The clinic could not be registered. Please try again!')->withInput();
@@ -71,17 +70,17 @@ class ClinicController extends Controller {
      */
     protected function validator(array $data) {
         return \Validator::make($data, [
-            'name'      => 'required|max:255|min:3',
-            'email'     => 'required|email|max:255|unique:clinics',
-            'address'   => 'required|min:6',
-            'phone'     => 'required',
-            'country'   => 'required|in:' . implode(",", array_keys(Country::$countries)),
-            'timezone'  => 'required|timezone',
-            'currency'  => 'required',
+            'name' => 'required|max:255|min:3',
+            'email' => 'required|email|max:255|unique:clinics',
+            'address' => 'required|min:6',
+            'phone' => 'required',
+            'country' => 'required|in:' . implode(",", array_keys(Country::$countries)),
+            'timezone' => 'required|timezone',
+            'currency' => 'required',
             'adminName' => 'required|min:6',
-            'username'  => 'required|unique:users',
-            'password'  => 'required|confirmed|min:6',
-            'terms'     => 'required|accepted'
+            'username' => 'required|unique:users',
+            'password' => 'required|confirmed|min:6',
+            'terms' => 'required|accepted'
         ], [
             'terms.*' => "You have to accept the Terms and Conditions along with the Privacy Policy in order to register"
         ]);
@@ -92,17 +91,17 @@ class ClinicController extends Controller {
      * REMEMBER :   Update the $fillable array whenever adding additional attribute to Clinic table
      *
      * @param  array $data
-     * @return Clinic
+     * @return bool
      */
     protected function create(array $data) {
         DB::beginTransaction();
         try {
             $clinic = Clinic::create([
-                'name'     => $data['name'],
-                'email'    => $data['email'],
-                'address'  => $data['address'],
-                'phone'    => $data['phone'],
-                'country'  => Country::$countries[$data['country']],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'address' => $data['address'],
+                'phone' => $data['phone'],
+                'country' => Country::$countries[$data['country']],
                 'timezone' => $data['timezone'],
                 'currency' => $data['currency'],
                 'accepted' => false
