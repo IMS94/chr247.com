@@ -11,12 +11,13 @@ install:
 
 before_script:
   - phpenv rehash
+  - set +H
   - cp .env.travis .env
   - chmod 0755 .env
   - php artisan key:generate
   - php artisan config:clear
   - mysql -e 'create database homestead_test;'
-  - set +H
+  - php artisan migrate
 
 script:
   - vendor/bin/phpunit
