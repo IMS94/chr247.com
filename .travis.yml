@@ -1,0 +1,37 @@
+language: php
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+
+sudo: false
+
+env:
+  global:
+    - DEFAULT=1
+    - CODECOVERAGE=0
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.1
+      env: CODECOVERAGE=1 DEFAULT=0
+    - php: 5.6
+      env: PREFER_LOWEST=1
+
+install:
+  - composer self-update
+  - sh -c "if [ '$PREFER_LOWEST' != '1' ]; then composer install --prefer-dist --no-interaction; fi"
+  - sh -c "if [ '$PREFER_LOWEST' = '1' ]; then composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable; fi"
+
+before_script:
+  - phpenv rehash
+  - set +H
+
+script:
+  - sh -c "if [ '$DEFAULT' = '1' ]; then ./vendor/bin/phpunit; fi"
+  - sh -c "if [ '$CODECOVERAGE' = '1' ]; then phpdbg -qrr vendor/bin/phpunit --coverage-clover=clover.xml || true; fi"
+
+notifications:
+  email: false
