@@ -33,7 +33,7 @@ before_script:
   - php artisan key:generate
   - php artisan config:clear
   - mysql -e 'create database homestead_test;'
-  - php artisan migrate
+  - php artisan migrate:refresh --seed
 
 script:
   - sh -c "if [ '$DEFAULT' = '1' ]; then ./vendor/bin/phpunit; fi"
