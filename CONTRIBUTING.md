@@ -75,3 +75,12 @@ git push origin add-feature-x
 ### 8. Make a pull request
 Go to https://github.com/yourusername/chr247.com and select your feature branch.
 Click the 'Pull Request' button and fill out the form.
+
+## Report Issues
+
+If you find a bug/issue and want to report it, open a [new issue](https://github.com/chr24x7/chr247.com/issues/new)
+and be sure to include a title and clear description, as much relevant information
+as possible, and a code sample or a test case demonstrating the expected behavior
+that is not occurring.
+
+Discussions can be done via github issues.
