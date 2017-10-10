@@ -18,8 +18,8 @@ efforts from contributors on the same issue.
 ## Making Code Contributions
 
 ### 1. Fork the project on Github
-a. Navigate to the [chr247.com repo on github] (https://github.com/chr24x7/chr247.com)
-b. In the top-right corner of the page, click Fork. 
+* Navigate to the [chr247.com repo on github](https://github.com/chr24x7/chr247.com)
+* In the top-right corner of the page, click Fork. 
 
 ### 2. Check out your copy locally
 ```
@@ -50,9 +50,9 @@ git add <any_new_file>
 git commit
 ```
 To write a good commit message:
-a. Describe why you did the change, not what the change is (the diff already shows the what).
-b. In the message body, add as many information as you need, it’s better to be extra verbose than the alternative.
-c. If it adresses an issue, add the coment closes #1234 to the description, where #1234 is the issue number on github.
+* Describe why you did the change, not what the change is (the diff already shows the what).
+* In the message body, add as many information as you need, it’s better to be extra verbose than the alternative.
+* If it adresses an issue, add the coment closes #1234 to the description, where #1234 is the issue number on github.
 
 ### 6. Rebase to keep updated
 To sync your work from time to time and avoid conflicts it is a good idea to rebase.
