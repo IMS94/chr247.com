@@ -4,7 +4,7 @@
 
 [请点击这里阅读中文](https://github.com/consectechnologies/chr247.com/blob/master/README.zh-cn.md)
 
-This is the official repository of chr247.com cloud platform for small scale clinics. This is a project written in PHP using Laravel framework.
+This is the official repository of chr247.com cloud platform for small scale clinics. This is a project written in PHP using Laravel framework. Please read [**the contribution guide**](https://github.com/chr24x7/chr247.com/blob/master/CONTRIBUTING.md) for information on contributions.
 
 chr247.com won the **Commonwealth Digital Health Award for promoting eHealth among general practitioners** at the [**Commonwealth Medical Association Conference 2016**](https://www.facebook.com/commonwealthdoctors/) and is listed [here](https://scontent.fcmb3-1.fna.fbcdn.net/v/t31.0-8/s720x720/14615584_10154295604103612_6255794136538531020_o.jpg?oh=a50482633c25f6ce313b54312a4eaf57&oe=59956173).
 
@@ -53,12 +53,14 @@ Following youtube video explains what are the capabilities of chr247.com in deta
 - **Issue & Print Prescriptions**
   - Issue prescriptions to patients and also print them straight from the system with one click of a button.
   
-## TO DO
+## Contributions
+
+Please read [**contributing guide**](https://github.com/chr24x7/chr247.com/blob/master/CONTRIBUTING.md) for more details on how to contribute. In summary, chr247.com requires following major imrpovements to be done at the moment.
 
 - [ ] Improvements to prescribe medicine section (Bug fixes and UX improvements)
 - [ ] Implement channelling for clinics (When configured, public users can search for a specific clinic and channel the doctor)
 
-**Contributions are more than welcome!**
+**Contributions, bug fixes and feature requests are more than welcome!**
   
 ## Contact
   For more info visit [chr247.com](https://chr247.com/) or email [imesha.sudasingha@gmail.com](mailto:imesha.sudasingha@gmail.com)
