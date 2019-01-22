@@ -1,6 +1,6 @@
 # CHR 24x7 - Cloud Health Records
 
-![CHR247.com Logo](https://chr247.com/logo.png "CHR247.com Logo")
+![CHR247.com Logo](https://raw.githubusercontent.com/IMS94/chr247.com/master/public/logo.png "CHR247.com Logo")
 
 [请点击这里阅读中文](https://github.com/consectechnologies/chr247.com/blob/master/README.zh-cn.md)
 
