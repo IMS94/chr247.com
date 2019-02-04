@@ -53,6 +53,42 @@ Following youtube video explains what are the capabilities of chr247.com in deta
 - **Issue & Print Prescriptions**
   - Issue prescriptions to patients and also print them straight from the system with one click of a button.
   
+## How to Install
+### Developer Installation
+
+To install a development version of chr247.com, please follow the following steps. Since this
+webapp is developed using laravel 5.2 following prerequisites exist:
+- PHP version between 5.5.9 - 7.1.*
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Mbstring PHP Extension
+- Tokenizer PHP Extension
+- PHP XML (DOM) Extension
+- PHP MySQL Driver (If MySQL is used as database)
+
+Then follow the following steps to configure project
+- First, [composer](https://getcomposer.org/download/) should be installed. This is the package
+manager used internally.
+- Within the project root directory, 
+    - Make sure the permissions for `storage` and `bootstrap/cache`
+are set to `776` (i.e writable by the web server)
+    - Copy the `.env.example` file as `.env`.
+    - Run `php artisan key:generate` to generate application key.
+        - This command will set a newly generated application key to `.env` file.
+    - Set the database related information within `.env` file. If you are using a DB otherthan
+    MySQL, you may have to add `DB_CONNECTION=<DB Driver Name>` to `.env` file as well.
+        - ```
+          DB_HOST=<Your DB Host>
+          DB_DATABASE=<Your DB Name>
+          DB_USERNAME=<Your DB Username>
+          DB_PASSWORD=<Your DB Password>
+          ```
+    - Run `composer install` with the project root.
+    - Run database migrations and seeds with `php artisan migrate:refresh --seed`
+    - Run `php artisan serve`
+- Visit [http://localhost:8000] to view the webapp. You can use the login
+    - username: `imesha`, password: `1234` to login.
+  
 ## Contributions
 
 Please read [**contributing guide**](https://github.com/chr24x7/chr247.com/blob/master/CONTRIBUTING.md) for more details on how to contribute. In summary, chr247.com requires following major imrpovements to be done at the moment.
