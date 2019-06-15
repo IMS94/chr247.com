@@ -72,7 +72,8 @@ manager used internally.
 - Within the project root directory, 
     - Make sure the permissions for `storage` and `bootstrap/cache`
 are set to `776` (i.e writable by the web server)
-    - Copy the `.env.example` file as `.env`.
+    - Copy the `.env.example` file as `.env` (windows Users- do this using the command prompt)
+    - Run `composer install` with the project root.
     - Run `php artisan key:generate` to generate application key.
         - This command will set a newly generated application key to `.env` file.
     - Set the database related information within `.env` file. If you are using a DB otherthan
@@ -83,7 +84,7 @@ are set to `776` (i.e writable by the web server)
           DB_USERNAME=<Your DB Username>
           DB_PASSWORD=<Your DB Password>
           ```
-    - Run `composer install` with the project root.
+    
     - Run database migrations and seeds with `php artisan migrate:refresh --seed`
     - Run `php artisan serve`
 - Visit [http://localhost:8000] to view the webapp. You can use the login
