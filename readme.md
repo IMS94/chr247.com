@@ -71,9 +71,9 @@ Then follow the following steps to configure project
 manager used internally.
 - Within the project root directory, 
     - Make sure the permissions for `storage` and `bootstrap/cache`
-are set to `776` (i.e writable by the web server)
-    - Copy the `.env.example` file as `.env` (windows Users- do this using the command prompt)
-    - Run `composer install` with the project root.
+are set to `776` (i.e writable by the web server) - (Windows users make sure the current user has full permissions to read and write on the folders `storage` and `bootstrap/cache`)
+    - Copy the `.env.example` file as `.env` (windows Users- do this using the command prompt). Its advisable to have a copy of this file before you do this.
+    - Run `composer install` within the project root.
     - Run `php artisan key:generate` to generate application key.
         - This command will set a newly generated application key to `.env` file.
     - Set the database related information within `.env` file. If you are using a DB otherthan
