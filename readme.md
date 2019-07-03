@@ -79,7 +79,7 @@ are set to `776` (i.e writable by the web server) - (Windows users make sure the
     - Set the database related information within `.env` file. If you are using a DB otherthan
     MySQL, you may have to add `DB_CONNECTION=<DB Driver Name>` to `.env` file as well.
         - ```
-          DB_HOST=<Your DB Host>
+          DB_HOST=<Your DB Host> or DB_HOST=<Your DB Host>:<port number> if using non default settings for mysql 
           DB_DATABASE=<Your DB Name>
           DB_USERNAME=<Your DB Username>
           DB_PASSWORD=<Your DB Password>
