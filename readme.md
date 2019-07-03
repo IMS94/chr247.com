@@ -86,8 +86,13 @@ are set to `776` (i.e writable by the web server) - (Windows users make sure the
           ```
     
     - Run database migrations and seeds with `php artisan migrate:refresh --seed`
-    - Run `php artisan serve`
-- Visit [http://localhost:8000] to view the webapp. You can use the login
+    - Run `php artisan serve` this will only provide the page for the development computer
+    - Visit [http://localhost:8000] to view the webapp. 
+    or
+    - Run `php artisan serve --host xxx.xxx.xxx.xxx --port 8000 this will provide page for all computers on the same network 
+    - Visit [http://xxx.xxx.xxx.xxx:8000] to view the webapp. 
+    
+You can use the login
     - username: `imesha`, password: `1234` to login.
   
 ## Contributions
