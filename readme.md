@@ -89,7 +89,7 @@ are set to `776` (i.e writable by the web server) - (Windows users make sure the
     - Run `php artisan serve` this will only provide the page for the development computer
     - Visit [http://localhost:8000] to view the webapp. 
     or
-    - Run `php artisan serve --host xxx.xxx.xxx.xxx --port 8000 this will provide page for all computers on the same network 
+    - Run `php artisan serve --host xxx.xxx.xxx.xxx --port 8000` this will provide page for all computers on the same network 
     - Visit [http://xxx.xxx.xxx.xxx:8000] to view the webapp. 
     
 You can use the login
