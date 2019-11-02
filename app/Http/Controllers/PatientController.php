@@ -13,16 +13,97 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class PatientController extends Controller {
+    
     /**
      * Get the patients list
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getPatientList() {
         $clinic = Clinic::getCurrentClinic();
-        $patients = $clinic->patients;
-        return view('patients.patients', ['patients' => $patients]);
+        return view('patients.patients', ['patients' => []]);
     }
 
+
+    /**
+     * Get the patients list for data tables, server side processing
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function listPatients(Request $request)
+    {
+        $clinic = Clinic::getCurrentClinic();
+
+        $draw = $request->query('draw');
+        $start = $request->query('start');
+        $length = $request->query('length');
+        $search = $request->query('search');
+        $order = $request->query('order');
+        $query = $search['value'];
+        $orderByColIdx = $order[0]["column"];
+        $orderByDirection = $order[0]["dir"];
+
+        $orderByCol = 'first_name';
+        if ($orderByColIdx == 2) {
+            $orderByCol = 'phone';
+        } else if ($orderByColIdx == 3) {
+            $orderByCol = 'address';
+        } else if ($orderByColIdx == 4) {
+            $orderByCol = 'dob';
+            $orderByDirection = $orderByDirection == 'asc' ? 'desc' : 'asc';
+        }
+
+        Log::debug("Draw -> $draw, Start-> $start, Length-> $length, OrderByColumn-> $orderByColIdx, Query-> $query");
+
+        $totalRecords = $clinic->patients()->count();
+        $filteredRecords = $totalRecords;
+
+        $patients = $clinic->patients();
+
+        if (!empty($query)) {
+            $patients = $patients->where('first_name', 'like', "%$query%")
+                ->orWhere('last_name', 'like', "%$query%");
+            $filteredRecords = $patients->count();
+        }
+
+        $patients = $patients->orderBy($orderByCol, $orderByDirection)
+            ->skip($start)->take($length)->get();
+
+        $data = [];
+        foreach ($patients as $patient) {
+            $buttons = '';
+            if (\Gate::allows('delete', $patient)) {
+                $buttons = "
+                    <button class=\"btn btn-sm btn-danger\" data-toggle=\"modal\"
+                        data-target=\"#confirmDeletePatientModal\"
+                        onclick=\"showConfirmDelete($patient->id,'$patient->first_name $patient->last_name')\">
+                        <i class=\"fa fa-recycle fa-lg\" data-toggle=\"tooltip\"
+                        data-placement=\"bottom\" title=\"\"
+                        data-original-title=\"Delete this patient?
+                        You won't be able to delete this patient if the patient has any records
+                        associated to him/her in the system.\"></i>
+                    </button>";
+            }
+
+            $row = [
+                $patient->id,
+                $patient->first_name . ' ' . $patient->last_name,
+                $patient->phone,
+                $patient->address,
+                \Utils::getAge($patient->dob),
+                $buttons
+            ];
+
+            $data[] = $row;
+        }
+
+        $result = [
+            'draw' => $request->query('draw'),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $data
+        ];
+
+        return response()->json($result);
+    }
 
     /**
      * Adds a patient to the system

@@ -42,6 +42,14 @@
             @endif
 
             <style>
+                .tableBoby tr {
+                    cursor: pointer;
+                }
+
+                .tableBoby tr:hover {
+                    text-decoration: underline !important;
+                }
+
                 .tableRow {
                     cursor: pointer;
                 }
@@ -54,6 +62,7 @@
             <table class="table table-condensed table-hover text-center" id="patientsTable">
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Contact No.</th>
                     <th>Address</th>
@@ -61,9 +70,13 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="tableBoby">
+                {{-- Rows below will now be printed with data tables server side processing --}}
                 @forelse($patients as $patient)
                     <tr class="tableRow">
+                        <td>
+                            {{$patient->id}}
+                        </td>
                         <td onclick="window.location='{{route("patient",['id'=>$patient->id])}}'">
                             {{$patient->first_name}} {{$patient->last_name?:''}}
                         </td>
@@ -121,8 +134,24 @@
     {{--Data Tables Scripts--}}
     <script>
         $(document).ready(function () {
-            var tableFixed = $('#patientsTable').dataTable({
-                'pageLength': 10
+            var tableFixed = $('#patientsTable').DataTable({
+                'pageLength': 10,
+                'processing': true,
+                'serverSide': true,
+                'ajax': '{{route("listPatients")}}',
+                'order': [[1, 'asc']],
+                'columnDefs': [
+                    {
+                        'targets': [0],
+                        'visible': false,
+                        'searchable': false
+                    }
+                ]
+            });
+
+            $('#patientsTable tbody').on('click', 'tr', function() {
+                var data = tableFixed.row(this).data();
+                window.location.replace("{{url('patients/patient')}}/"+data[0]);
             });
         });
     </script>

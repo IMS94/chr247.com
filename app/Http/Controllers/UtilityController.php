@@ -49,12 +49,14 @@ class UtilityController extends Controller {
         }
 
         $clinic        = Clinic::getCurrentClinic();
-        $prescriptions = Prescription::whereIn('patient_id', $clinic->patients()->lists('id'));
+        // TODO Commented out below sections due to inability to handle large number of records
+//        $prescriptions = Prescription::whereIn('patient_id', $clinic->patients()->lists('id'));
 
-        $prescriptionCount = $prescriptions->where('issued', 1)->count();
-        $payments          = Payment::whereIn('prescription_id',
-            $prescriptions->where('issued', 1)->lists('id'))->sum('amount');
-
+//        $prescriptionCount = $prescriptions->where('issued', 1)->count();
+        $prescriptionCount = 0;
+//        $payments          = Payment::whereIn('prescription_id',
+//            $prescriptions->where('issued', 1)->lists('id'))->sum('amount');
+        $payments          = 0;
         $stats = $this->calcClinicStats($clinic);
 
         return view('dashboard', [
@@ -79,7 +81,8 @@ class UtilityController extends Controller {
         ];
 
         $date       = date('Y-m-d H:i:s', strtotime("-6 months"));
-        $patientIds = $clinic->patients()->lists('id')->toArray();
+//        $patientIds = $clinic->patients()->lists('id')->toArray();
+        $patientIds = [];
         if (count($patientIds) > 0) {
             $patientIds = implode(",", $patientIds);
             $query      = "SELECT MONTH(created_at) AS m,COUNT(*) AS c FROM `prescriptions` WHERE `patient_id`

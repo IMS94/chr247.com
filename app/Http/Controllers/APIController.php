@@ -155,6 +155,7 @@ class APIController extends Controller {
         }
 
         $clinic        = Clinic::getCurrentClinic();
+        // TODO Fix for large number of records
         $prescriptions = Prescription::whereIn('patient_id', $clinic->patients()->lists('id'))
             ->where('issued', false)->orderBy('id')
             ->with('prescriptionDrugs.dosage', 'prescriptionDrugs.frequency', 'prescriptionPharmacyDrugs',

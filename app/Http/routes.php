@@ -101,10 +101,10 @@ Route::group(['middleware' => 'web'], function () {
          */
         Route::group(['prefix' => 'patients'], function () {
             Route::get('/', ['as' => 'patients', 'uses' => 'PatientController@getPatientList']);
-
             /*
              * PATIENTS
              */
+            Route::get('/list', ['as' => 'listPatients', 'uses' => 'PatientController@listPatients']);
             Route::post('addPatient', ['as' => 'addPatient', 'uses' => 'PatientController@addPatient']);
             Route::get('patient/{id}', ['as' => 'patient', 'uses' => 'PatientController@getPatient']);
             Route::any('deletePatient/{id}', ['as' => 'deletePatient', 'uses' => 'PatientController@deletePatient']);
