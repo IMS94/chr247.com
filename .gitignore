@@ -8,3 +8,4 @@ Homestead.json
 /.idea
 /_ide_helper.php
 /storage/
+composer.phar
