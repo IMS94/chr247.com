@@ -149,6 +149,7 @@
                 ]
             });
 
+            // TODO Delete button not clickable now
             $('#patientsTable tbody').on('click', 'tr', function() {
                 var data = tableFixed.row(this).data();
                 window.location.replace("{{url('patients/patient')}}/"+data[0]);
