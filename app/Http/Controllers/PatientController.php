@@ -59,8 +59,7 @@ class PatientController extends Controller {
         $patients = $clinic->patients();
 
         if (!empty($query)) {
-            $patients = $patients->where('first_name', 'like', "%$query%")
-                ->orWhere('last_name', 'like', "%$query%");
+            $patients = $patients->where(DB::raw('concat(first_name, " ", last_name)'), 'like', "%$query%");
             $filteredRecords = $patients->count();
         }
 

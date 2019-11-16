@@ -49,19 +49,24 @@ class UtilityController extends Controller {
         }
 
         $clinic        = Clinic::getCurrentClinic();
-        // TODO Commented out below sections due to inability to handle large number of records
-//        $prescriptions = Prescription::whereIn('patient_id', $clinic->patients()->lists('id'));
+        $idList = $clinic->patients()->pluck('id')->toArray();
 
-//        $prescriptionCount = $prescriptions->where('issued', 1)->count();
-        $prescriptionCount = 0;
-//        $payments          = Payment::whereIn('prescription_id',
-//            $prescriptions->where('issued', 1)->lists('id'))->sum('amount');
-        $payments          = 0;
+        $prescriptions = collect();
+        $batch_size = 10000;
+        foreach (array_chunk($idList, $batch_size) as $idListBatch) {
+            $prescriptions = Prescription::whereIn('patient_id', $idListBatch)->get()->toBase()->merge($prescriptions);
+        }
+
+        $prescriptionCount = $prescriptions->where('issued', 1)->count();
+        $payments          = Payment::whereIn('prescription_id',
+           $prescriptions->where('issued', 1)->pluck('id'))->sum('amount');
         $stats = $this->calcClinicStats($clinic);
 
         return view('dashboard', [
-            'clinic'   => $clinic, 'prescriptionCount' => $prescriptionCount,
-            'payments' => $payments, 'stats' => $stats
+            'clinic'   => $clinic, 
+            'prescriptionCount' => $prescriptionCount,
+            'payments' => $payments, 
+            'stats' => $stats
         ]);
     }
 
