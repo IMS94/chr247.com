@@ -59,12 +59,14 @@ class UtilityController extends Controller {
 
         $prescriptionCount = $prescriptions->where('issued', 1)->count();
         $payments          = Payment::whereIn('prescription_id',
-           $prescriptions->where('issued', 1)->lists('id'))->sum('amount');
+           $prescriptions->where('issued', 1)->pluck('id'))->sum('amount');
         $stats = $this->calcClinicStats($clinic);
 
         return view('dashboard', [
-            'clinic'   => $clinic, 'prescriptionCount' => $prescriptionCount,
-            'payments' => $payments, 'stats' => $stats
+            'clinic'   => $clinic, 
+            'prescriptionCount' => $prescriptionCount,
+            'payments' => $payments, 
+            'stats' => $stats
         ]);
     }
 
