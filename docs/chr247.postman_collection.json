@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "183abd2f-a810-4516-8714-9dc61610368e",
+		"name": "chr247",
+		"description": "chr247 APIs and pages",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c782fb2-28cd-430d-85f6-080c38d79121",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"Check cookies\", function() {",
+							"    pm.expect(pm.cookies.has(\"XSRF-TOKEN\")).to.be.true;",
+							"    pm.expect(pm.cookies.has(\"chr247_session\")).to.be.true;",
+							"});",
+							"",
+							"pm.environment.set(\"xsrf_token\", pm.cookies.get(\"XSRF-TOKEN\"));",
+							"pm.environment.set(\"session\", pm.cookies.get(\"chr247_session\"));",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{chr247_url}}/login",
+					"host": [
+						"{{chr247_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fee7c243-2c36-4ea3-adba-b832fd446f70",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{chr247_url}}/login",
+					"host": [
+						"{{chr247_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Patients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{chr247_url}}/patients/list?order[0][column]=1&order[0][dir]=asc&start=0&length=10&search[value]=a&search[regex]=false&draw=1",
+					"host": [
+						"{{chr247_url}}"
+					],
+					"path": [
+						"patients",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order[0][column]",
+							"value": "1"
+						},
+						{
+							"key": "order[0][dir]",
+							"value": "asc"
+						},
+						{
+							"key": "start",
+							"value": "0"
+						},
+						{
+							"key": "length",
+							"value": "10"
+						},
+						{
+							"key": "search[value]",
+							"value": "a"
+						},
+						{
+							"key": "search[regex]",
+							"value": "false"
+						},
+						{
+							"key": "draw",
+							"value": "1"
+						}
+					]
+				},
+				"description": "API used by data tables to paginate and load patients"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "96ee9cc0-96a5-4fcd-b677-b47f58005cf0",
+				"type": "text/javascript",
+				"exec": [
+					"if(pm.environment.has(\"xsrf_token\")) {",
+					"    pm.request.headers.add({",
+					"        key: \"X-XSRF-TOKEN\",",
+					"        value: \"{{xsrf_token}}\"",
+					"    });",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3a1eba76-6c9a-4497-8931-ab05d5115ff3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

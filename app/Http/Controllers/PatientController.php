@@ -95,7 +95,7 @@ class PatientController extends Controller {
         }
 
         $result = [
-            'draw' => $request->query('draw'),
+            'draw' => $draw,
             'recordsTotal' => $totalRecords,
             'recordsFiltered' => $filteredRecords,
             'data' => $data
