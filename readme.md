@@ -4,11 +4,20 @@
 
 [请点击这里阅读中文](https://github.com/consectechnologies/chr247.com/blob/master/README.zh-cn.md)
 
+See [Demo](#demo) section for a demo.
+
 This is the official repository of chr247.com cloud platform for small scale clinics. This is a project written in PHP using Laravel framework. Please read [**the contribution guide**](https://github.com/chr24x7/chr247.com/blob/master/CONTRIBUTING.md) for information on contributions.
 
 chr247.com won the **Commonwealth Digital Health Award for promoting eHealth among general practitioners** at the [**Commonwealth Medical Association Conference 2016**](https://www.facebook.com/commonwealthdoctors/) and is listed [here](https://scontent.fcmb3-1.fna.fbcdn.net/v/t31.0-8/s720x720/14615584_10154295604103612_6255794136538531020_o.jpg?oh=a50482633c25f6ce313b54312a4eaf57&oe=59956173).
 
-Our mission is to build a global platform for Health Informatics, which is easy to use by clinical staff (Doctors, Nurses, etc..) 
+Our mission is to build a global platform for Health Informatics, which is easy to use by clinical staff (Doctors, Nurses, etc..)
+
+- [Introduction](#introduction-to-chr247com)
+- [Demo](#demo)
+- [Why chr247.com](#why-chr247com)
+- [Features](#features)
+- [How to install](#how-to-install)
+- [Contributions](#contributions)
 
 ## Introduction to chr247.com
 
@@ -16,6 +25,24 @@ Following youtube video explains what are the capabilities of chr247.com in deta
 
 [![CHR247.com Step by Step Introduction](http://img.youtube.com/vi/02_pjKzW0cY/0.jpg)](http://www.youtube.com/watch?v=02_pjKzW0cY "CHR247.com Step by Step Introduction")
 
+## Demo
+Please visit [https://chr247.herokuapp.com] and use the following credentials to view a demo.
+
+### Login with role ADMIN of a clinic
+```
+username: imesha
+password: 1234
+```
+### Login with role DOCTOR of a clinic
+```
+username: john
+password: 1234
+```
+### Login with role NURSE of a clinic
+```
+username: jane
+password: 1234
+```
 ## Why chr247.com?
 
 - **100% Free and open source**
