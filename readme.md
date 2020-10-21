@@ -18,6 +18,7 @@ Our mission is to build a global platform for Health Informatics, which is easy 
 - [Features](#features)
 - [How to install](#how-to-install)
 - [Contributions](#contributions)
+- [Contact](#contact)
 
 ## Introduction to chr247.com
 
@@ -127,4 +128,4 @@ Please read [**contributing guide**](https://github.com/chr24x7/chr247.com/blob/
 **Contributions, bug fixes and feature requests are more than welcome!**
   
 ## Contact
-  For more info visit [chr247.com](https://chr247.com/) or email [imesha.sudasingha@gmail.com](mailto:imesha.sudasingha@gmail.com)
+  For more info visit [chr247.com](https://chr247.herokuapp.com/) or email [imesha.sudasingha@gmail.com](mailto:imesha.sudasingha@gmail.com)
