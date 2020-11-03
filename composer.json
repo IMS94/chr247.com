@@ -8,7 +8,7 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": "7.3.*",
+    "php": ">=5.5.9 <7.4.0",
     "laravel/framework": "5.2.*",
     "guzzlehttp/guzzle": "~5.3|~6.0",
     "barryvdh/laravel-ide-helper": "^2.1",
