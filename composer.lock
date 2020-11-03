@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "044f056bbf7f2b629de0e90f57907955",
+    "content-hash": "51591fdf94d643194d6c65d4a94324d5",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -2933,6 +2933,50 @@
             "time": "2015-05-11T14:41:42+00:00"
         },
         {
+            "name": "heroku/heroku-buildpack-php",
+            "version": "v182",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/heroku/heroku-buildpack-php.git",
+                "reference": "78b5f5c03ace2fbc6e49a2a1a1b1188643d0ddb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/78b5f5c03ace2fbc6e49a2a1a1b1188643d0ddb6",
+                "reference": "78b5f5c03ace2fbc6e49a2a1a1b1188643d0ddb6",
+                "shasum": ""
+            },
+            "bin": [
+                "bin/heroku-hhvm-apache2",
+                "bin/heroku-hhvm-nginx",
+                "bin/heroku-php-apache2",
+                "bin/heroku-php-nginx"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Zuelke",
+                    "email": "dz@heroku.com"
+                }
+            ],
+            "description": "Toolkit for starting a PHP application locally, with or without foreman, using the same config for PHP/HHVM and Apache2/Nginx as on Heroku",
+            "homepage": "https://github.com/heroku/heroku-buildpack-php",
+            "keywords": [
+                "apache",
+                "apache2",
+                "foreman",
+                "heroku",
+                "hhvm",
+                "nginx",
+                "php"
+            ],
+            "time": "2020-10-12T17:22:24+00:00"
+        },
+        {
             "name": "mockery/mockery",
             "version": "0.9.11",
             "source": {
@@ -3581,6 +3625,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2015-10-02T06:51:40+00:00"
         },
         {
