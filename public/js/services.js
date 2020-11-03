@@ -11,7 +11,7 @@ angular.module('HIS', [], function ($interpolateProvider) {
              * @returns {*}
              */
             getDrugs: function (baseUrl, token) {
-                return $http.post(baseUrl + "/API/drugs/", {
+                return $http.post(baseUrl + "/API/drugs", {
                     _token: token
                 }).then(function (response) {
                     return response.data;
