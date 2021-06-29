@@ -2,6 +2,7 @@
 
 ![CHR247.com Logo](https://raw.githubusercontent.com/IMS94/chr247.com/master/public/logo.png "CHR247.com Logo")
 
+සිංහල documentation එක වෙත යොමුවෙන්න
 [请点击这里阅读中文](https://github.com/IMS94/chr247.com/blob/master/README.zh-cn.md)
 
 See [Demo](#demo) section for a demo.
