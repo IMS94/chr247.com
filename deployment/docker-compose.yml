@@ -1,0 +1,69 @@
+version: '3'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: chr247.com/app:latest
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: chr247
+      DB_USERNAME: root
+      DB_PASSWORD: db@chr247
+      APP_ENV: local
+      APP_KEY: "base64:xbm8zs6+8TIi+STHIm6yLK47d7TocCs3qZqXjjewaIk="
+      APP_URL: http://localhost:8080
+    working_dir: /var/www
+    networks:
+      - app-network
+
+  #Nginx Service
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    image: chr247.com/nginx:latest
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  #MySQL Service
+  mysql:
+    image: mysql:5.7.22
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: chr247
+      MYSQL_ROOT_PASSWORD: db@chr247
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - chr247-db:/var/lib/mysql/
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  chr247-db:
+    driver: local

@@ -16,7 +16,9 @@ Our mission is to build a global platform for Health Informatics, which is easy 
 - [Demo](#demo)
 - [Why chr247.com](#why-chr247com)
 - [Features](#features)
-- [How to install](#how-to-install)
+- [**How to install**](#how-to-install)
+  - [Run with docker-compose](#run-with-docker-compose)
+  - [Developer Installation](#developer-installation)
 - [Contributions](#contributions)
 - [Contact](#contact)
 
@@ -82,6 +84,20 @@ password: 1234
   - Issue prescriptions to patients and also print them straight from the system with one click of a button.
   
 ## How to Install
+
+### Run with docker-compose
+You can spin up a complete up and running installation of chr247.com using [docker-compose](https://docs.docker.com/compose/compose-file/compose-file-v3/). 
+
+1. Go to `deployment` directory (`cd deployment`)
+2. Run `docker-compose up --build -d` to build and start required docker images.
+3. Once up, run `docker-compose exec app php artisan migrate:refresh --seed` to create database tables and seed initial data.
+4. Visit (http://localhost:8080) to view the app
+
+#### About docker-compose deployment
+- The deployment consists of `app` (php-fpm and chr247.com source), `nginx` and `mysql` services.
+- The `app` dockerfile is at `Dockerfile` in root directory of the repo
+- `nginx` dockerfile is at `deployment/nginx/Dockerfile` directory
+
 ### Developer Installation
 
 To install a development version of chr247.com, please follow the following steps. Since this
