@@ -36,7 +36,7 @@
             @if(session()->has('error'))
                 <div class="alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h4><i class="icon fa fa-ban"></i> Success!</h4>
+                    <h4><i class="icon fa fa-ban"></i> Error!</h4>
                     {{session('error')}}
                 </div>
             @endif
@@ -149,10 +149,11 @@
                 ]
             });
 
-            // TODO Delete button not clickable now
-            $('#patientsTable tbody').on('click', 'tr', function() {
+            $('#patientsTable tbody').on('click', 'tr', function(e) {
                 var data = tableFixed.row(this).data();
-                window.location.replace("{{url('patients/patient')}}/"+data[0]);
+                if ($(e.target).is('td')) {
+                    window.location.replace("{{url('patients/patient')}}/"+data[0]);
+                }
             });
         });
     </script>
