@@ -28,33 +28,33 @@ Our mission is to build a global platform for Health Informatics, which is easy 
 - [Contributions](#contributions)
 - [Contact](#contact)
 
-## Introduction to chr247.com
+## chr247.com හැදින්වී
 
-Following youtube video explains what are the capabilities of chr247.com in detail.
+පහතින් ඇති YouTube වීඩියෝව මගින් ඔබට chr247 හි සපයනු ලබන පහසුකම් ගැන සවිස්තරාත්මකව දැනගත හැක.
 
 [![CHR247.com Step by Step Introduction](http://img.youtube.com/vi/02_pjKzW0cY/0.jpg)](http://www.youtube.com/watch?v=02_pjKzW0cY "CHR247.com Step by Step Introduction")
 
-## Demo
+## Demo එක 
 Please visit https://chr247.herokuapp.com and use the following credentials to view a demo.
 
-### Login with role ADMIN of a clinic
+### ADMIN කෙනෙක් විදියට Clinic එකට log වෙන්න 
 ```
 username: imesha
 password: 1234
 ```
-### Login with role DOCTOR of a clinic
+### DOCTOR කෙනෙක් විදියට Clinic එකට log වෙන්න 
 ```
 username: john
 password: 1234
 ```
-### Login with role NURSE of a clinic
+### NURSE කෙනෙක් විදියට Clinic එකට log වෙන්න 
 ```
 username: jane
 password: 1234
 ```
-## Why chr247.com?
+## chr247 භාවිතා කල යුත්තේ අයි?
 
-- **100% Free and open source**
+- **100% නොමිලයේ සහ විවෘත මෘදුකාංග ආශ්‍රයෙන් නිර්මාණය කර ඇත**
   - Enjoy all the standard features that any medical practitioner requires for free all day every day!
   - No trial periods
   - No hidden charges
