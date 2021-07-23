@@ -7,7 +7,13 @@
 
 [Demo](#demo) එක බලන්න. 
 
-කුඩා පරිමාණ වෛද්‍ය සායන සඳහා වන chr247.com cloud platform හි  නිල repository එක මෙයයි. මෙය මෘදුකාංගය Laravel framework එක භාවිතා කරමින් PHP මගින් ලියා ඇති ව්‍යාපෘතියකි. ඔබ මෙම ව්‍යාපෘතියට සහභාගී වීමට කැමතිනම්, කරුණාකර contribution guide එක බලන්න. [**the contribution guide**](https://github.com/IMS94/chr247.com/blob/master/CONTRIBUTING.md) 
+කුඩා පරිමාණ වෛද්‍ය සායන සඳහා වන chr247.com cloud platform හි  නිල repository එක මෙයයි. මෙය මෘදුකාංගය Laravel framework එක භාවිතා කරමින් PHP මගින් නිෂ්පාදනය කර ඇති ව්‍යාපෘතියකි. ඔබ මෙම ව්‍යාපෘතියට සහභාගී වීමට කැමතිනම්, කරුණාකර contribution guide එක බලන්න. [**the contribution guide**](https://github.com/IMS94/chr247.com/blob/master/CONTRIBUTING.md) 
+
+
+පොදුරාජ්‍ය මණ්ඩලීය වෛද්‍ය සංගමයී 2016 සමුළුවේදී වෛද්‍යවරුන් අතර e-health ප්‍රවර්ධනය කිරීම සඳහා වූ සම්මානය chr247.com ව්‍යාපෘතිය විසින් පොදුරාජ්‍ය මණ්ඩලීය ඩිජිටල් සෞඛ්‍ය සම්මානය දිනා ගන්න ලදී. මෙහි ලැයිස්තු ගත කර ඇත.
+
+
+
 
 
 chr247.com won the **Commonwealth Digital Health Award for promoting eHealth among general practitioners** at the [**Commonwealth Medical Association Conference 2016**](https://www.facebook.com/commonwealthdoctors/) and is listed [here](https://scontent.fcmb3-1.fna.fbcdn.net/v/t31.0-8/s720x720/14615584_10154295604103612_6255794136538531020_o.jpg?oh=a50482633c25f6ce313b54312a4eaf57&oe=59956173).
