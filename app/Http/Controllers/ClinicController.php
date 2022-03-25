@@ -104,7 +104,7 @@ class ClinicController extends Controller {
                 'country' => Country::$countries[$data['country']],
                 'timezone' => $data['timezone'],
                 'currency' => $data['currency'],
-                'accepted' => false
+                'accepted' => true
             ]);
 
             $user = new User();
