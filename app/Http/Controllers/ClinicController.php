@@ -55,7 +55,7 @@ class ClinicController extends Controller {
 
         if ($this->create($request->all())) {
             return redirect()->to("login")
-                ->with('success', 'Your clinic registered successfully. You will receive a confirmation email once the account is reviewed');
+                ->with('success', 'Your clinic registered successfully. Please sign in to continue!');
         } else {
             return back()
                 ->with('error', 'The clinic could not be registered. Please try again!')->withInput();
