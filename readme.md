@@ -142,6 +142,14 @@ Please read [**contributing guide**](https://github.com/chr24x7/chr247.com/blob/
 - [ ] Implement channelling for clinics (When configured, public users can search for a specific clinic and channel the doctor)
 
 **Contributions, bug fixes and feature requests are more than welcome!**
+
+### Contributors
+
+* Developers
+  * Imesha Sudasingha [@IMS94](https://github.com/IMS94)
+  * Chuck [@cbwchuck](https://github.com/cbwchuck)
+* Project Managers
+  * Pasan Thilakasiri [@pasan93](https://github.com/pasan93)
   
 ## Contact
   For more info visit [chr247.com](https://chr247.herokuapp.com/) or email [imesha.sudasingha@gmail.com](mailto:imesha.sudasingha@gmail.com)
