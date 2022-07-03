@@ -5,10 +5,11 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    curl
+    curl \
+    libpq-dev
 
 # Install Git/Curl
-RUN docker-php-ext-install pdo_mysql mbstring 
+RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring 
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -20,6 +21,3 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN apt-get update && apt-get install -y \
     zip \
     unzip
-
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
