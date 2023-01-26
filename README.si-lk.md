@@ -5,9 +5,16 @@
 සිංහල documentation එක වෙත යොමුවෙන්න
 [请点击这里阅读中文](https://github.com/IMS94/chr247.com/blob/master/README.zh-cn.md)
 
-See [Demo](#demo) section for a demo.
+[Demo](#demo) එක බලන්න. 
 
-This is the official repository of chr247.com cloud platform for small scale clinics. This is a project written in PHP using Laravel framework. Please read [**the contribution guide**](https://github.com/IMS94/chr247.com/blob/master/CONTRIBUTING.md) for information on contributions.
+කුඩා පරිමාණ වෛද්‍ය සායන සඳහා වන chr247.com cloud platform හි  නිල repository එක මෙයයි. මෙය මෘදුකාංගය Laravel framework එක භාවිතා කරමින් PHP මගින් නිෂ්පාදනය කර ඇති ව්‍යාපෘතියකි. ඔබ මෙම ව්‍යාපෘතියට සහභාගී වීමට කැමතිනම්, කරුණාකර contribution guide එක බලන්න. [**the contribution guide**](https://github.com/IMS94/chr247.com/blob/master/CONTRIBUTING.md) 
+
+
+පොදුරාජ්‍ය මණ්ඩලීය වෛද්‍ය සංගමයී 2016 සමුළුවේදී වෛද්‍යවරුන් අතර e-health ප්‍රවර්ධනය කිරීම සඳහා වූ සම්මානය chr247.com ව්‍යාපෘතිය විසින් පොදුරාජ්‍ය මණ්ඩලීය ඩිජිටල් සෞඛ්‍ය සම්මානය දිනා ගන්න ලදී. මෙහි ලැයිස්තු ගත කර ඇත.
+
+
+
+
 
 chr247.com won the **Commonwealth Digital Health Award for promoting eHealth among general practitioners** at the [**Commonwealth Medical Association Conference 2016**](https://www.facebook.com/commonwealthdoctors/) and is listed [here](https://scontent.fcmb3-1.fna.fbcdn.net/v/t31.0-8/s720x720/14615584_10154295604103612_6255794136538531020_o.jpg?oh=a50482633c25f6ce313b54312a4eaf57&oe=59956173).
 
@@ -17,39 +24,37 @@ Our mission is to build a global platform for Health Informatics, which is easy 
 - [Demo](#demo)
 - [Why chr247.com](#why-chr247com)
 - [Features](#features)
-- [**How to install**](#how-to-install)
-  - [Run with docker-compose](#run-with-docker-compose)
-  - [Developer Installation](#developer-installation)
+- [How to install](#how-to-install)
 - [Contributions](#contributions)
 - [Contact](#contact)
 
-## Introduction to chr247.com
+## chr247.com හැදින්වී
 
-Following youtube video explains what are the capabilities of chr247.com in detail.
+පහතින් ඇති YouTube වීඩියෝව මගින් ඔබට chr247 හි සපයනු ලබන පහසුකම් ගැන සවිස්තරාත්මකව දැනගත හැක.
 
 [![CHR247.com Step by Step Introduction](http://img.youtube.com/vi/02_pjKzW0cY/0.jpg)](http://www.youtube.com/watch?v=02_pjKzW0cY "CHR247.com Step by Step Introduction")
 
-## Demo
+## Demo එක 
 Please visit https://chr247.herokuapp.com and use the following credentials to view a demo.
 
-### Login with role ADMIN of a clinic
+### ADMIN කෙනෙක් විදියට Clinic එකට log වෙන්න 
 ```
 username: imesha
 password: 1234
 ```
-### Login with role DOCTOR of a clinic
+### DOCTOR කෙනෙක් විදියට Clinic එකට log වෙන්න 
 ```
 username: john
 password: 1234
 ```
-### Login with role NURSE of a clinic
+### NURSE කෙනෙක් විදියට Clinic එකට log වෙන්න 
 ```
 username: jane
 password: 1234
 ```
-## Why chr247.com?
+## chr247 භාවිතා කල යුත්තේ අයි?
 
-- **100% Free and open source**
+- **100% නොමිලයේ සහ විවෘත මෘදුකාංග ආශ්‍රයෙන් නිර්මාණය කර ඇත**
   - Enjoy all the standard features that any medical practitioner requires for free all day every day!
   - No trial periods
   - No hidden charges
@@ -85,20 +90,6 @@ password: 1234
   - Issue prescriptions to patients and also print them straight from the system with one click of a button.
   
 ## How to Install
-
-### Run with docker-compose
-You can spin up a complete up and running installation of chr247.com using [docker-compose](https://docs.docker.com/compose/compose-file/compose-file-v3/). 
-
-1. Go to `deployment` directory (`cd deployment`)
-2. Run `docker-compose up --build -d` to build and start required docker images.
-3. Once up, run `docker-compose exec app php artisan migrate:refresh --seed` to create database tables and seed initial data.
-4. Visit (http://localhost:8080) to view the app
-
-#### About docker-compose deployment
-- The deployment consists of `app` (php-fpm and chr247.com source), `nginx` and `mysql` services.
-- The `app` dockerfile is at `Dockerfile` in root directory of the repo
-- `nginx` dockerfile is at `deployment/nginx/Dockerfile` directory
-
 ### Developer Installation
 
 To install a development version of chr247.com, please follow the following steps. Since this
@@ -143,14 +134,6 @@ Please read [**contributing guide**](https://github.com/chr24x7/chr247.com/blob/
 - [ ] Implement channelling for clinics (When configured, public users can search for a specific clinic and channel the doctor)
 
 **Contributions, bug fixes and feature requests are more than welcome!**
-
-### Contributors
-
-* Developers
-  * Imesha Sudasingha [@IMS94](https://github.com/IMS94)
-  * Chuck [@cbwchuck](https://github.com/cbwchuck)
-* Project Managers
-  * Pasan Thilakasiri [@pasan93](https://github.com/pasan93)
   
 ## Contact
   For more info visit [chr247.com](https://chr247.herokuapp.com/) or email [imesha.sudasingha@gmail.com](mailto:imesha.sudasingha@gmail.com)
